@@ -1,2 +1,2 @@
 # MasterPiece
-Masterpiece develops during ITSchool
+Application designs during ITSchool formation
