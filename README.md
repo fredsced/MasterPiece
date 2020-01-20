@@ -1,2 +1,2 @@
 # MasterPiece
-Application designs during ITSchool formation
+ITSchool training
