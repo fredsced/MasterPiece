@@ -17,8 +17,14 @@ public class AccountService {
         Account accountToSave = new Account();
         accountToSave.setEmail(accountDto.getEmail());
         accountToSave.setPassword(accountDto.getPassword());
-        repo.save(accountToSave);
-        return true;
+        // check if email is already use in db
+        if (repo.findByEmail(accountToSave.getEmail()).isPresent()){
+            return false;
+        }
+        else{
+            repo.save(accountToSave);
+            return true;
+        }
     }
 
 }
