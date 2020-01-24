@@ -8,6 +8,7 @@ import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { Formik } from 'formik';
+import axios from 'axios';
 
 
 
@@ -62,11 +63,29 @@ export default function SignUp() {
         return errors;
       }}
       onSubmit={(values, { setSubmitting }) => {
-        setTimeout(() => {
-          alert(JSON.stringify(values, removeConfirmation, 2));
-          setSubmitting(false);
-        }, 400);
-      }}
+        setSubmitting(true);
+        axios.post('http://localhost:8082/api/account',
+          /* remove password_confirmation from values before send to back ... code smell */
+          JSON.parse(JSON.stringify(values, removeConfirmation)),
+          {
+            headers:{
+              'Access-Control-Allow-Origin': '*',
+              'Content-Type': 'application/json',
+                      
+            }
+          }).then(resp => {
+            // to do...
+            console.log(resp);
+            
+          }).catch(error =>{
+            // to do ...
+            console.log(error);
+           
+          }).then(() => {
+            setSubmitting(false);
+          })
+          
+        }}
     >
       {({
         values,
@@ -137,7 +156,7 @@ export default function SignUp() {
                     fullWidth
                     variant="contained"
                     color="primary"
-                    disabled={errors !== {} ? false : true}
+                    disabled={isSubmitting}
                     className={classes.submit}
 
                   >
