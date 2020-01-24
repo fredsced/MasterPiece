@@ -1,0 +1,22 @@
+.creation-form{
+    max-width: 400px;
+    margin: 20px auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
+    padding: 20px;
+  }
+  .creation-form div {
+    padding: 5px 15px 5px 5px;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+  }
+  .creation-form div > * {
+    padding: 5px 15px 5px 5px;
+  }
+  .creation-form div input{
+      width: 250px;
+  }
