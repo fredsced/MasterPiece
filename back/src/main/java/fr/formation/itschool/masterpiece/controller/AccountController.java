@@ -21,7 +21,11 @@ public class AccountController {
 
     @PostMapping("/account")
     public ResponseEntity<String> newAccount(@Valid @RequestBody AccountDto accountdto)  {
-        service.createAccount(accountdto);
-        return new ResponseEntity<>("Account created", HttpStatus.CREATED);
+        if (service.createAccount(accountdto)) {
+            return new ResponseEntity<>("Account created", HttpStatus.CREATED);
+        }
+        else {
+            return new ResponseEntity<>("Email already presents", HttpStatus.CONFLICT);
+        }
     }
 }
