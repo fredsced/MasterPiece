@@ -9,12 +9,12 @@ import javax.validation.constraints.Size;
 @Getter
 public class AccountDto {
 
-    @NotBlank
-    @Email
-    @Size(max = 255)
-    private String email;
+  @NotBlank
+  @Email
+  @Size(max = 255)
+  private String email;
 
-    @NotBlank
-    @Size(min = 8, max = 255)
-    private String password;
+  @NotBlank
+  @Size(min = 8, max = 255)
+  private String password;
 }
