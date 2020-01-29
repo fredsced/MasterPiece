@@ -7,24 +7,24 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class AccountService {
-    private final AccountRepository repo;
+  private final AccountRepository repo;
 
-    protected AccountService(AccountRepository repo){
-        this.repo = repo;
+  protected AccountService(AccountRepository repo) {
+    this.repo = repo;
+  }
+
+  public boolean createAccount(AccountDto accountDto) {
+    Account accountToSave = new Account();
+    accountToSave.setEmail(accountDto.getEmail());
+    accountToSave.setPassword(accountDto.getPassword());
+    if (isEmailPresentsInDB(accountToSave)) {
+      return false;
     }
+    repo.save(accountToSave);
+    return true;
+  }
 
-    public boolean createAccount(AccountDto accountDto){
-        Account accountToSave = new Account();
-        accountToSave.setEmail(accountDto.getEmail());
-        accountToSave.setPassword(accountDto.getPassword());
-        // check if email is already in db
-        if (repo.findByEmail(accountToSave.getEmail()).isPresent()){
-            return false;
-        }
-        else{
-            repo.save(accountToSave);
-            return true;
-        }
-    }
-
+  private boolean isEmailPresentsInDB(Account accountToSave) {
+    return repo.findByEmail(accountToSave.getEmail()).isPresent();
+  }
 }
