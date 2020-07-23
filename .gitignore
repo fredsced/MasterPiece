@@ -1,3 +1,6 @@
+.idea
+.vscode
+
 /conception
 /front/node_modules
 /front/.pnp
