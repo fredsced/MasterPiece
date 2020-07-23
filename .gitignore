@@ -3,6 +3,8 @@
 /front/.pnp
 /front/.pnp.js
 
+/back/.idea
+/back/target
 # testing
 coverage
 
