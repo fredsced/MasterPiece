@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import SignUp from './Signup';
 import Footer from './Footer';
+
 function App() {
   return (
     <div className="App">
@@ -10,9 +11,6 @@ function App() {
       </header>
       <SignUp />
       <Footer />
-
-
-
     </div>
   );
 }
