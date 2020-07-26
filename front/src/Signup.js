@@ -10,13 +10,6 @@ import Container from '@material-ui/core/Container';
 import { Formik } from 'formik';
 import axios from 'axios';
 
-
-
-const removeConfirmation = (key, value) => {
-  if (key === 'password_confirmation') return undefined
-  return value
-}
-
 const useStyles = makeStyles(theme => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -63,13 +56,13 @@ export default function SignUp() {
         return errors;
       }}
       onSubmit={(values, { setSubmitting }) => {
+        const { email, password } = values;
+        const valuesToSend = { email, password };
         setSubmitting(true);
-        axios.post('http://localhost:8082/api/account',
-          /* remove password_confirmation from values before send to back ... code smell */
-          JSON.parse(JSON.stringify(values, removeConfirmation)),
+        axios.post('http://localhost:8082/api/private/account',
+          valuesToSend,
           {
             headers:{
-              'Access-Control-Allow-Origin': '*',
               'Content-Type': 'application/json',
                       
             }
@@ -99,12 +92,12 @@ export default function SignUp() {
           <form className="creation-form" onSubmit={handleSubmit}>
             <Container component="main" maxWidth="xs">
               <div className={classes.paper}>
+                <Typography component="h1">
+                  Créer votre compte
+                </Typography>
                 <Avatar className={classes.avatar}>
                 </Avatar>
-                <Typography component="h1" variant="h5">
-                  Créez votre compte
-                </Typography>
-                <form className={classes.form} noValidate>
+             
                   <Grid container spacing={2}>
                     <Grid item xs={12}>
                       <TextField
@@ -153,7 +146,6 @@ export default function SignUp() {
                   </Grid>
                   <Button
                     type="submit"
-                    fullWidth
                     variant="contained"
                     color="primary"
                     disabled={isSubmitting}
@@ -169,7 +161,6 @@ export default function SignUp() {
                       </Link>
                     </Grid>
                   </Grid>
-                </form>
               </div>
             </Container>
           </form>
