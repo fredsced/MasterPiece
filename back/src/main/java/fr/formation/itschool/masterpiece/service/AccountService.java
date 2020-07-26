@@ -1,30 +1,11 @@
 package fr.formation.itschool.masterpiece.service;
 
-import fr.formation.itschool.masterpiece.domain.Account;
 import fr.formation.itschool.masterpiece.dto.AccountDto;
-import fr.formation.itschool.masterpiece.repository.AccountRepository;
-import org.springframework.stereotype.Service;
+import fr.formation.itschool.masterpiece.dto.AccountInfoDto;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
-@Service
-public class AccountService {
-  private final AccountRepository repo;
+public interface AccountService extends UserDetailsService {
+  void create(AccountDto accountDto);
+  AccountInfoDto getCurrentAccountInfo(Long id);
 
-  protected AccountService(AccountRepository repo) {
-    this.repo = repo;
-  }
-
-  public boolean createAccount(AccountDto accountDto) {
-    Account accountToSave = new Account();
-    accountToSave.setEmail(accountDto.getEmail());
-    accountToSave.setPassword(accountDto.getPassword());
-    if (isEmailPresentsInDB(accountToSave)) {
-      return false;
-    }
-    repo.save(accountToSave);
-    return true;
-  }
-
-  private boolean isEmailPresentsInDB(Account accountToSave) {
-    return repo.findByEmail(accountToSave.getEmail()).isPresent();
-  }
 }

@@ -1,9 +1,7 @@
 package fr.formation.itschool.masterpiece.controller;
 
 import fr.formation.itschool.masterpiece.dto.AccountDto;
-import fr.formation.itschool.masterpiece.service.AccountService;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import fr.formation.itschool.masterpiece.service.AccountServiceImpl;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,20 +12,17 @@ import javax.validation.Valid;
 
 @CrossOrigin
 @RestController
-@RequestMapping(value = "/api")
+@RequestMapping(value = "/private")
 class AccountController {
 
-  private final AccountService service;
+  private final AccountServiceImpl service;
 
-  protected AccountController(AccountService service) {
+  protected AccountController(AccountServiceImpl service) {
     this.service = service;
   }
 
   @PostMapping("/account")
-  public ResponseEntity<String> newAccount(@Valid @RequestBody AccountDto accountdto) {
-    if (service.createAccount(accountdto)) {
-      return new ResponseEntity<>("Account created", HttpStatus.CREATED);
-    }
-    return new ResponseEntity<>("Email already presents", HttpStatus.CONFLICT);
+  public void createAccount(@Valid @RequestBody AccountDto accountDto) {
+    service.create(accountDto);
   }
 }
