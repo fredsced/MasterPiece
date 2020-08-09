@@ -19,7 +19,7 @@ public class CustomTokenEnhancer implements TokenEnhancer {
     Map<String, Object> additionalInfo = new HashMap<>();
     // Authentication principal not yet flattened to username
     // Will be available in access token and Authentication object
-    CustomUserDetails user = (CustomUserDetails) authentication
+    AccountDetails user = (AccountDetails) authentication
         .getPrincipal();
     additionalInfo.put(USER_ID_KEY, user.getId());
     ((DefaultOAuth2AccessToken) accessToken)

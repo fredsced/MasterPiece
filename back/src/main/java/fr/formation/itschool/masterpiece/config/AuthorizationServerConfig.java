@@ -1,7 +1,7 @@
 package fr.formation.itschool.masterpiece.config;
 
-import fr.formation.itschool.masterpiece.dto.AccountInfoDto;
-import fr.formation.itschool.masterpiece.service.AccountService;
+import fr.formation.itschool.masterpiece.dtos.AccountInfoDto;
+import fr.formation.itschool.masterpiece.services.AccountService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -167,7 +167,7 @@ public class AuthorizationServerConfig
    * @param authentication injected authentication object
    * @return a view of the current authenticated user
    */
-  @GetMapping("/userInfo")
+  @GetMapping("/accountInfo")
   public AccountInfoDto userInfo() {
     Long userId = SecurityHelper.getUserId();
     return accountService.getCurrentAccountInfo(userId);

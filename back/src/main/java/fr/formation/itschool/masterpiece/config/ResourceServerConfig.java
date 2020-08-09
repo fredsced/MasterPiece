@@ -41,7 +41,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
         .and()
         // "/api/public/**" for anyone even anonymous
         .authorizeRequests()
-        .antMatchers(HttpMethod.POST,"/api/private/account")
+        .antMatchers(HttpMethod.POST,"/api/private/accounts")
         .permitAll()
         .and()
         // "/api/public/**" for anyone even anonymous
