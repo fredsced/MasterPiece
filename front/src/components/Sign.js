@@ -66,7 +66,7 @@ const Sign = ({ type }) => {
 
         if (type === 'creation') {
           valuesToSend = { email, password };
-          options.url = 'http://localhost:8082/api/private/accounts';
+          options.url = `${process.env.REACT_APP_SERVER_URL}/api/private/accounts`;
           options.method = 'POST';
           options.data = (valuesToSend);
           options.headers = {'content-type': 'application/json'}
@@ -78,7 +78,7 @@ const Sign = ({ type }) => {
           valuesToSend = { username: email, password, client_id, grant_type };
           options.method = 'POST';
           options.data = queryString.stringify(valuesToSend);
-          options.url = 'http://localhost:8082/oauth/token';
+          options.url = `${process.env.REACT_APP_SERVER_URL}/oauth/token`;
           options.headers = {'content-type': 'application/x-www-form-urlencoded'}
         }
         setSubmitting(true);
@@ -107,7 +107,7 @@ const Sign = ({ type }) => {
           <form className="creation-form" onSubmit={handleSubmit}>
             <Container component="main" maxWidth="xs">
               <div className={classes.paper}>
-                <Typography component="h2" variant="h4">
+                <Typography component="h2">
                   {type === 'creation' ?
                     'Créer votre compte' :
                     'Connectez vous'}
