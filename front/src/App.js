@@ -1,15 +1,14 @@
 import React from 'react';
 import './App.css';
-import SignUp from './Signup';
-import Footer from './Footer';
+import Sign from './components/Sign';
+import Footer from './components/Footer';
+import Header from './components/Header';
 
-function App() {
+const App = () => {
   return (
     <div className="App">
-      <header className="App-header">
-        <h1> My ConformityPal </h1>
-      </header>
-      <SignUp />
+      <Header />
+      <Sign />
       <Footer />
     </div>
   );
