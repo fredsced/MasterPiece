@@ -25,3 +25,6 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+/bugs
+.~lock.ITSCHOOL_P2_-_Avancement_chef_doeuvre_-_Descloux_Frederic.xlsx#
+
