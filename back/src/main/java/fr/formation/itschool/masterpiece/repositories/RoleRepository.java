@@ -1,4 +1,4 @@
-package fr.formation.itschool.masterpiece.repository;
+package fr.formation.itschool.masterpiece.repositories;
 
 import fr.formation.itschool.masterpiece.domain.Role;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -1,4 +1,4 @@
-package fr.formation.itschool.masterpiece.dto;
+package fr.formation.itschool.masterpiece.dtos;
 import fr.formation.itschool.masterpiece.domain.Role;
 
 /**

@@ -1,5 +1,6 @@
-package fr.formation.itschool.masterpiece.dto;
+package fr.formation.itschool.masterpiece.dtos;
 
+import fr.formation.itschool.masterpiece.validators.UniqueEmail;
 import lombok.Getter;
 
 import javax.validation.constraints.Email;
@@ -7,9 +8,10 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 @Getter
-public class AccountDto {
+public class CreateAccountDto {
 
   @NotBlank
+  @UniqueEmail
   @Email
   @Size(max = 255)
   private String email;

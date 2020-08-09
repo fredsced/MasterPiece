@@ -1,7 +1,7 @@
 package fr.formation.itschool.masterpiece.config;
 
 import fr.formation.itschool.masterpiece.domain.Role;
-import fr.formation.itschool.masterpiece.dto.AccountAuthDto;
+import fr.formation.itschool.masterpiece.dtos.AccountAuthDto;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -9,13 +9,13 @@ import org.springframework.security.core.userdetails.User;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class CustomUserDetails extends User {
+public class AccountDetails extends User {
 
   private static final long serialVersionUID = 5803283930339051994L;
 
   private Long id;
 
-  public CustomUserDetails(AccountAuthDto user) {
+  public AccountDetails(AccountAuthDto user) {
     super(user.getEmail(), user.getPassword(),
        buildAuthorities(user.getRoles()));
     id = user.getId();
