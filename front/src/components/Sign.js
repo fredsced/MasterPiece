@@ -10,6 +10,7 @@ import Container from '@material-ui/core/Container';
 import { Formik } from 'formik';
 import axios from 'axios';
 import queryString from 'query-string';
+import { Link as RouterLink } from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -34,7 +35,6 @@ const useStyles = makeStyles(theme => ({
 const Sign = ({ type }) => {
   const classes = useStyles();
   const [apiError, setApiError] = useState([]);
-
 
   return (
     <Formik
@@ -69,7 +69,7 @@ const Sign = ({ type }) => {
           options.url = `${process.env.REACT_APP_SERVER_URL}/api/private/accounts`;
           options.method = 'POST';
           options.data = (valuesToSend);
-          options.headers = {'content-type': 'application/json'}
+          options.headers = { 'content-type': 'application/json' }
 
         }
         else {
@@ -79,21 +79,19 @@ const Sign = ({ type }) => {
           options.method = 'POST';
           options.data = queryString.stringify(valuesToSend);
           options.url = `${process.env.REACT_APP_SERVER_URL}/oauth/token`;
-          options.headers = {'content-type': 'application/x-www-form-urlencoded'}
+          options.headers = { 'content-type': 'application/x-www-form-urlencoded' }
         }
         setSubmitting(true);
         setApiError(false);
         axios(options).then(resp => {
-            // to do...
+          // to do...
 
+        }).catch(error => {
+          error.response && setApiError(error.response.data);
 
-          }).catch(error => {
-            error.response && setApiError(error.response.data);
-
-          }).then(() => {
-            setSubmitting(false);
-          })
-
+        }).then(() => {
+          setSubmitting(false);
+        })
       }}
     >
       {({
@@ -107,14 +105,13 @@ const Sign = ({ type }) => {
           <form className="creation-form" onSubmit={handleSubmit}>
             <Container component="main" maxWidth="xs">
               <div className={classes.paper}>
+              <Avatar className={classes.avatar}>
+                </Avatar>
                 <Typography component="h2">
                   {type === 'creation' ?
                     'Créer votre compte' :
                     'Connectez vous'}
                 </Typography>
-                <Avatar className={classes.avatar}>
-                </Avatar>
-
                 <Grid container spacing={2}>
                   <Grid item xs={12}>
                     <TextField
@@ -174,17 +171,20 @@ const Sign = ({ type }) => {
                   color="primary"
                   disabled={isSubmitting}
                   className={classes.submit}
-
                 >
                   Envoyer
                   </Button>
                 <Grid container justify="flex-end">
                   <Grid item>
-                    <Link href="#" variant="body2">
-                      {type === 'creation' ?
-                        'Déjà un compte? connectez vous' :
-                        'Pas de compte? créer votre compte'}
-                    </Link>
+                    {type === 'creation' ?
+                      (<Link component={RouterLink} to='/' variant="body2">
+                        Déjà un compte? connectez vous
+                      </Link>)
+                      :
+                      (<Link component={RouterLink} to='/creation' variant="body2">
+                        Pas de compte? créer votre compte
+                      </Link>)
+                    }
                   </Grid>
                 </Grid>
               </div>

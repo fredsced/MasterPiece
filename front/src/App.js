@@ -1,16 +1,30 @@
 import React from 'react';
-import './App.css';
 import Sign from './components/Sign';
 import Footer from './components/Footer';
 import Header from './components/Header';
+import { Switch, Route } from 'react-router-dom';
 
 const App = () => {
   return (
-    <div className="App">
-      <Header />
-      <Sign />
+    <>
+
+      <Switch>
+        <Route exact path='/'>
+          <Header />
+          <Sign />
+        </Route>
+        <Route path='/creation'>
+          <Header />
+          <Sign type='creation' />
+        </Route>
+
+
+
+
+      </Switch>
+
       <Footer />
-    </div>
+    </>
   );
 }
 

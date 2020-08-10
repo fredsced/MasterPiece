@@ -4,7 +4,7 @@ import {
 } from '@testing-library/react';
 import App from './App';
 
-test('control label in form', () => {
+test('control title in page', () => {
   const {
     getByText
   } = render( < App / > );
