@@ -59,9 +59,15 @@ const useStyles = makeStyles(theme => ({
 export default function Sign({ type }) {
   const classes = useStyles();
   const [apiErrorResponse, setApiErrorResponse] = useState([]);
+  //const [apiSuccesResponse, setApiSuccessResponse] = useState();
   const [errorOpen, setErrorOpen] = useState(false);
+  const [successOpen, setSuccessOpen] = useState(false);
   const handleErrorClose = () => {
     setErrorOpen(false);
+  };
+  const handleSuccessClose = () => {
+    setSuccessOpen(false);
+    
   };
 
   return (
@@ -115,6 +121,11 @@ export default function Sign({ type }) {
         setSubmitting(true);
         setApiErrorResponse([]);
         axios(options).then(resp => {
+          console.log(resp);
+          console.log(resp.data);
+          if (resp.status === 200) {
+            setSuccessOpen(true);
+          }
 
         }).catch(error => {
           if (!error.response) {
@@ -197,6 +208,16 @@ export default function Sign({ type }) {
                     >
                       <Alert severity="error">{Array.isArray(apiErrorResponse) ? null : apiErrorResponse}
                       <IconButton size="small" aria-label="close" color="inherit" onClick={handleErrorClose}>
+                        <CloseIcon fontSize="small" />
+                        </IconButton>
+                      </Alert>
+                    </Dialog>
+                    <Dialog
+                      open={successOpen}
+                      onClose={handleSuccessClose}
+                    >
+                      <Alert severity="success">Vous êtes connecté !
+                      <IconButton size="small" aria-label="close" color="inherit" onClick={handleSuccessClose}>
                         <CloseIcon fontSize="small" />
                         </IconButton>
                       </Alert>
