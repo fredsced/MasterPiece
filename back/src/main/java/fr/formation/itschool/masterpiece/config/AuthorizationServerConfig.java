@@ -26,41 +26,31 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Arrays;
 
-
 @Configuration
 @EnableAuthorizationServer
 @RestController // for "/me" endpoint
-public class AuthorizationServerConfig
-    extends AuthorizationServerConfigurerAdapter {
+public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
 
+  // Defined as Spring bean in WebSecurity
+  private final AuthenticationManager authenticationManager;
+  // Custom user details service to authenticate users with username and
+  // password from the database
+  private final AccountService accountService;
+  // Custom token converter to store custom info within access token
+  private final CustomAccessTokenConverter customAccessTokenConverter;
+  private final PasswordEncoder encoder;
   // Get custom properties from application.properties
   // Could be different between environments
   @Value("${jwt-auth-server.keyStore}")
   private String keyStore;
-
   @Value("${jwt-auth-server.keyPass}")
   private String keyPass;
-
   @Value("${jwt-auth-server.keyAlias}")
   private String keyAlias;
-
   @Value("${jwt-auth-server.accessTokenValiditySeconds}")
   private int accessTokenValiditySeconds;
-
   @Value("${jwt-auth-server.refreshTokenValiditySeconds}")
   private int refreshTokenValiditySeconds;
-
-  // Defined as Spring bean in WebSecurity
-  private final AuthenticationManager authenticationManager;
-
-  // Custom user details service to authenticate users with username and
-  // password from the database
-  private final AccountService accountService;
-
-  // Custom token converter to store custom info within access token
-  private final CustomAccessTokenConverter customAccessTokenConverter;
-
-  private final PasswordEncoder encoder;
 
   protected AuthorizationServerConfig(
       PasswordEncoder encoder,
@@ -74,8 +64,8 @@ public class AuthorizationServerConfig
   }
 
   /**
-   * Token service using random UUID values for the access token and refresh
-   * token values. Specifies the token store and enables the refresh token.
+   * Token service using random UUID values for the access token and refresh token values. Specifies
+   * the token store and enables the refresh token.
    */
   @Bean
   protected DefaultTokenServices tokenServices() {
@@ -85,9 +75,7 @@ public class AuthorizationServerConfig
     return services;
   }
 
-  /**
-   * JwtTokenStore can read and write JWT thanks to the token converter.
-   */
+  /** JwtTokenStore can read and write JWT thanks to the token converter. */
   @Bean
   protected TokenStore tokenStore() {
     return new JwtTokenStore(accessTokenConverter());
@@ -98,24 +86,19 @@ public class AuthorizationServerConfig
     return new CustomTokenEnhancer();
   }
 
-  /**
-   * All in one.
-   */
+  /** All in one. */
   @Override
-  public void configure(AuthorizationServerEndpointsConfigurer configurer)
-      throws Exception {
+  public void configure(AuthorizationServerEndpointsConfigurer configurer) throws Exception {
     TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();
-    tokenEnhancerChain.setTokenEnhancers(
-        Arrays.asList(tokenEnhancer(), accessTokenConverter()));
-    configurer.tokenStore(tokenStore()).tokenEnhancer(tokenEnhancerChain)
+    tokenEnhancerChain.setTokenEnhancers(Arrays.asList(tokenEnhancer(), accessTokenConverter()));
+    configurer
+        .tokenStore(tokenStore())
+        .tokenEnhancer(tokenEnhancerChain)
         .authenticationManager(authenticationManager)
         .userDetailsService(accountService);
   }
 
-  /**
-   * A token converter for JWT and specifies a signing key (private/public key
-   * pair).
-   */
+  /** A token converter for JWT and specifies a signing key (private/public key pair). */
   @Bean
   protected JwtAccessTokenConverter accessTokenConverter() {
     JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
@@ -128,44 +111,39 @@ public class AuthorizationServerConfig
   }
 
   /**
-   * Change authorization server security allowing form auth for clients (vs
-   * HTTP Basic). The client_id is sent as form parameter instead.
+   * Change authorization server security allowing form auth for clients (vs HTTP Basic). The
+   * client_id is sent as form parameter instead.
    */
   @Override
-  public void configure(AuthorizationServerSecurityConfigurer configurer)
-      throws Exception {
+  public void configure(AuthorizationServerSecurityConfigurer configurer) throws Exception {
     configurer.allowFormAuthenticationForClients();
   }
 
   /**
-   * In memory client with empty secret, application is a "private" API with a
-   * single client, but Spring forces a client authentication.
-   * <p>
-   * Authorized grant types are <i>password</i> and <i>refresh_token</i>.
-   * <p>
-   * The scope is trusted (convention) and no need to specify it during client
-   * authentication. We do not use scope-based authorization in this
-   * application.
+   * In memory client with empty secret, application is a "private" API with a single client, but
+   * Spring forces a client authentication.
+   *
+   * <p>Authorized grant types are <i>password</i> and <i>refresh_token</i>.
+   *
+   * <p>The scope is trusted (convention) and no need to specify it during client authentication. We
+   * do not use scope-based authorization in this application.
    */
   @Override
-  public void configure(ClientDetailsServiceConfigurer clients)
-      throws Exception {
-    clients.inMemory().withClient("my-client-app")
-        .secret(encoder.encode("")).scopes("trusted")
+  public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
+    clients
+        .inMemory()
+        .withClient("my-client-app")
+        .secret(encoder.encode(""))
+        .scopes("trusted")
         .authorizedGrantTypes("password", "refresh_token")
         .accessTokenValiditySeconds(accessTokenValiditySeconds)
         .refreshTokenValiditySeconds(refreshTokenValiditySeconds);
   }
 
-
-
   /**
    * Standard endpoint returning a view of the current authenticated user.
-   * <p>
-   * Could be in a "user controller".
    *
-   * @param authentication injected authentication object
-   * @return a view of the current authenticated user
+   * <p>Could be in a "user controller".
    */
   @GetMapping("/accountInfo")
   public AccountInfoDto userInfo() {

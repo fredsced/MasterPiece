@@ -26,6 +26,7 @@ public class AccountDetails extends User {
         .collect(Collectors.toUnmodifiableSet());
   }
 
+
   public Long getId() {
     return id;
   }
