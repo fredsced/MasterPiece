@@ -8,8 +8,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Paper from '@material-ui/core/Paper';
 import { Formik } from 'formik';
-import axios from 'axios';
-import queryString from 'query-string';
 import { Link as RouterLink } from 'react-router-dom';
 import logo from '../logo.svg';
 import Backdrop from '@material-ui/core/Backdrop';
@@ -18,6 +16,8 @@ import { Dialog } from '@material-ui/core';
 import MuiAlert from '@material-ui/lab/Alert';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
+import AuthService from '../services/AuthService';
+import { useHistory } from 'react-router-dom';
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant='filled' {...props} />;
@@ -55,7 +55,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Sign({ type }) {
+export default function Sign({ type, ...props }) {
+  let history = useHistory();
   const classes = useStyles();
   const [apiErrorResponse, setApiErrorResponse] = useState([]);
   const [errorOpen, setErrorOpen] = useState(false);
@@ -88,7 +89,7 @@ export default function Sign({ type }) {
           errors.password = 'Le mot de passe est inférieur à 8 caractères';
         }
         if (
-          type === 'signup' &&
+          type === 'register' &&
           values.password !== values.password_confirmation
         ) {
           errors.password_confirmation = "Le mot de passe n'est pas identique";
@@ -96,51 +97,49 @@ export default function Sign({ type }) {
         return errors;
       }}
       onSubmit={(values, { setSubmitting }) => {
-        const options = {
-          timeout: 5000,
-        };
         const { email, password } = values;
-        let valuesToSend = {};
-
-        if (type === 'signup') {
-          valuesToSend = { email, password };
-          options.url = `${process.env.REACT_APP_SERVER_URL}/api/private/accounts`;
-          options.method = 'POST';
-          options.data = valuesToSend;
-          options.headers = { 'content-type': 'application/json' };
-        } else {
-          const client_id = process.env.REACT_APP_CLIENT_ID;
-          const grant_type = 'password';
-          valuesToSend = { username: email, password, client_id, grant_type };
-          options.method = 'POST';
-          options.data = queryString.stringify(valuesToSend);
-          options.url = `${process.env.REACT_APP_SERVER_URL}/oauth/token`;
-          options.headers = {
-            'content-type': 'application/x-www-form-urlencoded',
-          };
-        }
         setSubmitting(true);
-        setApiErrorResponse([]);
-        axios(options)
-          .then((resp) => {
-            if (resp.status === 200) {
+        type === 'login' &&
+          AuthService.login(email, password)
+            .then(() => {
               setSuccessOpen(true);
-            }
-          })
-          .catch((error) => {
-            if (!error.response) {
-              setApiErrorResponse('Connexion au serveur impossible');
+              history.push('/profile');
+              window.location.reload();
+            })
+            .catch((error) => {
+              console.log('i m in the catch block');
+              const resMessage =
+                (error.response &&
+                  error.response.data &&
+                  error.response.data.error) ||
+                error.message ||
+                error.toString();
+              setApiErrorResponse(resMessage);
               setErrorOpen(true);
-            } else if (Array.isArray(error.response.data)) {
-              setApiErrorResponse(error.response.data);
-            } else if (error.response && error.response.data) {
-              setApiErrorResponse(error.response.data.error_description);
-              setErrorOpen(true);
-            }
-          })
-          .then(() => {
-            setSubmitting(false);
-          });
+            })
+            .then(() => {
+              setSubmitting(false);
+            });
+
+        type === 'register' &&
+          AuthService.register(email, password)
+            .then(() => {
+              history.push('/');
+            })
+            .catch((error) => {
+              console.log('error tostring: ' + error.toString());
+              const resMessage =
+                (error.response && error.response.data) ||
+                error.message ||
+                error.toString();
+              setApiErrorResponse(resMessage);
+              if (!Array.isArray(resMessage)) {
+                setErrorOpen(true);
+              }
+            })
+            .then(() => {
+              setSubmitting(false);
+            });
       }}
     >
       {({
@@ -159,7 +158,7 @@ export default function Sign({ type }) {
               <img src={logo} alt='logo Banque Générale' />
             </div>
             <Typography component='h1' variant='h3'>
-              {type === 'signup'
+              {type === 'register'
                 ? 'Créer votre compte'
                 : 'Connexion à BG Connect'}
             </Typography>
@@ -231,7 +230,9 @@ export default function Sign({ type }) {
                   </Dialog>
                   <Dialog open={successOpen} onClose={handleSuccessClose}>
                     <Alert severity='success'>
-                      {type === 'signup' ? 'Compte crée' : 'Vous êtes connecté'}
+                      {type === 'register'
+                        ? 'Compte crée'
+                        : 'Vous êtes connecté'}
                       <IconButton
                         size='small'
                         aria-label='close'
@@ -243,7 +244,7 @@ export default function Sign({ type }) {
                     </Alert>
                   </Dialog>
                 </Grid>
-                {type === 'signup' ? (
+                {type === 'register' ? (
                   <Grid item xs={12}>
                     <TextField
                       variant='outlined'
@@ -276,19 +277,19 @@ export default function Sign({ type }) {
                 disabled={isSubmitting || !isValid}
                 className={classes.submit}
               >
-                {type === 'signup' ? 'Envoyer' : 'Connexion'}
+                {type === 'register' ? 'Envoyer' : 'Connexion'}
               </Button>
               <Backdrop className={classes.backdrop} open={isSubmitting}>
                 <CircularProgress color='primary' />
               </Backdrop>
               <Grid container justify='flex-end'>
                 <Grid item>
-                  {type === 'signup' ? (
+                  {type === 'register' ? (
                     <Link component={RouterLink} to='/' variant='body2'>
                       Déjà un compte? connectez vous
                     </Link>
                   ) : (
-                    <Link component={RouterLink} to='/signup' variant='body2'>
+                    <Link component={RouterLink} to='/register' variant='body2'>
                       Pas de compte? créer votre compte
                     </Link>
                   )}
