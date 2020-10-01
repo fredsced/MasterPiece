@@ -32,11 +32,12 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    padding: theme.spacing(6, 3),
+    padding: theme.spacing(4, 3, 6, 3),
   },
   logo: {
     width: '150px',
-    marginBottom: theme.spacing(4),
+    marginBottom: theme.spacing(2),
+    padding: theme.spacing(4),
   },
   form: {
     width: '100%',
@@ -55,12 +56,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Sign({ type, ...props }) {
+export default function Sign(props) {
   let history = useHistory();
   const classes = useStyles();
-  const [apiErrorResponse, setApiErrorResponse] = useState([]);
+  const [apiErrorResponse, setApiErrorResponse] = useState(null);
   const [errorOpen, setErrorOpen] = useState(false);
   const [successOpen, setSuccessOpen] = useState(false);
+
   const handleErrorClose = () => {
     setErrorOpen(false);
   };
@@ -85,11 +87,12 @@ export default function Sign({ type, ...props }) {
         }
         if (!values.password) {
           errors.password = 'Le mot de passe est obligatoire';
-        } else if (values.password.length < 8) {
-          errors.password = 'Le mot de passe est inférieur à 8 caractères';
+        } else if (values.password.length < 8 || values.password.length > 50) {
+          errors.password =
+            'Le mot de passe doit faire entre 8 et 50 caractères';
         }
         if (
-          type === 'register' &&
+          props.type === 'register' &&
           values.password !== values.password_confirmation
         ) {
           errors.password_confirmation = "Le mot de passe n'est pas identique";
@@ -99,15 +102,14 @@ export default function Sign({ type, ...props }) {
       onSubmit={(values, { setSubmitting }) => {
         const { email, password } = values;
         setSubmitting(true);
-        type === 'login' &&
+        props.type === 'login' &&
           AuthService.login(email, password)
-            .then(() => {
-              setSuccessOpen(true);
+            .then((response) => {
+              props.userLogged(response);
+              setSubmitting(false);
               history.push('/profile');
-              window.location.reload();
             })
             .catch((error) => {
-              console.log('i m in the catch block');
               const resMessage =
                 (error.response &&
                   error.response.data &&
@@ -116,15 +118,13 @@ export default function Sign({ type, ...props }) {
                 error.toString();
               setApiErrorResponse(resMessage);
               setErrorOpen(true);
-            })
-            .then(() => {
               setSubmitting(false);
             });
-
-        type === 'register' &&
+        if (props.type === 'register') {
+          setApiErrorResponse([]);
           AuthService.register(email, password)
             .then(() => {
-              history.push('/');
+              history.push('/login');
             })
             .catch((error) => {
               console.log('error tostring: ' + error.toString());
@@ -140,6 +140,7 @@ export default function Sign({ type, ...props }) {
             .then(() => {
               setSubmitting(false);
             });
+        }
       }}
     >
       {({
@@ -154,14 +155,17 @@ export default function Sign({ type, ...props }) {
       }) => (
         <Container component='main' className={classes.main} maxWidth='xs'>
           <Paper className={classes.paper}>
-            <div className={classes.logo}>
-              <img src={logo} alt='logo Banque Générale' />
-            </div>
-            <Typography component='h1' variant='h3'>
-              {type === 'register'
-                ? 'Créer votre compte'
-                : 'Connexion à BG Connect'}
-            </Typography>
+            <Grid container spacing={2} justify='center'>
+              <div className={classes.logo}>
+                <img src={logo} alt='logo Banque Générale' />
+              </div>
+
+              <Typography component='h1' variant='h3'>
+                {props.type === 'register'
+                  ? 'Créer votre compte'
+                  : 'Connexion à myCPal'}
+              </Typography>
+            </Grid>
             <form className={classes.form} onSubmit={handleSubmit}>
               <Grid container spacing={2}>
                 <Grid item xs={12}>
@@ -230,7 +234,7 @@ export default function Sign({ type, ...props }) {
                   </Dialog>
                   <Dialog open={successOpen} onClose={handleSuccessClose}>
                     <Alert severity='success'>
-                      {type === 'register'
+                      {props.type === 'register'
                         ? 'Compte crée'
                         : 'Vous êtes connecté'}
                       <IconButton
@@ -244,7 +248,7 @@ export default function Sign({ type, ...props }) {
                     </Alert>
                   </Dialog>
                 </Grid>
-                {type === 'register' ? (
+                {props.type === 'register' ? (
                   <Grid item xs={12}>
                     <TextField
                       variant='outlined'
@@ -277,15 +281,15 @@ export default function Sign({ type, ...props }) {
                 disabled={isSubmitting || !isValid}
                 className={classes.submit}
               >
-                {type === 'register' ? 'Envoyer' : 'Connexion'}
+                {props.type === 'register' ? 'Envoyer' : 'Connexion'}
               </Button>
               <Backdrop className={classes.backdrop} open={isSubmitting}>
                 <CircularProgress color='primary' />
               </Backdrop>
               <Grid container justify='flex-end'>
                 <Grid item>
-                  {type === 'register' ? (
-                    <Link component={RouterLink} to='/' variant='body2'>
+                  {props.type === 'register' ? (
+                    <Link component={RouterLink} to='/login' variant='body2'>
                       Déjà un compte? connectez vous
                     </Link>
                   ) : (

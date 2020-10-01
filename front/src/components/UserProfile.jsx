@@ -1,11 +1,10 @@
-import React, { useState, Component } from 'react';
-import AuthService from '../services/AuthService';
+import React from 'react';
 import Container from '@material-ui/core/Container';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import { withStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 
-const useStyles = (theme) => ({
+const useStyles = makeStyles((theme) => ({
   main: {
     minHeight: 'calc(100vh - 110px)',
     paddingTop: theme.spacing(6),
@@ -17,29 +16,24 @@ const useStyles = (theme) => ({
     alignItems: 'center',
     padding: theme.spacing(6, 3),
   },
-});
-class Userprofile extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      currentUser: AuthService.getCurrentUser(),
-      classes: useStyles,
-    };
-  }
+}));
+export default function Userprofile(props) {
+  const { user } = props;
+  const classes = useStyles();
 
-  //const [currentUser, setCurrentUser] = useState({});
-  //setCurrentUser(AuthService.getCurrentUser);
-  render() {
-    const { classes } = this.props;
-    return (
-      <Container component='main' className={classes.main} maxWidth='xs'>
-        <Paper className={classes.paper}>
-          <Typography component='h1' variant='body2'>
-            {`Hello ${this.state.currentUser.userEmail}`}
+  return (
+    <Container component='main' className={classes.main} maxWidth='md'>
+      <Paper className={classes.paper}>
+        {user ? (
+          <Typography component='p' variant='body1'>
+            {`Hello ${user.userEmail}`}
           </Typography>
-        </Paper>
-      </Container>
-    );
-  }
+        ) : (
+          <Typography component='p' variant='body1'>
+            Vous n'êtes pas connecté
+          </Typography>
+        )}
+      </Paper>
+    </Container>
+  );
 }
-export default withStyles(useStyles, { whithTheme: true })(Userprofile);

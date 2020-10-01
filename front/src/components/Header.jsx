@@ -12,9 +12,10 @@ const useStyles = makeStyles((theme) => ({
     margin: '0px auto',
     [theme.breakpoints.down('sm')]: {
       width: '100%',
+      margin: '0px 5px',
     },
     [theme.breakpoints.up('sm')]: {
-      width: '90%',
+      maxWidth: '960px',
     },
     borderBottom: `1px solid ${theme.palette.primary.light}`,
   },
@@ -67,9 +68,8 @@ export default function Header(props) {
               </Box>
               <Box>
                 <Typography variant='subtitle1'>
-                  <a href='/' onClick={props.logOut}>
-                    {' '}
-                    Déconnexion{' '}
+                  <a href='/' onClick={props.logOut()}>
+                    Déconnexion
                   </a>
                 </Typography>
               </Box>

@@ -5,7 +5,12 @@ const API_URL = process.env.REACT_APP_SERVER_URL;
 
 class UserService {
   getUserProfile() {
-    return axios.get(API_URL + '/user', { headers: authHeader() });
+    const options = {
+      method: 'GET',
+      url: `${API_URL}/api/accountInfo`,
+      headers: authHeader(),
+    };
+    return axios(options);
   }
 }
 
