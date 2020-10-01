@@ -19,7 +19,8 @@
     },
     "plugins": [
         "react",
-        "prettier"
+        "prettier",
+        "react-hooks"
     ],
     "rules": {
         "require-jsdoc": [
@@ -34,6 +35,8 @@
                 }
             }
         ],
-        "prettier/prettier": "error"
+        "prettier/prettier": "error",
+        "react-hooks/rules-of-hooks": "error", // Check Hooks rules
+        "react-hooks/exhaustive-deps": "warn" // Check list dependencies
     }
 }
