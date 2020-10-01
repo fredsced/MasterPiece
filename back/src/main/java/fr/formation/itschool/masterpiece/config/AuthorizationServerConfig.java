@@ -135,9 +135,9 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         .withClient("my-client-app")
         .secret(encoder.encode(""))
         .scopes("trusted")
-        .authorizedGrantTypes("password", "refresh_token")
-        .accessTokenValiditySeconds(accessTokenValiditySeconds)
-        .refreshTokenValiditySeconds(refreshTokenValiditySeconds);
+        .authorizedGrantTypes("password")
+        .accessTokenValiditySeconds(accessTokenValiditySeconds);
+        //.refreshTokenValiditySeconds(refreshTokenValiditySeconds);
   }
 
   /**

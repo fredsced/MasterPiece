@@ -2,7 +2,6 @@ package fr.formation.itschool.masterpiece.controllers;
 
 import fr.formation.itschool.masterpiece.dtos.CreateAccountDto;
 import fr.formation.itschool.masterpiece.services.AccountService;
-import fr.formation.itschool.masterpiece.services.AccountServiceImpl;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,7 +28,7 @@ class AccountController {
   }
 
   @GetMapping("/connected")
-  public String connected(){
+  public String connected() {
     return "connected";
   }
 }

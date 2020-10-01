@@ -11,6 +11,7 @@ import java.util.Map;
 public class CustomTokenEnhancer implements TokenEnhancer {
 
   final static String USER_ID_KEY = "userId";
+  final static String USER_EMAIL  = "userEmail";
 
   @Override
   public OAuth2AccessToken enhance(OAuth2AccessToken accessToken,
@@ -22,6 +23,7 @@ public class CustomTokenEnhancer implements TokenEnhancer {
     AccountDetails user = (AccountDetails) authentication
         .getPrincipal();
     additionalInfo.put(USER_ID_KEY, user.getId());
+    additionalInfo.put(USER_EMAIL, user.getUsername());
     ((DefaultOAuth2AccessToken) accessToken)
         .setAdditionalInformation(additionalInfo);
     return accessToken;
