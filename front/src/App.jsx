@@ -11,7 +11,7 @@ import { BrowserRouter } from 'react-router-dom';
 import AuthService from './services/AuthService';
 
 function App() {
-  const [currentUser, setCurrentUser] = useState(undefined);
+  const [currentUser, setCurrentUser] = useState(AuthService.getCurrentUser);
 
   function handleLogOut() {
     AuthService.logout();

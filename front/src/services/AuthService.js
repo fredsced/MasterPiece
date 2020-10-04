@@ -19,6 +19,8 @@ const AuthService = {
     const response = await axios(optionsToLogin);
     if (response.data.access_token) {
       localStorage.setItem('user', JSON.stringify(response.data));
+      const expiresAt = response.data.expires_in * 1000 + new Date().getTime();
+      localStorage.setItem('expires_at', expiresAt);
     }
     return response.data;
   },
@@ -33,9 +35,16 @@ const AuthService = {
   },
   logout: () => {
     localStorage.removeItem('user');
+    localStorage.removeItem('expires_at');
   },
   getCurrentUser: () => {
-    return JSON.parse(localStorage.getItem('user'));
+    if (AuthService.isAuthenticated()) {
+      return JSON.parse(localStorage.getItem('user'));
+    } else return null;
+  },
+  isAuthenticated: () => {
+    const expiresAt = localStorage.getItem('expires_at');
+    return expiresAt > new Date().getTime();
   },
 };
 export default AuthService;

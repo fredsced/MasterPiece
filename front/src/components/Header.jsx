@@ -68,7 +68,7 @@ export default function Header(props) {
               </Box>
               <Box>
                 <Typography variant='subtitle1'>
-                  <a href='/' onClick={props.logOut()}>
+                  <a href='/' onClick={() => props.logOut()}>
                     Déconnexion
                   </a>
                 </Typography>
