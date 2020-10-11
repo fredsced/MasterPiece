@@ -27,9 +27,9 @@ const bgTheme = createMuiTheme({
       fontWeight: 500,
     },
     h4: {
-      fontSize: '1.4rem',
+      fontSize: '1.1rem',
       '@media (min-width:600px)': {
-        fontSize: '2rem',
+        fontSize: '1.3rem',
       },
       fontWeight: 300,
     },
@@ -40,8 +40,8 @@ const bgTheme = createMuiTheme({
       lineHeight: 1.5,
     },
     subtitle2: {
-      fontSize: '0.7rem',
-      fontWeight: 500,
+      fontSize: '0.6rem',
+      fontWeight: 300,
       padding: 0,
       lineHeight: 1.5,
     },
