@@ -1,0 +1,19 @@
+{
+  "createAccount": "Create your account yo",
+  "connectToMCP": "Connect to myCP yo",
+  "send": "Send",
+  "connection": "Sign In",
+  "email": "Email",
+  "password": "Password",
+  "passwordConfirmation": "Password confirmation",
+  "alreadyAnAccount?": "Already have an account? sign in",
+  "noAccount?": "No account? register",
+  "emailRequired": "Email required",
+  "emailNotValid": "Email not valid",
+  "emailNotUnique": "Email not unique",
+  "passwordRequired": "Password required",
+  "passwordMinMax": "Password between 8 and 50 characteres",
+  "passwordNotMatch": "Password doesn't match",
+  "networkError": "Network error",
+  "invalidGrant": "Invalid grant"
+}

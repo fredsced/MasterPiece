@@ -18,6 +18,7 @@ import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import AuthService from '../services/AuthService';
 import { useHistory } from 'react-router-dom';
+import { FormattedMessage } from 'react-intl';
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant='filled' {...props} />;
@@ -73,25 +74,52 @@ export default function Sign(props) {
     setSuccessOpen(false);
   };
   const handleLoginError = (error) => {
-    const resMessage =
+    let resMessage =
       (error.response && error.response.data && error.response.data.error) ||
       error.message ||
       error.toString();
+    console.log(resMessage);
+    switch (resMessage) {
+      case 'Network':
+        resMessage = <FormattedMessage id='networkError' />;
+        break;
+      case 'invalid_grant':
+        resMessage = <FormattedMessage id='invalidGrant' />;
+        break;
+      default:
+    }
     setApiErrorResponse(resMessage);
     setErrorOpen(true);
   };
 
   const handleRegisterError = (error) => {
-    const errorMessage =
+    let errorMessage =
       (error.response && error.response.data) ||
       error.message ||
       error.toString();
+    console.log(errorMessage);
+    switch (errorMessage) {
+      case 'Network Error':
+        errorMessage = <FormattedMessage id='networkError' />;
+        break;
+      case 'invalid_grant':
+        errorMessage = (
+          <FormattedMessage id='invalidGrant' defaultMessage='Invalid grant' />
+        );
+        break;
+      default:
+    }
     setApiErrorResponse(errorMessage);
     if (
       Array.isArray(errorMessage) &&
       errorMessage.find((e) => e.code === 'UniqueEmail')
     ) {
-      setUniqueEmailErr('UniqueEmail');
+      setUniqueEmailErr(
+        <FormattedMessage
+          id='emailNotUnique'
+          defaultMessage='Email not unique'
+        />
+      );
     } else {
       setErrorOpen(true);
     }
@@ -108,28 +136,57 @@ export default function Sign(props) {
       validate={(values, apiErrorResponse) => {
         const errors = {};
         if (!values.email) {
-          errors.email = 'Email obligatoire';
+          errors.email = (
+            <FormattedMessage
+              id='emailRequired'
+              defaultMessage='Email required'
+            />
+          );
         } else if (
           !/^[A-Z0-9._%+-]{1,64}@[A-Z0-9.-]{1,64}\.[A-Z]{1,64}$/i.test(
             values.email
           )
         ) {
-          errors.email = 'Email non valide';
+          errors.email = (
+            <FormattedMessage
+              id='emailNotValid'
+              defaultMessage='Email not valid'
+            />
+          );
         }
         if (apiErrorResponse) {
-          errors.email = 'Email déjà utilisé';
+          errors.email = (
+            <FormattedMessage
+              id='emailNotUnique'
+              defaultMessage='Email not unique'
+            />
+          );
         }
         if (!values.password) {
-          errors.password = 'Le mot de passe est obligatoire';
+          errors.password = (
+            <FormattedMessage
+              id='passwordRequired'
+              defaultMessage='Password required'
+            />
+          );
         } else if (values.password.length < 8 || values.password.length > 50) {
-          errors.password =
-            'Le mot de passe doit faire entre 8 et 50 caractères';
+          errors.password = (
+            <FormattedMessage
+              id='passwordMinMax'
+              defaultMessage='Password between 8 and 50 characteres'
+            />
+          );
         }
         if (
           props.type === 'register' &&
           values.password !== values.password_confirmation
         ) {
-          errors.password_confirmation = "Le mot de passe n'est pas identique";
+          errors.password_confirmation = (
+            <FormattedMessage
+              id='passwordNotMatch'
+              defaultMessage="Password doesn't match"
+            />
+          );
         }
         return errors;
       }}
@@ -178,9 +235,17 @@ export default function Sign(props) {
               </div>
 
               <Typography component='h1' variant='h3'>
-                {props.type === 'register'
-                  ? 'Créer votre compte'
-                  : 'Connexion à myCPal'}
+                {props.type === 'register' ? (
+                  <FormattedMessage
+                    id='createAccount'
+                    defaultMessage='Create account'
+                  />
+                ) : (
+                  <FormattedMessage
+                    id='connectToMCP'
+                    defaultMessage='Connect to MyCP'
+                  />
+                )}
               </Typography>
             </Grid>
             <form className={classes.form} onSubmit={handleSubmit}>
@@ -192,7 +257,13 @@ export default function Sign(props) {
                     variant='outlined'
                     fullWidth
                     id='email'
-                    label={dirty && errors.email ? errors.email : 'Email'}
+                    label={
+                      dirty && errors.email ? (
+                        errors.email
+                      ) : (
+                        <FormattedMessage id='email' defaultMessage='Email' />
+                      )
+                    }
                     name='email'
                     value={values.email}
                     onChange={handleChange}
@@ -217,9 +288,14 @@ export default function Sign(props) {
                     fullWidth
                     name='password'
                     label={
-                      dirty && !!errors.password
-                        ? errors.password
-                        : 'Mot de passe'
+                      dirty && !!errors.password ? (
+                        errors.password
+                      ) : (
+                        <FormattedMessage
+                          id='password'
+                          defaultMessage='Password'
+                        />
+                      )
                     }
                     type='password'
                     id='password'
@@ -267,9 +343,14 @@ export default function Sign(props) {
                         fullWidth
                         name='password_confirmation'
                         label={
-                          dirty && !!errors.password_confirmation
-                            ? errors.password_confirmation
-                            : 'Confirmation du mot de passe'
+                          dirty && !!errors.password_confirmation ? (
+                            errors.password_confirmation
+                          ) : (
+                            <FormattedMessage
+                              id='passwordConfirmation'
+                              defaultMessage='Password confirmation'
+                            />
+                          )
                         }
                         type='password'
                         id='password_confirmation'
@@ -293,7 +374,11 @@ export default function Sign(props) {
                 disabled={isSubmitting || !isValid}
                 className={classes.submit}
               >
-                {props.type === 'register' ? 'Envoyer' : 'Connexion'}
+                {props.type === 'register' ? (
+                  <FormattedMessage id='send' defaultMessage='Send' />
+                ) : (
+                  <FormattedMessage id='connection' defaultMessage='Sign In' />
+                )}
               </Button>
               <Backdrop className={classes.backdrop} open={isSubmitting}>
                 <CircularProgress color='primary' />
@@ -302,11 +387,17 @@ export default function Sign(props) {
                 <Grid item>
                   {props.type === 'register' ? (
                     <Link component={RouterLink} to='/login' variant='body2'>
-                      Déjà un compte? connectez vous
+                      <FormattedMessage
+                        id='alreadyAnAccount?'
+                        defaultMessage='Already have an account? sign in'
+                      />
                     </Link>
                   ) : (
                     <Link component={RouterLink} to='/register' variant='body2'>
-                      Pas de compte? créer votre compte
+                      <FormattedMessage
+                        id='noAccount?'
+                        defaultMessage='No account? register'
+                      />
                     </Link>
                   )}
                 </Grid>

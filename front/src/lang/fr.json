@@ -1,0 +1,19 @@
+{
+  "createAccount": "Créer votre compte",
+  "connectToMCP": "Connexion à myCP",
+  "send": "Envoyer",
+  "connection": "Connexion",
+  "email": "Email",
+  "password": "Mot de passe",
+  "passwordConfirmation": "Confirmation du mot de passe",
+  "alreadyAnAccount?": "Déjà un compte? connectez vous",
+  "noAccount?": "Pas de compte? créer votre compte",
+  "emailRequired": "Email obligatoire",
+  "emailNotValid": "Email non valide",
+  "emailNotUnique": "Email déjà utilisé",
+  "passwordRequired": "Mot de passe obligatoire",
+  "passwordMinMax": "Mode de passe entre 8 et 50 caractères",
+  "passwordNotMatch": "Le mot de passe n'est pas identique",
+  "networkError": "Erreur réseau",
+  "invalidGrant": "Identifiants non valides"
+}
