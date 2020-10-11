@@ -78,7 +78,6 @@ export default function Sign(props) {
       (error.response && error.response.data && error.response.data.error) ||
       error.message ||
       error.toString();
-    console.log(resMessage);
     switch (resMessage) {
       case 'Network':
         resMessage = <FormattedMessage id='networkError' />;
@@ -97,7 +96,6 @@ export default function Sign(props) {
       (error.response && error.response.data) ||
       error.message ||
       error.toString();
-    console.log(errorMessage);
     switch (errorMessage) {
       case 'Network Error':
         errorMessage = <FormattedMessage id='networkError' />;
@@ -320,9 +318,17 @@ export default function Sign(props) {
                   </Dialog>
                   <Dialog open={successOpen} onClose={handleSuccessClose}>
                     <Alert severity='success'>
-                      {props.type === 'register'
-                        ? 'Compte crée'
-                        : 'Vous êtes connecté'}
+                      {props.type === 'register' ? (
+                        <FormattedMessage
+                          id='accountCreated'
+                          defaultMessage='Account created'
+                        />
+                      ) : (
+                        <FormattedMessage
+                          id='connected'
+                          defaultMessage='Connected'
+                        />
+                      )}
                       <IconButton
                         size='small'
                         aria-label='close'

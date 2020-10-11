@@ -3,6 +3,7 @@
   "connectToMCP": "Connexion à myCP",
   "send": "Envoyer",
   "connection": "Connexion",
+  "logout": "Déconnexion",
   "email": "Email",
   "password": "Mot de passe",
   "passwordConfirmation": "Confirmation du mot de passe",
@@ -15,5 +16,7 @@
   "passwordMinMax": "Mode de passe entre 8 et 50 caractères",
   "passwordNotMatch": "Le mot de passe n'est pas identique",
   "networkError": "Erreur réseau",
-  "invalidGrant": "Identifiants non valides"
+  "invalidGrant": "Identifiants non valides",
+  "accountCreated": "Compte créé",
+  "connected": "Vous êtes connecté"
 }

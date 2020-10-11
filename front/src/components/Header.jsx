@@ -4,6 +4,7 @@ import Box from '@material-ui/core/Box';
 import { makeStyles } from '@material-ui/core/styles';
 import logo from '../logo.svg';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import { FormattedMessage } from 'react-intl';
 
 const useStyles = makeStyles((theme) => ({
   header: {
@@ -43,6 +44,9 @@ const useStyles = makeStyles((theme) => ({
 export default function Header(props) {
   const classes = useStyles();
   const user = props.user;
+  const handleSelectLanguage = (e) => {
+    props.changeLanguage(e.target.value);
+  };
 
   return (
     <header className={classes.header}>
@@ -69,14 +73,13 @@ export default function Header(props) {
               <Box>
                 <Typography variant='subtitle1'>
                   <a href='/' onClick={() => props.logOut()}>
-                    Déconnexion
+                    <FormattedMessage id='logout' defaultMessage='Log out' />
                   </a>
                 </Typography>
               </Box>
             </Box>
           </>
         ) : null}
-
         <Box className={classes.service}>
           <Box>
             <Typography variant='subtitle2'>
@@ -88,6 +91,16 @@ export default function Header(props) {
               {process.env.REACT_APP_WEBSITE_NAME}
             </Typography>
           </Box>
+        </Box>
+        <Box ml={2} mt={1}>
+          <select
+            onChange={handleSelectLanguage}
+            defaultValue={props.currentLanguage}
+          >
+            {['en', 'fr'].map((lang) => (
+              <option key={lang}>{lang}</option>
+            ))}
+          </select>
         </Box>
       </Box>
     </header>
