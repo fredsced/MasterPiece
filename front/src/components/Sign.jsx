@@ -100,11 +100,6 @@ export default function Sign(props) {
       case 'Network Error':
         errorMessage = <FormattedMessage id='networkError' />;
         break;
-      case 'invalid_grant':
-        errorMessage = (
-          <FormattedMessage id='invalidGrant' defaultMessage='Invalid grant' />
-        );
-        break;
       default:
     }
     setApiErrorResponse(errorMessage);
