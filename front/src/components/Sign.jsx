@@ -59,7 +59,8 @@ const useStyles = makeStyles((theme) => ({
 export default function Sign(props) {
   let history = useHistory();
   const classes = useStyles();
-  const [apiErrorResponse, setApiErrorResponse] = useState(null);
+  const [apiErrorResponse, setApiErrorResponse] = useState();
+  const [uniqueEmailErr, setUniqueEmailErr] = useState();
   const [errorOpen, setErrorOpen] = useState(false);
   const [successOpen, setSuccessOpen] = useState(false);
 
@@ -67,7 +68,38 @@ export default function Sign(props) {
     setErrorOpen(false);
   };
   const handleSuccessClose = () => {
+    if (props.type === 'register') history.push('/login');
+    else history.push('/profile');
     setSuccessOpen(false);
+  };
+  const handleLoginError = (error) => {
+    const resMessage =
+      (error.response && error.response.data && error.response.data.error) ||
+      error.message ||
+      error.toString();
+    setApiErrorResponse(resMessage);
+    setErrorOpen(true);
+  };
+
+  const handleRegisterError = (error) => {
+    const errorMessage =
+      (error.response && error.response.data) ||
+      error.message ||
+      error.toString();
+    setApiErrorResponse(errorMessage);
+    if (
+      Array.isArray(errorMessage) &&
+      errorMessage.find((e) => e.code === 'UniqueEmail')
+    ) {
+      setUniqueEmailErr('UniqueEmail');
+    } else {
+      setErrorOpen(true);
+    }
+  };
+  const resetApiErrors = () => {
+    setApiErrorResponse();
+    setUniqueEmailErr();
+    setErrorOpen(false);
   };
 
   return (
@@ -78,7 +110,9 @@ export default function Sign(props) {
         if (!values.email) {
           errors.email = 'Email obligatoire';
         } else if (
-          !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
+          !/^[A-Z0-9._%+-]{1,64}@[A-Z0-9.-]{1,64}\.[A-Z]{1,64}$/i.test(
+            values.email
+          )
         ) {
           errors.email = 'Email non valide';
         }
@@ -100,47 +134,30 @@ export default function Sign(props) {
         return errors;
       }}
       onSubmit={(values, { setSubmitting }) => {
+        resetApiErrors();
         const { email, password } = values;
         setSubmitting(true);
-        props.type === 'login' &&
-          AuthService.login(email, password)
-            .then((response) => {
-              props.userLogged(response);
-              setSubmitting(false);
-              history.push('/profile');
-            })
-            .catch((error) => {
-              const resMessage =
-                (error.response &&
-                  error.response.data &&
-                  error.response.data.error) ||
-                error.message ||
-                error.toString();
-              setApiErrorResponse(resMessage);
-              setErrorOpen(true);
-              setSubmitting(false);
-            });
-        if (props.type === 'register') {
-          setApiErrorResponse([]);
-          AuthService.register(email, password)
-            .then(() => {
-              history.push('/login');
-            })
-            .catch((error) => {
-              console.log('error tostring: ' + error.toString());
-              const resMessage =
-                (error.response && error.response.data) ||
-                error.message ||
-                error.toString();
-              setApiErrorResponse(resMessage);
-              if (!Array.isArray(resMessage)) {
-                setErrorOpen(true);
-              }
-            })
-            .then(() => {
-              setSubmitting(false);
-            });
-        }
+        props.type === 'login'
+          ? AuthService.login(email, password)
+              .then((response) => {
+                props.userLogged(response);
+                setSubmitting(false);
+                setSuccessOpen(true);
+              })
+              .catch((error) => {
+                handleLoginError(error);
+                setSubmitting(false);
+              })
+          : AuthService.register(email, password)
+              .then(() => {
+                setSuccessOpen(true);
+              })
+              .catch((error) => {
+                handleRegisterError(error);
+              })
+              .then(() => {
+                setSubmitting(false);
+              });
       }}
     >
       {({
@@ -179,23 +196,16 @@ export default function Sign(props) {
                     name='email'
                     value={values.email}
                     onChange={handleChange}
-                    error={
-                      (dirty && !!errors.email) ||
-                      (apiErrorResponse &&
-                        Array.isArray(apiErrorResponse) &&
-                        !!apiErrorResponse.find((e) => e.field === 'email'))
-                    }
+                    error={(dirty && !!errors.email) || !!uniqueEmailErr}
                   />
-                  {apiErrorResponse &&
-                  Array.isArray(apiErrorResponse) &&
-                  !!apiErrorResponse.find((e) => e.field === 'email') ? (
+                  {!!uniqueEmailErr ? (
                     <Grid item xs={12}>
                       <Typography
                         color='secondary'
                         component='p'
                         display='block'
                       >
-                        Email déjà utilisé
+                        {uniqueEmailErr}
                       </Typography>
                     </Grid>
                   ) : null}
@@ -249,27 +259,29 @@ export default function Sign(props) {
                   </Dialog>
                 </Grid>
                 {props.type === 'register' ? (
-                  <Grid item xs={12}>
-                    <TextField
-                      variant='outlined'
-                      autoComplete='password confirmation'
-                      fullWidth
-                      name='password_confirmation'
-                      label={
-                        dirty && !!errors.password_confirmation
-                          ? errors.password_confirmation
-                          : 'Confirmation du mot de passe'
-                      }
-                      type='password'
-                      id='password_confirmation'
-                      onChange={handleChange}
-                      value={values.password_confirmation}
-                      error={
-                        touched.password_confirmation &&
-                        !!errors.password_confirmation
-                      }
-                    />
-                  </Grid>
+                  <>
+                    <Grid item xs={12}>
+                      <TextField
+                        variant='outlined'
+                        autoComplete='password confirmation'
+                        fullWidth
+                        name='password_confirmation'
+                        label={
+                          dirty && !!errors.password_confirmation
+                            ? errors.password_confirmation
+                            : 'Confirmation du mot de passe'
+                        }
+                        type='password'
+                        id='password_confirmation'
+                        onChange={handleChange}
+                        value={values.password_confirmation}
+                        error={
+                          touched.password_confirmation &&
+                          !!errors.password_confirmation
+                        }
+                      />
+                    </Grid>
+                  </>
                 ) : null}
               </Grid>
               <Button
