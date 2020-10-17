@@ -51,6 +51,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
   private int accessTokenValiditySeconds;
   @Value("${jwt-auth-server.refreshTokenValiditySeconds}")
   private int refreshTokenValiditySeconds;
+  @Value("${jwt-auth-server.clientId}")
+  private String clientId;
 
   protected AuthorizationServerConfig(
       PasswordEncoder encoder,
@@ -132,12 +134,11 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
   public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
     clients
         .inMemory()
-        .withClient("my-client-app")
+        .withClient(clientId)
         .secret(encoder.encode(""))
         .scopes("trusted")
         .authorizedGrantTypes("password")
         .accessTokenValiditySeconds(accessTokenValiditySeconds);
-        //.refreshTokenValiditySeconds(refreshTokenValiditySeconds);
   }
 
   /**
