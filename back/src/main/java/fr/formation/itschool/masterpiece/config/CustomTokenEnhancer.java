@@ -6,12 +6,15 @@ import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.token.TokenEnhancer;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 public class CustomTokenEnhancer implements TokenEnhancer {
 
   final static String USER_ID_KEY = "userId";
   final static String USER_EMAIL  = "userEmail";
+  final static String USER_ROLES = "userRoles";
 
   @Override
   public OAuth2AccessToken enhance(OAuth2AccessToken accessToken,
@@ -24,6 +27,7 @@ public class CustomTokenEnhancer implements TokenEnhancer {
         .getPrincipal();
     additionalInfo.put(USER_ID_KEY, user.getId());
     additionalInfo.put(USER_EMAIL, user.getUsername());
+    additionalInfo.put(USER_ROLES, user.getAuthorities());
     ((DefaultOAuth2AccessToken) accessToken)
         .setAdditionalInformation(additionalInfo);
     return accessToken;
