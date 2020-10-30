@@ -1,4 +1,4 @@
-package fr.formation.itschool.masterpiece.config;
+package fr.formation.itschool.masterpiece.exceptions;
 
 public class ResourceNotFoundException extends RuntimeException{
 

@@ -7,6 +7,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 public interface AccountService extends UserDetailsService {
   void create(CreateAccountDto createAccountDto);
   AccountInfoDto getCurrentAccountInfo(Long id);
-  boolean isEmailPresentsInDB(String email);
+  boolean isEmailPresentInDB(String email);
 
 }

@@ -8,8 +8,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Paper from '@material-ui/core/Paper';
 import { Formik } from 'formik';
-import axios from 'axios';
-import queryString from 'query-string';
 import { Link as RouterLink } from 'react-router-dom';
 import logo from '../logo.svg';
 import Backdrop from '@material-ui/core/Backdrop';
@@ -18,6 +16,9 @@ import { Dialog } from '@material-ui/core';
 import MuiAlert from '@material-ui/lab/Alert';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
+import AuthService from '../services/AuthService';
+import { useHistory } from 'react-router-dom';
+import { FormattedMessage } from 'react-intl';
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant='filled' {...props} />;
@@ -32,11 +33,12 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    padding: theme.spacing(6, 3),
+    padding: theme.spacing(4, 3, 6, 3),
   },
   logo: {
     width: '150px',
-    marginBottom: theme.spacing(4),
+    marginBottom: theme.spacing(2),
+    padding: theme.spacing(4),
   },
   form: {
     width: '100%',
@@ -55,16 +57,70 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Sign({ type }) {
+export default function Sign(props) {
+  let history = useHistory();
   const classes = useStyles();
-  const [apiErrorResponse, setApiErrorResponse] = useState([]);
+  const [apiErrorResponse, setApiErrorResponse] = useState();
+  const [uniqueEmailErr, setUniqueEmailErr] = useState();
   const [errorOpen, setErrorOpen] = useState(false);
   const [successOpen, setSuccessOpen] = useState(false);
+
   const handleErrorClose = () => {
     setErrorOpen(false);
   };
   const handleSuccessClose = () => {
+    if (props.type === 'register') history.push('/login');
+    else history.push('/profile');
     setSuccessOpen(false);
+  };
+  const handleLoginError = (error) => {
+    let resMessage =
+      (error.response && error.response.data && error.response.data.error) ||
+      error.message ||
+      error.toString();
+    switch (resMessage) {
+      case 'Network':
+        resMessage = <FormattedMessage id='networkError' />;
+        break;
+      case 'invalid_grant':
+        resMessage = <FormattedMessage id='invalidGrant' />;
+        break;
+      default:
+    }
+    setApiErrorResponse(resMessage);
+    setErrorOpen(true);
+  };
+
+  const handleRegisterError = (error) => {
+    let errorMessage =
+      (error.response && error.response.data) ||
+      error.message ||
+      error.toString();
+    switch (errorMessage) {
+      case 'Network Error':
+        errorMessage = <FormattedMessage id='networkError' />;
+        break;
+      default:
+    }
+    setApiErrorResponse(errorMessage);
+    if (
+      Array.isArray(errorMessage) &&
+      errorMessage.find((e) => e.code === 'UniqueEmail')
+    ) {
+      setUniqueEmailErr(
+        <FormattedMessage
+          id='emailNotUnique'
+          defaultMessage='Email not unique'
+        />
+      );
+    } else {
+      setErrorOpen(true);
+    }
+  };
+  const resetApiErrors = () => {
+    setApiErrorResponse();
+    setUniqueEmailErr();
+    setErrorOpen(false);
   };
 
   return (
@@ -73,74 +129,85 @@ export default function Sign({ type }) {
       validate={(values, apiErrorResponse) => {
         const errors = {};
         if (!values.email) {
-          errors.email = 'Email obligatoire';
+          errors.email = (
+            <FormattedMessage
+              id='emailRequired'
+              defaultMessage='Email required'
+            />
+          );
         } else if (
-          !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
+          !/^[A-Z0-9._%+-]{1,64}@[A-Z0-9.-]{1,64}\.[A-Z]{1,64}$/i.test(
+            values.email
+          )
         ) {
-          errors.email = 'Email non valide';
+          errors.email = (
+            <FormattedMessage
+              id='emailNotValid'
+              defaultMessage='Email not valid'
+            />
+          );
         }
         if (apiErrorResponse) {
-          errors.email = 'Email déjà utilisé';
+          errors.email = (
+            <FormattedMessage
+              id='emailNotUnique'
+              defaultMessage='Email not unique'
+            />
+          );
         }
         if (!values.password) {
-          errors.password = 'Le mot de passe est obligatoire';
-        } else if (values.password.length < 8) {
-          errors.password = 'Le mot de passe est inférieur à 8 caractères';
+          errors.password = (
+            <FormattedMessage
+              id='passwordRequired'
+              defaultMessage='Password required'
+            />
+          );
+        } else if (values.password.length < 8 || values.password.length > 50) {
+          errors.password = (
+            <FormattedMessage
+              id='passwordMinMax'
+              defaultMessage='Password between 8 and 50 characteres'
+            />
+          );
         }
         if (
-          type === 'signup' &&
+          props.type === 'register' &&
           values.password !== values.password_confirmation
         ) {
-          errors.password_confirmation = "Le mot de passe n'est pas identique";
+          errors.password_confirmation = (
+            <FormattedMessage
+              id='passwordNotMatch'
+              defaultMessage="Password doesn't match"
+            />
+          );
         }
         return errors;
       }}
       onSubmit={(values, { setSubmitting }) => {
-        const options = {
-          timeout: 5000,
-        };
+        resetApiErrors();
         const { email, password } = values;
-        let valuesToSend = {};
-
-        if (type === 'signup') {
-          valuesToSend = { email, password };
-          options.url = `${process.env.REACT_APP_SERVER_URL}/api/private/accounts`;
-          options.method = 'POST';
-          options.data = valuesToSend;
-          options.headers = { 'content-type': 'application/json' };
-        } else {
-          const client_id = process.env.REACT_APP_CLIENT_ID;
-          const grant_type = 'password';
-          valuesToSend = { username: email, password, client_id, grant_type };
-          options.method = 'POST';
-          options.data = queryString.stringify(valuesToSend);
-          options.url = `${process.env.REACT_APP_SERVER_URL}/oauth/token`;
-          options.headers = {
-            'content-type': 'application/x-www-form-urlencoded',
-          };
-        }
         setSubmitting(true);
-        setApiErrorResponse([]);
-        axios(options)
-          .then((resp) => {
-            if (resp.status === 200) {
-              setSuccessOpen(true);
-            }
-          })
-          .catch((error) => {
-            if (!error.response) {
-              setApiErrorResponse('Connexion au serveur impossible');
-              setErrorOpen(true);
-            } else if (Array.isArray(error.response.data)) {
-              setApiErrorResponse(error.response.data);
-            } else if (error.response && error.response.data) {
-              setApiErrorResponse(error.response.data.error_description);
-              setErrorOpen(true);
-            }
-          })
-          .then(() => {
-            setSubmitting(false);
-          });
+        props.type === 'login'
+          ? AuthService.login(email, password)
+              .then((response) => {
+                props.userLogged(response);
+                setSubmitting(false);
+                setSuccessOpen(true);
+              })
+              .catch((error) => {
+                handleLoginError(error);
+                setSubmitting(false);
+              })
+          : AuthService.register(email, password)
+              .then(() => {
+                setSuccessOpen(true);
+              })
+              .catch((error) => {
+                handleRegisterError(error);
+              })
+              .then(() => {
+                setSubmitting(false);
+              });
       }}
     >
       {({
@@ -155,14 +222,25 @@ export default function Sign({ type }) {
       }) => (
         <Container component='main' className={classes.main} maxWidth='xs'>
           <Paper className={classes.paper}>
-            <div className={classes.logo}>
-              <img src={logo} alt='logo Banque Générale' />
-            </div>
-            <Typography component='h1' variant='h3'>
-              {type === 'signup'
-                ? 'Créer votre compte'
-                : 'Connexion à BG Connect'}
-            </Typography>
+            <Grid container spacing={2} justify='center'>
+              <div className={classes.logo}>
+                <img src={logo} alt='logo Banque Générale' />
+              </div>
+
+              <Typography component='h1' variant='h3'>
+                {props.type === 'register' ? (
+                  <FormattedMessage
+                    id='createAccount'
+                    defaultMessage='Create account'
+                  />
+                ) : (
+                  <FormattedMessage
+                    id='connectToMCP'
+                    defaultMessage='Connect to MyCP'
+                  />
+                )}
+              </Typography>
+            </Grid>
             <form className={classes.form} onSubmit={handleSubmit}>
               <Grid container spacing={2}>
                 <Grid item xs={12}>
@@ -172,27 +250,26 @@ export default function Sign({ type }) {
                     variant='outlined'
                     fullWidth
                     id='email'
-                    label={dirty && errors.email ? errors.email : 'Email'}
+                    label={
+                      dirty && errors.email ? (
+                        errors.email
+                      ) : (
+                        <FormattedMessage id='email' defaultMessage='Email' />
+                      )
+                    }
                     name='email'
                     value={values.email}
                     onChange={handleChange}
-                    error={
-                      (dirty && !!errors.email) ||
-                      (apiErrorResponse &&
-                        Array.isArray(apiErrorResponse) &&
-                        !!apiErrorResponse.find((e) => e.field === 'email'))
-                    }
+                    error={(dirty && !!errors.email) || !!uniqueEmailErr}
                   />
-                  {apiErrorResponse &&
-                  Array.isArray(apiErrorResponse) &&
-                  !!apiErrorResponse.find((e) => e.field === 'email') ? (
+                  {!!uniqueEmailErr ? (
                     <Grid item xs={12}>
                       <Typography
                         color='secondary'
                         component='p'
                         display='block'
                       >
-                        Email déjà utilisé
+                        {uniqueEmailErr}
                       </Typography>
                     </Grid>
                   ) : null}
@@ -204,9 +281,14 @@ export default function Sign({ type }) {
                     fullWidth
                     name='password'
                     label={
-                      dirty && !!errors.password
-                        ? errors.password
-                        : 'Mot de passe'
+                      dirty && !!errors.password ? (
+                        errors.password
+                      ) : (
+                        <FormattedMessage
+                          id='password'
+                          defaultMessage='Password'
+                        />
+                      )
                     }
                     type='password'
                     id='password'
@@ -231,7 +313,17 @@ export default function Sign({ type }) {
                   </Dialog>
                   <Dialog open={successOpen} onClose={handleSuccessClose}>
                     <Alert severity='success'>
-                      {type === 'signup' ? 'Compte crée' : 'Vous êtes connecté'}
+                      {props.type === 'register' ? (
+                        <FormattedMessage
+                          id='accountCreated'
+                          defaultMessage='Account created'
+                        />
+                      ) : (
+                        <FormattedMessage
+                          id='connected'
+                          defaultMessage='Connected'
+                        />
+                      )}
                       <IconButton
                         size='small'
                         aria-label='close'
@@ -243,28 +335,35 @@ export default function Sign({ type }) {
                     </Alert>
                   </Dialog>
                 </Grid>
-                {type === 'signup' ? (
-                  <Grid item xs={12}>
-                    <TextField
-                      variant='outlined'
-                      autoComplete='password confirmation'
-                      fullWidth
-                      name='password_confirmation'
-                      label={
-                        dirty && !!errors.password_confirmation
-                          ? errors.password_confirmation
-                          : 'Confirmation du mot de passe'
-                      }
-                      type='password'
-                      id='password_confirmation'
-                      onChange={handleChange}
-                      value={values.password_confirmation}
-                      error={
-                        touched.password_confirmation &&
-                        !!errors.password_confirmation
-                      }
-                    />
-                  </Grid>
+                {props.type === 'register' ? (
+                  <>
+                    <Grid item xs={12}>
+                      <TextField
+                        variant='outlined'
+                        autoComplete='password confirmation'
+                        fullWidth
+                        name='password_confirmation'
+                        label={
+                          dirty && !!errors.password_confirmation ? (
+                            errors.password_confirmation
+                          ) : (
+                            <FormattedMessage
+                              id='passwordConfirmation'
+                              defaultMessage='Password confirmation'
+                            />
+                          )
+                        }
+                        type='password'
+                        id='password_confirmation'
+                        onChange={handleChange}
+                        value={values.password_confirmation}
+                        error={
+                          touched.password_confirmation &&
+                          !!errors.password_confirmation
+                        }
+                      />
+                    </Grid>
+                  </>
                 ) : null}
               </Grid>
               <Button
@@ -276,20 +375,30 @@ export default function Sign({ type }) {
                 disabled={isSubmitting || !isValid}
                 className={classes.submit}
               >
-                {type === 'signup' ? 'Envoyer' : 'Connexion'}
+                {props.type === 'register' ? (
+                  <FormattedMessage id='send' defaultMessage='Send' />
+                ) : (
+                  <FormattedMessage id='connection' defaultMessage='Sign In' />
+                )}
               </Button>
               <Backdrop className={classes.backdrop} open={isSubmitting}>
                 <CircularProgress color='primary' />
               </Backdrop>
               <Grid container justify='flex-end'>
                 <Grid item>
-                  {type === 'signup' ? (
-                    <Link component={RouterLink} to='/' variant='body2'>
-                      Déjà un compte? connectez vous
+                  {props.type === 'register' ? (
+                    <Link component={RouterLink} to='/login' variant='body2'>
+                      <FormattedMessage
+                        id='alreadyAnAccount?'
+                        defaultMessage='Already have an account? sign in'
+                      />
                     </Link>
                   ) : (
-                    <Link component={RouterLink} to='/signup' variant='body2'>
-                      Pas de compte? créer votre compte
+                    <Link component={RouterLink} to='/register' variant='body2'>
+                      <FormattedMessage
+                        id='noAccount?'
+                        defaultMessage='No account? register'
+                      />
                     </Link>
                   )}
                 </Grid>

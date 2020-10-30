@@ -7,6 +7,7 @@ const useStyles = makeStyles((theme) => ({
   footer: {
     height: '39px',
     width: '90%',
+    maxWidth: '960px',
     margin: '0 auto',
     borderTop: `1px solid ${theme.palette.primary.light}`,
     color: theme.palette.primary.light,

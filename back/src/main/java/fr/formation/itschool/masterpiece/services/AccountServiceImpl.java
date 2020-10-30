@@ -1,7 +1,7 @@
 package fr.formation.itschool.masterpiece.services;
 
 import fr.formation.itschool.masterpiece.config.AccountDetails;
-import fr.formation.itschool.masterpiece.config.ResourceNotFoundException;
+import fr.formation.itschool.masterpiece.exceptions.ResourceNotFoundException;
 import fr.formation.itschool.masterpiece.domain.Account;
 import fr.formation.itschool.masterpiece.domain.Role;
 import fr.formation.itschool.masterpiece.dtos.AccountAuthDto;
@@ -53,8 +53,8 @@ public class AccountServiceImpl implements AccountService {
   }
 
   @Override
-  public boolean isEmailPresentsInDB(String email) {
-    return accounts.findByEmailIgnoreCase(email).isPresent();
+  public boolean isEmailPresentInDB(String email) {
+    return accounts.existsByEmailIgnoreCase(email);
   }
 
   @Override
