@@ -44,8 +44,8 @@ const useStyles = makeStyles((theme) => ({
 export default function Header(props) {
   const classes = useStyles();
   const user = props.user;
-  const handleSelectLanguage = (e) => {
-    props.changeLanguage(e.target.value);
+  const handleSelectLanguage = (event) => {
+    props.changeLanguage(event.target.value);
   };
 
   return (
@@ -65,7 +65,7 @@ export default function Header(props) {
             <Box pr={6}>
               <Box>
                 <Typography variant='subtitle1'>
-                  {user && user.firstName && user.lastName
+                  {user.firstName && user.lastName
                     ? `${user.firstName} ${user.lastName}`
                     : user.userEmail}
                 </Typography>

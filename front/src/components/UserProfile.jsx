@@ -1,11 +1,8 @@
 import React from 'react';
-import Container from '@material-ui/core/Container';
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
-import Link from '@material-ui/core/Link';
+import { Container, Paper, Link, Typography, Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { Link as RouterLink } from 'react-router-dom';
-import Grid from '@material-ui/core/Grid';
+import { FormattedMessage } from 'react-intl';
 
 const useStyles = makeStyles((theme) => ({
   main: {
@@ -15,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     display: 'flex',
-    flexDirection: 'column',
+    flexDirection: 'row',
     alignItems: 'center',
     padding: theme.spacing(6, 3, 2),
   },
@@ -33,15 +30,21 @@ export default function Userprofile(props) {
           </Typography>
         ) : (
           <Grid container spacing={2} justify='center'>
-            <Grid item={12}>
+            <Grid item>
               <Typography component='h1' variant='h4'>
-                Vous n'êtes pas connecté
+                <FormattedMessage
+                  id='notConnected'
+                  defaultMessage='You are not connected'
+                />
               </Typography>
             </Grid>
             <Grid container spacing={2} justify='flex-end'>
               <Grid item>
                 <Link component={RouterLink} to='/login' variant='body2'>
-                  Connectez vous
+                  <FormattedMessage
+                    id='connection'
+                    defaultMessage='Connection'
+                  />
                 </Link>
               </Grid>
             </Grid>

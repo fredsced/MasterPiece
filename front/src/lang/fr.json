@@ -18,5 +18,6 @@
   "networkError": "Erreur réseau",
   "invalidGrant": "Identifiants non valides",
   "accountCreated": "Compte créé",
-  "connected": "Vous êtes connecté"
+  "connected": "Vous êtes connecté",
+  "notConnected": "Vous n'êtes pas connecté"
 }

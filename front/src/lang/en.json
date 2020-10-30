@@ -18,5 +18,7 @@
   "networkError": "Network error",
   "invalidGrant": "Invalid grant",
   "accountCreated": "Account created",
-  "connected": "Connected"
+  "connected": "Connected",
+  "notConnected": "You're not connected"
+  
 }
