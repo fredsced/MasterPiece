@@ -105,7 +105,7 @@ export default function Sign(props) {
     setApiErrorResponse(errorMessage);
     if (
       Array.isArray(errorMessage) &&
-      errorMessage.find((e) => e.code === 'UniqueEmail')
+      errorMessage.find((e) => e.field==='email' && e.code === 'UniqueEmail')
     ) {
       setUniqueEmailErr(
         <FormattedMessage
