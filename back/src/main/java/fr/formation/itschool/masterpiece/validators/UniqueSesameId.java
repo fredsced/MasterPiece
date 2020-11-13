@@ -10,10 +10,10 @@ import java.lang.annotation.Target;
 
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.FIELD, ElementType.TYPE})
-@Constraint(validatedBy = UniqueEmailValidator.class)
-public @interface UniqueEmail {
-  String message() default "emailNotUnique";
+@Target({ ElementType.FIELD, ElementType.TYPE })
+@Constraint(validatedBy = UniqueSesameIdValidator.class)
+public @interface UniqueSesameId {
+  String message() default "sesameIdNotUnique";
 
   Class<?>[] groups() default {};
 

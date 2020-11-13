@@ -20,7 +20,7 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
-@Table(name="accounts")
+@Table(name = "ACCOUNTS")
 @NoArgsConstructor
 @AllArgsConstructor
 public class Account {
@@ -36,9 +36,8 @@ public class Account {
 
   @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(
-      name="accounts_roles",
-      joinColumns = @JoinColumn(name="account_id"),
-      inverseJoinColumns = @JoinColumn(name="role_id")
-  )
+      name = "accounts_roles",
+      joinColumns = @JoinColumn(name = "account_id"),
+      inverseJoinColumns = @JoinColumn(name = "role_id"))
   private Set<Role> roles;
 }

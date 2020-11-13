@@ -27,7 +27,10 @@ public class ControllerAdvice extends ResponseEntityExceptionHandler {
 
     List<ValidationError> validationErrors =
         fieldErrors.stream()
-            .map(error -> new ValidationError(error.getCode(), error.getField(), error.getDefaultMessage()))
+            .map(
+                error ->
+                    new ValidationError(
+                        error.getCode(), error.getField(), error.getDefaultMessage()))
             .collect(Collectors.toList());
     return super.handleExceptionInternal(ex, validationErrors, headers, status, webRequest);
   }

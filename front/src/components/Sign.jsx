@@ -58,7 +58,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Sign(props) {
-  let history = useHistory();
+  const history = useHistory();
   const classes = useStyles();
   const [apiErrorResponse, setApiErrorResponse] = useState();
   const [uniqueEmailErr, setUniqueEmailErr] = useState();
@@ -70,7 +70,7 @@ export default function Sign(props) {
   };
   const handleSuccessClose = () => {
     if (props.type === 'register') history.push('/login');
-    else history.push('/profile');
+    else history.push('/collaborator');
     setSuccessOpen(false);
   };
   const handleLoginError = (error) => {
@@ -105,7 +105,7 @@ export default function Sign(props) {
     setApiErrorResponse(errorMessage);
     if (
       Array.isArray(errorMessage) &&
-      errorMessage.find((e) => e.field==='email' && e.code === 'UniqueEmail')
+      errorMessage.find((e) => e.field === 'email' && e.code === 'UniqueEmail')
     ) {
       setUniqueEmailErr(
         <FormattedMessage

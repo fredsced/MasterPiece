@@ -1,12 +1,12 @@
 package fr.formation.itschool.masterpiece.services;
 
 import fr.formation.itschool.masterpiece.config.AccountDetails;
-import fr.formation.itschool.masterpiece.exceptions.ResourceNotFoundException;
 import fr.formation.itschool.masterpiece.domain.Account;
 import fr.formation.itschool.masterpiece.domain.Role;
 import fr.formation.itschool.masterpiece.dtos.AccountAuthDto;
 import fr.formation.itschool.masterpiece.dtos.AccountInfoDto;
 import fr.formation.itschool.masterpiece.dtos.CreateAccountDto;
+import fr.formation.itschool.masterpiece.exceptions.ResourceNotFoundException;
 import fr.formation.itschool.masterpiece.repositories.AccountRepository;
 import fr.formation.itschool.masterpiece.repositories.RoleRepository;
 import org.springframework.security.core.userdetails.UserDetails;

@@ -24,14 +24,14 @@ public final class SecurityHelper {
    * @return the authenticated user identifier
    */
   @SuppressWarnings("unchecked")
-  public static Long getUserId() {
+  public static Long getAccountId() {
     Authentication auth = getAuthentication();
     OAuth2AuthenticationDetails details = (OAuth2AuthenticationDetails) auth
         .getDetails();
     Map<String, Object> decodedDetails = (Map<String, Object>) details
         .getDecodedDetails();
     Integer value = (Integer) decodedDetails
-        .get(CustomTokenEnhancer.USER_ID_KEY);
+        .get(CustomTokenEnhancer.ACCOUNT_ID_KEY);
     return value.longValue();
   }
 

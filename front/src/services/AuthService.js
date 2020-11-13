@@ -20,7 +20,7 @@ const AuthService = {
         client_id: process.env.REACT_APP_CLIENT_ID,
         grant_type: process.env.REACT_APP_GRANT_TYPE,
       }),
-      header: { 'content-type': URL_ENCODED },
+      headers: { 'content-type': URL_ENCODED },
     };
     const response = await axios(optionsToLogin);
     if (response.data.access_token) {

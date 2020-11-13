@@ -4,10 +4,7 @@ import fr.formation.itschool.masterpiece.domain.Role;
 
 import java.util.Set;
 
-/**
- A projection of {@code Account} when logged
- */
-
+/** A projection of {@code Account} when logged */
 public interface AccountInfoDto {
   Long getId();
 

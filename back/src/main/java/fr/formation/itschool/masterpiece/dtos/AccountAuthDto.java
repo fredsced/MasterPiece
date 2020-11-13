@@ -1,12 +1,10 @@
 package fr.formation.itschool.masterpiece.dtos;
-import fr.formation.itschool.masterpiece.domain.Role;
 
-/**
-  A projection of {@code Account} for authentication
- */
+import fr.formation.itschool.masterpiece.domain.Role;
 
 import java.util.Set;
 
+/** A projection of {@code Account} for authentication */
 public interface AccountAuthDto {
 
   Long getId();
@@ -16,5 +14,4 @@ public interface AccountAuthDto {
   String getPassword();
 
   Set<Role> getRoles();
-
 }

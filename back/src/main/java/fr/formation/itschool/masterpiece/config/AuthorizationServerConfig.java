@@ -148,7 +148,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
    */
   @GetMapping("/accountInfo")
   public AccountInfoDto userInfo() {
-    Long userId = SecurityHelper.getUserId();
+    Long userId = SecurityHelper.getAccountId();
     return accountService.getCurrentAccountInfo(userId);
   }
 }
