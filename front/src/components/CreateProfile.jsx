@@ -87,17 +87,57 @@ const ValidationSchema = Yup.object().shape({
     .oneOf(Array.from(organisationUnits, (ou) => ou.value))
     .required('required'),
 });
+
 export default function Createprofile(props) {
   const { user } = props;
   const history = useHistory();
   const classes = useStyles();
   const [successOpen, setSuccessOpen] = useState(false);
+  const [uqSesameId, setUqSesameId] = useState();
+  const [errorOpen, setErrorOpen] = useState(false);
+  const [apiErrorResponse, setApiErrorResponse] = useState();
 
   const handleSuccessClose = () => {
     const updatedUser = AuthService.getCurrentUser();
     props.updateUser(updatedUser);
-    history.push('collaborator');
+    //history.push('collaborator');
     setSuccessOpen(false);
+  };
+  const handleErrorClose = () => {
+    setErrorOpen(false);
+  };
+  const handleCreationError = (error) => {
+    let errorMessage =
+      (error.response && error.response.data) ||
+      error.message ||
+      error.toString();
+    switch (errorMessage) {
+      case 'Network Error':
+        errorMessage = <FormattedMessage id='networkError' />;
+        break;
+      default:
+    }
+    setApiErrorResponse(errorMessage);
+    if (
+      Array.isArray(errorMessage) &&
+      errorMessage.find(
+        (error) => error.field === 'sesameId' && error.code === 'UniqueSesameId'
+      )
+    ) {
+      setUqSesameId(
+        <FormattedMessage
+          id='SesameNotUnique'
+          defaultMessage='Sesame ID not unique'
+        />
+      );
+    } else {
+      setErrorOpen(true);
+    }
+  };
+  const resetApiErrors = () => {
+    setUqSesameId();
+    setErrorOpen(false);
+    setApiErrorResponse();
   };
 
   return (
@@ -112,16 +152,15 @@ export default function Createprofile(props) {
       validationSchema={ValidationSchema}
       onSubmit={(values, { setSubmitting }) => {
         setSubmitting(true);
+        resetApiErrors();
         CollaboratorService.create(values)
           .then(() => {
-            console.log('collaborator created !');
-
             CollaboratorService.setCollaboratorHasProfileToTrue();
-
             setSuccessOpen(true);
           })
           .catch((error) => {
-            console.log(error.response);
+            handleCreationError(error);
+            console.log(error.response.data);
           })
           .then(() => {
             setSubmitting(false);
@@ -229,15 +268,17 @@ export default function Createprofile(props) {
                       name='sesameId'
                       value={values.sesameId}
                       onChange={handleChange}
-                      error={touched.sesameId && !!errors.sesameId}
+                      error={
+                        !!uqSesameId || (touched.sesameId && !!errors.sesameId)
+                      }
                       helperText={
-                        touched.sesameId &&
-                        !!errors.sesameId && (
+                        uqSesameId ||
+                        (touched.sesameId && errors.sesameId && (
                           <FormattedMessage
                             id={errors.sesameId}
                             defaultMessage={errors.sesameId}
                           />
-                        )
+                        ))
                       }
                     />
                   </Grid>
@@ -322,6 +363,19 @@ export default function Createprofile(props) {
                       aria-label='close'
                       color='inherit'
                       onClick={handleSuccessClose}
+                    >
+                      <CloseIcon fontSize='small' />
+                    </IconButton>
+                  </Alert>
+                </Dialog>
+                <Dialog open={errorOpen} onClose={handleErrorClose}>
+                  <Alert severity='error'>
+                    {apiErrorResponse}
+                    <IconButton
+                      size='small'
+                      aria-label='close'
+                      color='inherit'
+                      onClick={handleErrorClose}
                     >
                       <CloseIcon fontSize='small' />
                     </IconButton>
