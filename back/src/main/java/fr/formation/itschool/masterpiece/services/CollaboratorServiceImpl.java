@@ -3,13 +3,13 @@ package fr.formation.itschool.masterpiece.services;
 import fr.formation.itschool.masterpiece.domain.Account;
 import fr.formation.itschool.masterpiece.domain.Collaborator;
 import fr.formation.itschool.masterpiece.domain.Country;
-import fr.formation.itschool.masterpiece.domain.OrganisationUnit;
+import fr.formation.itschool.masterpiece.domain.Organisationunit;
 import fr.formation.itschool.masterpiece.dtos.CreateCollaboratorDto;
 import fr.formation.itschool.masterpiece.exceptions.ResourceNotFoundException;
 import fr.formation.itschool.masterpiece.repositories.AccountRepository;
 import fr.formation.itschool.masterpiece.repositories.CollaboratorRepository;
 import fr.formation.itschool.masterpiece.repositories.CountryRepository;
-import fr.formation.itschool.masterpiece.repositories.OrganisationUnitRepository;
+import fr.formation.itschool.masterpiece.repositories.OrganisationunitRepository;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -18,13 +18,13 @@ public class CollaboratorServiceImpl implements CollaboratorService {
   private final CollaboratorRepository collaboratorRepository;
   private final AccountRepository accountRepository;
   private final CountryRepository countryRepository;
-  private final OrganisationUnitRepository ouRepository;
+  private final OrganisationunitRepository ouRepository;
 
   protected CollaboratorServiceImpl(
       CollaboratorRepository collaboratorRepository,
       AccountRepository accountRepository,
       CountryRepository countryRepository,
-      OrganisationUnitRepository ouRepository) {
+      OrganisationunitRepository ouRepository) {
     this.collaboratorRepository = collaboratorRepository;
     this.accountRepository = accountRepository;
     this.countryRepository = countryRepository;
@@ -46,7 +46,7 @@ public class CollaboratorServiceImpl implements CollaboratorService {
                 () ->
                     new ResourceNotFoundException(
                         "No country with the code iso :" + createCollaboratorDto.getCountryIso()));
-    OrganisationUnit ou = ouRepository.findByCodeIgnoreCase(createCollaboratorDto.getOuCode());
+    Organisationunit ou = ouRepository.findByCodeIgnoreCase(createCollaboratorDto.getOuCode());
     Account account = accountRepository.getOne(accountId);
     collaboratorToCreate.setAccount(account);
     collaboratorToCreate.setCountry(country);

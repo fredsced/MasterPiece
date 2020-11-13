@@ -48,7 +48,7 @@ public class Collaborator {
 
   @NotNull
   @ManyToOne
-  private OrganisationUnit organisationUnit;
+  private Organisationunit organisationUnit;
 
   @OneToOne
   private Account account;
