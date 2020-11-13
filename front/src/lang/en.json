@@ -19,6 +19,19 @@
   "invalidGrant": "Invalid grant",
   "accountCreated": "Account created",
   "connected": "Connected",
-  "notConnected": "You're not connected"
-  
+  "notConnected": "You're not authenticated",
+  "firstname": "Firstname",
+  "lastname": "Lastname",
+  "sesameId": "Sesame ID",
+  "organisationUnit": "Organisation Unit",
+  "country": "Country",
+  "createProfile": "Create your profile",
+  "findLCO": "Find my compliance officer",
+  "tooShort": "Too short",
+  "tooLong" : "Too long",
+  "required": "Required",
+  "collaboratorCreated": "Collaborator profile created",
+  "France": "France",
+  "United States": "United States",
+  "United KingDom": "United KingDom"
 }
