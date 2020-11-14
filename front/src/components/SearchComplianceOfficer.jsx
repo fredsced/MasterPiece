@@ -1,5 +1,11 @@
 import React from 'react';
-import { Container, Paper, Typography, Grid } from '@material-ui/core';
+import {
+  Container,
+  Paper,
+  Typography,
+  Grid,
+  TextField,
+} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { FormattedMessage } from 'react-intl';
 
@@ -20,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(5),
     '& .MuiTextField-root': {
       margin: theme.spacing(1),
-      width: '20ch',
+      width: '25ch',
     },
   },
   formControl: {
@@ -43,6 +49,48 @@ export default function SearchComplianceOfficer(props) {
             />
           </Typography>
         </Grid>
+
+        <form className={classes.form}>
+          <Grid
+            container
+            spacing={2}
+            direction='row'
+            justify='space-evenly'
+            alignItems='baseline'
+          >
+            <Grid
+              item
+              container
+              xs={12}
+              sm={6}
+              justify='center'
+              alignItems='baseline'
+            >
+              <Typography component='p' variant='body'>
+                <FormattedMessage
+                  id='chooseRiskScope'
+                  defaultMessage='Choose the risk scope'
+                />
+              </Typography>
+            </Grid>
+            <Grid
+              item
+              container
+              xs={12}
+              sm={6}
+              alignItems='baseline'
+              justify='center'
+            >
+              <TextField
+                variant='standard'
+                id='risk'
+                size='small'
+                select
+                label='Risk'
+              ></TextField>
+            </Grid>
+          </Grid>
+        </form>
       </Paper>
     </Container>
   );
