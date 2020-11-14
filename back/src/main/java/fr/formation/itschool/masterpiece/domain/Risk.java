@@ -17,22 +17,20 @@ import javax.validation.constraints.Size;
 @Entity
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
-@Table(name="COUNTRIES")
-public class Country {
-
+@AllArgsConstructor
+@Table(name="RISKS")
+public class Risk {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
   @NotBlank
-  @Size(min=3,max=3)
+  @Size(max=45)
   @Column(unique = true, nullable = false)
-  private String iso;
+  private String code;
 
-  @NotBlank
-  @Size(max=100)
-  private String name;
+  @Size(max=255)
+  private String label;
 
 }

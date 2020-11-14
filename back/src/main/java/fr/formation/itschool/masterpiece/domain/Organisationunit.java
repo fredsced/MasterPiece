@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -27,6 +28,7 @@ public class Organisationunit {
 
   @NotBlank
   @Size(max=25)
+  @Column(unique = true, nullable = false)
   private String code;
 
   @Size(max=100)
