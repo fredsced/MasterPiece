@@ -34,5 +34,6 @@
   "France": "France",
   "United States": "United States",
   "United KingDom": "United KingDom",
-  "SesameNotUnique": "Sesame ID not unique"
+  "SesameNotUnique": "Sesame ID not unique",
+  "chooseRiskScope": "Choose de risk perimeter"
 }

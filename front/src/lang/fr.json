@@ -30,10 +30,11 @@
   "tooShort": "Trop court",
   "tooLong" : "Trop long",
   "required" : "Obligatoire",
-  "notASesamId": "Format sesame non valide",
+  "notASesamId": "Format sésame non valide",
   "collaboratorCreated": "Profil collaborateur créé",
   "France": "France",
-  "United States": "Etats Unis",
-  "United KingDom": "Royaume Uni",
-  "SesameNotUnique": "Compte sésame déjà utilisé"
+  "United States": "Etats-Unis",
+  "United KingDom": "Royaume-Uni",
+  "SesameNotUnique": "Compte sésame déjà utilisé",
+  "chooseRiskScope": "Choisissez le périmètre du risque"
 }

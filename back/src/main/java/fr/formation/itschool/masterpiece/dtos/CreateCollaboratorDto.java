@@ -22,10 +22,10 @@ public class CreateCollaboratorDto {
   private String sesameId;
 
   @NotNull
-  @Size(min = 3, max = 4)
+  @Size(min = 3, max = 3)
   private String countryIso;
 
   @NotNull
-  @Size(min = 3, max = 4)
+  @Size(min = 3, max = 25)
   private String ouCode;
 }
