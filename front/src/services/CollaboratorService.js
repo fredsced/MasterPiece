@@ -18,9 +18,11 @@ const CollaboratorService = {
       return response.data;
     }
   },
-  setCollaboratorHasProfileToTrue: () => {
+  updateCollaboratorProfile: (values) => {
     const userToUpdate = JSON.parse(localStorage.getItem(LOCAL_STORAGE_USER));
     userToUpdate.accountHasProfile = true;
+    userToUpdate.collaboratorName = values.name;
+    userToUpdate.collaboratorFirstname = values.firstname;
     localStorage.setItem(LOCAL_STORAGE_USER, JSON.stringify(userToUpdate));
   },
 };

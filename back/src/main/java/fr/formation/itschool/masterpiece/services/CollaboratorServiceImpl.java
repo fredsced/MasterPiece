@@ -4,6 +4,7 @@ import fr.formation.itschool.masterpiece.domain.Account;
 import fr.formation.itschool.masterpiece.domain.Collaborator;
 import fr.formation.itschool.masterpiece.domain.Country;
 import fr.formation.itschool.masterpiece.domain.Organisationunit;
+import fr.formation.itschool.masterpiece.dtos.CollaboratorNameDto;
 import fr.formation.itschool.masterpiece.dtos.CreateCollaboratorDto;
 import fr.formation.itschool.masterpiece.exceptions.ResourceNotFoundException;
 import fr.formation.itschool.masterpiece.repositories.AccountRepository;
@@ -46,7 +47,14 @@ public class CollaboratorServiceImpl implements CollaboratorService {
                 () ->
                     new ResourceNotFoundException(
                         "No country with the code iso :" + createCollaboratorDto.getCountryIso()));
-    Organisationunit ou = ouRepository.findByCodeIgnoreCase(createCollaboratorDto.getOuCode());
+    Organisationunit ou =
+        ouRepository
+            .findByCodeIgnoreCase(createCollaboratorDto.getOuCode())
+            .orElseThrow(
+                () ->
+                    new ResourceNotFoundException(
+                        "No organisation unit with the code :"
+                            + createCollaboratorDto.getOuCode()));
     Account account = accountRepository.getOne(accountId);
     collaboratorToCreate.setAccount(account);
     collaboratorToCreate.setCountry(country);
@@ -55,6 +63,11 @@ public class CollaboratorServiceImpl implements CollaboratorService {
     collaboratorToCreate.setName(createCollaboratorDto.getName());
     collaboratorToCreate.setSesameId(createCollaboratorDto.getSesameId());
     collaboratorRepository.save(collaboratorToCreate);
+  }
+
+  @Override
+  public CollaboratorNameDto getNameByAccountId(Long accoundId) {
+    return collaboratorRepository.findByAccountId(accoundId);
   }
 
   @Override

@@ -1,5 +1,6 @@
 package fr.formation.itschool.masterpiece.config;
 
+import fr.formation.itschool.masterpiece.dtos.CollaboratorNameDto;
 import fr.formation.itschool.masterpiece.services.CollaboratorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
@@ -16,6 +17,10 @@ public class CustomTokenEnhancer implements TokenEnhancer {
   static final String ACCOUNT_EMAIL = "accountEmail";
   static final String ACCOUNT_ROLES = "accountRoles";
   static final String ACCOUNT_HAS_PROFILE = "accountHasProfile";
+  static final String COLLABORATOR_NAME = "collaboratorName";
+  static final String COLLABORATOR_FIRSTNAME = "collaboratorFirstname";
+  static final String COLLABORATOR_COUNTRY_ISO = "collaboratorCountryIso";
+  static final String COLLABORATOR_ORG_UNIT_CODE = "collaboratorOrgUnitCode";
 
   // need to conserve the enhance method signature
   @Autowired private CollaboratorService collaboratorService;
@@ -32,6 +37,11 @@ public class CustomTokenEnhancer implements TokenEnhancer {
     additionalInfo.put(ACCOUNT_EMAIL, account.getUsername());
     additionalInfo.put(ACCOUNT_ROLES, account.getAuthorities());
     additionalInfo.put(ACCOUNT_HAS_PROFILE, collaboratorService.hasProfile(account.getId()));
+    if (collaboratorService.hasProfile(account.getId())){
+        CollaboratorNameDto collaboratorName = collaboratorService.getNameByAccountId(account.getId());
+        additionalInfo.put(COLLABORATOR_NAME, collaboratorName.getName());
+        additionalInfo.put(COLLABORATOR_FIRSTNAME, collaboratorName.getFirstname());
+    }
     ((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(additionalInfo);
     return accessToken;
   }

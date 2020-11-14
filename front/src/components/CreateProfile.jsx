@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import * as Yup from 'yup';
 import {
   Container,
@@ -21,17 +21,17 @@ import CollaboratorService from '../services/CollaboratorService';
 import MuiAlert from '@material-ui/lab/Alert';
 import { useHistory } from 'react-router-dom';
 import AuthService from '../services/AuthService';
-const countries = [
-  { value: 'FRA', label: 'France' },
-  { value: 'USA', label: 'United States' },
-  { value: 'GBR', label: 'United KingDom' },
+import CountriesService from '../services/CountriesService';
+import OrgUnitService from '../services/OrgUnitService';
+
+
+const fakeCountries = [
+  { iso: 'FRA', name: 'France' },
+  { iso: 'USA', name: 'United States' },
+  { iso: 'GBR', name: 'United KingDom' },
 ];
 
-const organisationUnits = [
-  { value: 'GBIS' },
-  { value: 'BSC' },
-  { value: 'GTS' },
-];
+const fakeOrganisationUnits = [{ code: 'GBIS' }, { code: 'BSC' }, { code: 'GTS' }];
 
 const LOCAL_STORAGE_USER = process.env.REACT_APP_LOCAL_STORAGE_USER;
 
@@ -69,24 +69,29 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ValidationSchema = Yup.object().shape({
-  firstname: Yup.string()
-    .min(2, 'tooShort')
-    .max(50, 'tooLong')
-    .required('required'),
-  name: Yup.string().min(2, 'tooShort').max(50, 'tooLong').required('required'),
-  sesameId: Yup.string()
-    .min(7, 'tooShort')
-    .max(7, 'tooLong')
-    .matches(/[a,x]{1}\d{6}/i, 'notASesamId')
-    .required('required'),
-  countryIso: Yup.mixed()
-    .oneOf(Array.from(countries, (country) => country.value))
-    .required('required'),
-  ouCode: Yup.mixed()
-    .oneOf(Array.from(organisationUnits, (ou) => ou.value))
-    .required('required'),
-});
+const ValidationSchema = (countries, organisationUnits) => {
+  return Yup.object().shape({
+    firstname: Yup.string()
+      .min(2, 'tooShort')
+      .max(50, 'tooLong')
+      .required('required'),
+    name: Yup.string()
+      .min(2, 'tooShort')
+      .max(50, 'tooLong')
+      .required('required'),
+    sesameId: Yup.string()
+      .min(7, 'tooShort')
+      .max(7, 'tooLong')
+      .matches(/[a,x]{1}\d{6}/i, 'notASesamId')
+      .required('required'),
+    countryIso: Yup.mixed()
+      .oneOf(Array.from(countries, (country) => country.iso))
+      .required('required'),
+    ouCode: Yup.mixed()
+      .oneOf(Array.from(organisationUnits, (ou) => ou.code))
+      .required('required'),
+  });
+};
 
 export default function Createprofile(props) {
   const { user } = props;
@@ -96,11 +101,25 @@ export default function Createprofile(props) {
   const [uqSesameId, setUqSesameId] = useState();
   const [errorOpen, setErrorOpen] = useState(false);
   const [apiErrorResponse, setApiErrorResponse] = useState();
+  const [countries, setCountries] = useState([]);
+  const [organisationUnits, setOrganisationUnits] = useState([]);
+
+  useEffect(() => {
+    const fetchCountries = async () => {
+      const result = await CountriesService.getAll();
+      setCountries(result);
+    };
+    const fetchOrgUnits = async () => {
+      const orgUnits = await OrgUnitService.getAll();
+      setOrganisationUnits(orgUnits);
+    };
+    fetchCountries();
+    fetchOrgUnits();
+  }, []);
 
   const handleSuccessClose = () => {
     const updatedUser = AuthService.getCurrentUser();
     props.updateUser(updatedUser);
-    //history.push('collaborator');
     setSuccessOpen(false);
   };
   const handleErrorClose = () => {
@@ -149,13 +168,13 @@ export default function Createprofile(props) {
         countryIso: '',
         ouCode: '',
       }}
-      validationSchema={ValidationSchema}
+      validationSchema={() => ValidationSchema(countries, organisationUnits)}
       onSubmit={(values, { setSubmitting }) => {
         setSubmitting(true);
         resetApiErrors();
         CollaboratorService.create(values)
           .then(() => {
-            CollaboratorService.setCollaboratorHasProfileToTrue();
+            CollaboratorService.updateCollaboratorProfile(values);
             setSuccessOpen(true);
           })
           .catch((error) => {
@@ -309,8 +328,8 @@ export default function Createprofile(props) {
                       }
                     >
                       {organisationUnits.map((ou) => (
-                        <MenuItem key={ou.value} value={ou.value}>
-                          {ou.value}
+                        <MenuItem key={ou.code} value={ou.code}>
+                          {ou.code}
                         </MenuItem>
                       ))}
                     </TextField>
@@ -342,10 +361,10 @@ export default function Createprofile(props) {
                       }
                     >
                       {countries.map((country) => (
-                        <MenuItem key={country.value} value={country.value}>
+                        <MenuItem key={country.iso} value={country.iso}>
                           <FormattedMessage
-                            id={country.label}
-                            defaultMessage={country.label}
+                            id={country.name}
+                            defaultMessage={country.name}
                           />
                         </MenuItem>
                       ))}
