@@ -33,7 +33,13 @@
   "collaboratorCreated": "Collaborator profile created",
   "France": "France",
   "United States": "United States",
-  "United KingDom": "United KingDom",
+  "United Kingdom": "United Kingdom",
+  "Italy":"Italy",
   "SesameNotUnique": "Sesame ID not unique",
-  "chooseRiskScope": "Choose de risk perimeter"
+  "chooseRiskScope": "Choose the risk perimeter",
+  "Risk":"Risk",
+  "KYC": "Know Your Customer",
+  "Corruption": "Corruption",
+  "CORR": "Corruption",
+  "Org.Unit.": "Org.Unit."
 }

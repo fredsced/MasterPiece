@@ -2,15 +2,18 @@ package fr.formation.itschool.masterpiece.controllers;
 
 import fr.formation.itschool.masterpiece.config.SecurityHelper;
 import fr.formation.itschool.masterpiece.dtos.CreateCollaboratorDto;
+import fr.formation.itschool.masterpiece.dtos.LcoViewDto;
 import fr.formation.itschool.masterpiece.services.CollaboratorService;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @CrossOrigin
 @RestController
@@ -31,5 +34,9 @@ public class CollaboratorController {
   @PostMapping()
   public void createCollaborator(@RequestBody @Valid CreateCollaboratorDto createCollaboratorDto) {
     collaboratorService.createCollaborator(createCollaboratorDto, SecurityHelper.getAccountId());
+  }
+  @GetMapping("/getmylco")
+  public List<LcoViewDto> getLcoByRisk(@RequestParam String riskCode) {
+    return collaboratorService.getLcoByRisk(riskCode);
   }
 }

@@ -34,7 +34,13 @@
   "collaboratorCreated": "Profil collaborateur créé",
   "France": "France",
   "United States": "Etats-Unis",
-  "United KingDom": "Royaume-Uni",
+  "United Kingdom": "Royaume-Uni",
+  "Italy":"Italie",
   "SesameNotUnique": "Compte sésame déjà utilisé",
-  "chooseRiskScope": "Choisissez le périmètre du risque"
+  "chooseRiskScope": "Choisissez le périmètre du risque",
+  "Risk":"Risque",
+  "KYC": "KYC Connaissance du client",
+  "CORR": "Corruption",
+  "Corruption": "Corruption",
+  "Org.Unit.": "Unit.Org."
 }
