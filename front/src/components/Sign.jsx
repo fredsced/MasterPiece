@@ -60,10 +60,15 @@ const useStyles = makeStyles((theme) => ({
 const ValidationSchema = (type) => {
   if (type === 'register') {
     return Yup.object().shape({
-      email: Yup.string().email('emailNotValid').required('emailRequired'),
+      email: Yup.string()
+        .email('emailNotValid')
+        .required('emailRequired')
+        .max(255, 'tooLong'),
       password: Yup.string()
+        .min(8, 'tooShort')
+        .max(30, 'tooLong')
         .matches(
-          /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])\S{8,}/,
+          /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])\S{8,30}/,
           'passwordNotComplex'
         )
         .required('passwordRequired'),
