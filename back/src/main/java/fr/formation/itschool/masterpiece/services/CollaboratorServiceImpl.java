@@ -85,6 +85,11 @@ public class CollaboratorServiceImpl implements CollaboratorService {
 
   @Override
   public List<LcoViewDto> getLcoByRisk(String riskCode) {
+    // this function  will make 5 requests...
+    // Two to retrieve currentCollaborator
+    // One for the country
+    // One for the orgUnit
+    // One for the select with filter risk, country, orgunit
     Collaborator currentCollaborator =
         collaboratorRepository.findByAccountId(SecurityHelper.getAccountId(), Collaborator.class);
     return complianceReferentRepository.findMyComplianceReferentByRisk(
