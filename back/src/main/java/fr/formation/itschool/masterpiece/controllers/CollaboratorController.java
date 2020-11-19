@@ -37,6 +37,7 @@ public class CollaboratorController {
   }
   @GetMapping("/getmylco")
   public List<LcoViewDto> getLcoByRisk(@RequestParam String riskCode) {
+    // TODO SANITIZE inputs riskCode to avoid SQL Injection ?
     return collaboratorService.getLcoByRisk(riskCode);
   }
 }
