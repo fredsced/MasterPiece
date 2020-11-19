@@ -1,6 +1,5 @@
 import axios from 'axios';
 import authHeaders from './authHeader';
-import queryString from 'query-string';
 
 const LOCAL_STORAGE_USER = process.env.REACT_APP_LOCAL_STORAGE_USER;
 
