@@ -4,7 +4,7 @@ import fr.formation.itschool.masterpiece.config.SecurityHelper;
 import fr.formation.itschool.masterpiece.domain.Account;
 import fr.formation.itschool.masterpiece.domain.Collaborator;
 import fr.formation.itschool.masterpiece.domain.Country;
-import fr.formation.itschool.masterpiece.domain.Organisationunit;
+import fr.formation.itschool.masterpiece.domain.OrganisationUnit;
 import fr.formation.itschool.masterpiece.dtos.CollaboratorNameDto;
 import fr.formation.itschool.masterpiece.dtos.CreateCollaboratorDto;
 import fr.formation.itschool.masterpiece.dtos.LcoViewDto;
@@ -13,7 +13,7 @@ import fr.formation.itschool.masterpiece.repositories.AccountRepository;
 import fr.formation.itschool.masterpiece.repositories.CollaboratorRepository;
 import fr.formation.itschool.masterpiece.repositories.ComplianceReferentRepository;
 import fr.formation.itschool.masterpiece.repositories.CountryRepository;
-import fr.formation.itschool.masterpiece.repositories.OrganisationunitRepository;
+import fr.formation.itschool.masterpiece.repositories.OrganisationUnitRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,19 +24,19 @@ public class CollaboratorServiceImpl implements CollaboratorService {
   private final CollaboratorRepository collaboratorRepository;
   private final AccountRepository accountRepository;
   private final CountryRepository countryRepository;
-  private final OrganisationunitRepository ouRepository;
+  private final OrganisationUnitRepository organisationUnitRepository;
   private final ComplianceReferentRepository complianceReferentRepository;
 
   protected CollaboratorServiceImpl(
       CollaboratorRepository collaboratorRepository,
       AccountRepository accountRepository,
       CountryRepository countryRepository,
-      OrganisationunitRepository ouRepository,
+      OrganisationUnitRepository ouRepository,
       ComplianceReferentRepository complianceReferentRepository) {
     this.collaboratorRepository = collaboratorRepository;
     this.accountRepository = accountRepository;
     this.countryRepository = countryRepository;
-    this.ouRepository = ouRepository;
+    this.organisationUnitRepository = ouRepository;
     this.complianceReferentRepository = complianceReferentRepository;
   }
 
@@ -55,19 +55,19 @@ public class CollaboratorServiceImpl implements CollaboratorService {
                 () ->
                     new ResourceNotFoundException(
                         "No country with the code iso :" + createCollaboratorDto.getCountryIso()));
-    Organisationunit ou =
-        ouRepository
-            .findByCodeIgnoreCase(createCollaboratorDto.getOuCode())
+    OrganisationUnit organisationunit =
+        organisationUnitRepository
+            .findByCodeIgnoreCase(createCollaboratorDto.getOrganisationUnitCode())
             .orElseThrow(
                 () ->
                     new ResourceNotFoundException(
                         "No organisation unit with the code :"
-                            + createCollaboratorDto.getOuCode()));
+                            + createCollaboratorDto.getOrganisationUnitCode()));
     Account account = accountRepository.getOne(accountId);
     collaboratorToCreate.setAccount(account);
     collaboratorToCreate.setCountry(country);
-    collaboratorToCreate.setOrganisationUnit(ou);
-    collaboratorToCreate.setFirstname(createCollaboratorDto.getFirstname());
+    collaboratorToCreate.setOrganisationUnit(organisationunit);
+    collaboratorToCreate.setFirstname(createCollaboratorDto.getFirstName());
     collaboratorToCreate.setName(createCollaboratorDto.getName());
     collaboratorToCreate.setSesameId(createCollaboratorDto.getSesameId());
     collaboratorRepository.save(collaboratorToCreate);
@@ -75,7 +75,7 @@ public class CollaboratorServiceImpl implements CollaboratorService {
 
   @Override
   public CollaboratorNameDto getNameByAccountId(Long accountId) {
-    return collaboratorRepository.findNameByAccountId(accountId);
+    return collaboratorRepository.findByAccountId(accountId, CollaboratorNameDto.class);
   }
 
   @Override
@@ -86,7 +86,7 @@ public class CollaboratorServiceImpl implements CollaboratorService {
   @Override
   public List<LcoViewDto> getLcoByRisk(String riskCode) {
     Collaborator currentCollaborator =
-        collaboratorRepository.findByAccountId(SecurityHelper.getAccountId());
+        collaboratorRepository.findByAccountId(SecurityHelper.getAccountId(), Collaborator.class);
     return complianceReferentRepository.findLcoByRisk(
         riskCode,
         currentCollaborator.getCountry().getId(),
