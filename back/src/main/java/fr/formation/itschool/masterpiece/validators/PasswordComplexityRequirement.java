@@ -12,7 +12,7 @@ import java.lang.annotation.Target;
 @Documented@Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.FIELD, ElementType.TYPE})
 @Constraint(validatedBy = PasswordComplexityValidator.class)
-public @interface PasswordComplexity {
+public @interface PasswordComplexityRequirement {
   String message() default "passwordComplexityError";
   Class<?>[] groups() default {};
 

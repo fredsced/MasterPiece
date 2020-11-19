@@ -11,7 +11,7 @@ import java.util.List;
 public interface ComplianceReferentRepository extends JpaRepository<ComplianceReferent, Long> {
 
   @Query(
-      "SELECT new fr.formation.itschool.masterpiece.dtos.LcoViewDto(c.name, c.firstName, co.iso, ou.code, r.code) FROM ComplianceReferent cr join cr.collaborator c join c.country co join c.organisationUnit ou join cr.risk r WHERE r.code=:input AND ou.id=:buId AND co.id=:countryId")
+      "SELECT new fr.formation.itschool.masterpiece.dtos.LcoViewDto(c.lastname, c.firstname, co.iso, ou.code, r.code) FROM ComplianceReferent cr join cr.collaborator c join c.country co join c.organisationUnit ou join cr.risk r WHERE r.code=:input AND ou.id=:buId AND co.id=:countryId")
   List<LcoViewDto> findMyComplianceReferentByRisk(
       @Param("input") String riskCode,
       @Param("countryId") Long countryId,

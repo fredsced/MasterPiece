@@ -14,9 +14,11 @@ import fr.formation.itschool.masterpiece.repositories.CollaboratorRepository;
 import fr.formation.itschool.masterpiece.repositories.ComplianceReferentRepository;
 import fr.formation.itschool.masterpiece.repositories.CountryRepository;
 import fr.formation.itschool.masterpiece.repositories.OrganisationUnitRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class CollaboratorServiceImpl implements CollaboratorService {
@@ -26,18 +28,21 @@ public class CollaboratorServiceImpl implements CollaboratorService {
   private final CountryRepository countryRepository;
   private final OrganisationUnitRepository organisationUnitRepository;
   private final ComplianceReferentRepository complianceReferentRepository;
+  private final ModelMapper modelmapper;
 
   protected CollaboratorServiceImpl(
       CollaboratorRepository collaboratorRepository,
       AccountRepository accountRepository,
       CountryRepository countryRepository,
       OrganisationUnitRepository ouRepository,
-      ComplianceReferentRepository complianceReferentRepository) {
+      ComplianceReferentRepository complianceReferentRepository,
+      ModelMapper modelMapper) {
     this.collaboratorRepository = collaboratorRepository;
     this.accountRepository = accountRepository;
     this.countryRepository = countryRepository;
     this.organisationUnitRepository = ouRepository;
     this.complianceReferentRepository = complianceReferentRepository;
+    this.modelmapper = modelMapper;
   }
 
   @Override
@@ -47,29 +52,9 @@ public class CollaboratorServiceImpl implements CollaboratorService {
 
   @Override
   public void createCollaborator(CreateCollaboratorDto createCollaboratorDto, Long accountId) {
-    Collaborator collaboratorToCreate = new Collaborator();
-    Country country =
-        countryRepository
-            .findByIsoIgnoreCase(createCollaboratorDto.getCountryIso())
-            .orElseThrow(
-                () ->
-                    new ResourceNotFoundException(
-                        "No country with the code iso :" + createCollaboratorDto.getCountryIso()));
-    OrganisationUnit organisationunit =
-        organisationUnitRepository
-            .findByCodeIgnoreCase(createCollaboratorDto.getOrganisationUnitCode())
-            .orElseThrow(
-                () ->
-                    new ResourceNotFoundException(
-                        "No organisation unit with the code :"
-                            + createCollaboratorDto.getOrganisationUnitCode()));
-    Account account = accountRepository.getOne(accountId);
-    collaboratorToCreate.setAccount(account);
-    collaboratorToCreate.setCountry(country);
-    collaboratorToCreate.setOrganisationUnit(organisationunit);
-    collaboratorToCreate.setFirstName(createCollaboratorDto.getFirstName());
-    collaboratorToCreate.setName(createCollaboratorDto.getName());
-    collaboratorToCreate.setSesameId(createCollaboratorDto.getSesameId());
+    Account collaboratorAccount = accountRepository.getOne(accountId);
+    Collaborator collaboratorToCreate = modelmapper.map(createCollaboratorDto, Collaborator.class);
+    collaboratorToCreate.setAccount(Objects.requireNonNull(collaboratorAccount));
     collaboratorRepository.save(collaboratorToCreate);
   }
 

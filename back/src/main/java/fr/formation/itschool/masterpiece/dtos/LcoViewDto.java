@@ -2,26 +2,27 @@ package fr.formation.itschool.masterpiece.dtos;
 
 public class LcoViewDto {
 
-  private String name;
+  private String firstname;
   private String firstName;
   private String country;
   private String buCode;
   private String riskCode;
 
-  public LcoViewDto(String name, String firstName, String country, String buCode, String riskCode) {
-    this.name = name;
+  public LcoViewDto(
+      String firstname, String firstName, String country, String buCode, String riskCode) {
+    this.firstname = firstname;
     this.firstName = firstName;
     this.country = country;
     this.buCode = buCode;
     this.riskCode = riskCode;
   }
 
-  public String getName() {
-    return name;
+  public String getFirstname() {
+    return firstname;
   }
 
-  public void setName(String name) {
-    this.name = name;
+  public void setFirstname(String firstname) {
+    this.firstname = firstname;
   }
 
   public String getFirstName() {

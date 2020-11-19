@@ -39,8 +39,8 @@ public class CustomTokenEnhancer implements TokenEnhancer {
     additionalInfo.put(ACCOUNT_HAS_PROFILE, collaboratorService.hasProfile(account.getId()));
     if (collaboratorService.hasProfile(account.getId())){
         CollaboratorNameDto collaboratorName = collaboratorService.getNameByAccountId(account.getId());
-        additionalInfo.put(COLLABORATOR_NAME, collaboratorName.getName());
-        additionalInfo.put(COLLABORATOR_FIRSTNAME, collaboratorName.getFirstName());
+        additionalInfo.put(COLLABORATOR_NAME, collaboratorName.getLastname());
+        additionalInfo.put(COLLABORATOR_FIRSTNAME, collaboratorName.getFirstname());
     }
     ((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(additionalInfo);
     return accessToken;

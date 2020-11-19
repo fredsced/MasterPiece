@@ -10,7 +10,7 @@ import javax.validation.constraints.Size;
 public class CreateCollaboratorDto {
   @NotNull
   @Size(min = 2, max = 255)
-  private String name;
+  private String lastname;
 
   @NotNull
   @Size(min = 2, max = 255)
@@ -21,11 +21,7 @@ public class CreateCollaboratorDto {
   @Size(min = 7, max = 7)
   private String sesameId;
 
-  @NotNull
-  @Size(min = 3, max = 3)
-  private String countryIso;
+  @NotNull private Long countryId;
 
-  @NotNull
-  @Size(min = 3, max = 25)
-  private String organisationUnitCode;
+  @NotNull private String organisationUnitId;
 }

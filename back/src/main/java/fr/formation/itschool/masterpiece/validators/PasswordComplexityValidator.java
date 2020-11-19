@@ -6,7 +6,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
-public class PasswordComplexityValidator implements ConstraintValidator<PasswordComplexity, String> {
+public class PasswordComplexityValidator implements ConstraintValidator<PasswordComplexityRequirement, String> {
 
   @Override
   public boolean isValid(String password, ConstraintValidatorContext context) {
