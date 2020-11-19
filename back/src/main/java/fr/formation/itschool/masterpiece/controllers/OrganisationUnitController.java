@@ -1,6 +1,6 @@
 package fr.formation.itschool.masterpiece.controllers;
 
-import fr.formation.itschool.masterpiece.dtos.OrganisationunitViewDto;
+import fr.formation.itschool.masterpiece.dtos.OrganisationUnitViewDto;
 import fr.formation.itschool.masterpiece.services.OrganisationunitService;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,15 +14,15 @@ import java.util.List;
 @RequestMapping(value = "/private/organisation-units")
 public class OrganisationUnitController {
 
-  private final OrganisationunitService organisationunitService;
+  private final OrganisationunitService organisationUnitService;
 
-  protected OrganisationUnitController(OrganisationunitService organisationunitService){
-    this.organisationunitService = organisationunitService;
+  protected OrganisationUnitController(OrganisationunitService organisationUnitService){
+    this.organisationUnitService = organisationUnitService;
   }
 
   @GetMapping()
-  public List<OrganisationunitViewDto> getAllOrganisationUnits(){
-    return organisationunitService.getAllOrganisationUnits();
+  public List<OrganisationUnitViewDto> getAllOrganisationUnits(){
+    return organisationUnitService.getAllOrganisationUnits();
   }
 
 }

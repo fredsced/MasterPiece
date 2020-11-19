@@ -1,12 +1,12 @@
 package fr.formation.itschool.masterpiece.dtos;
 
 /** A DTO representation of a {@code Organisationunit} */
-public class OrganisationunitViewDto {
+public class OrganisationUnitViewDto {
   private String code;
   private String name;
   private String description;
 
-  protected OrganisationunitViewDto() {}
+  protected OrganisationUnitViewDto() {}
 
 
   public String getCode() {

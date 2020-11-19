@@ -20,7 +20,7 @@ import javax.validation.constraints.Size;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name="ORGANISATION_UNITS")
-public class Organisationunit {
+public class OrganisationUnit {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

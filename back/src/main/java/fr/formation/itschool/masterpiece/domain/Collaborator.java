@@ -45,7 +45,7 @@ public class Collaborator {
 
   @NotNull @ManyToOne private Country country;
 
-  @NotNull @ManyToOne private Organisationunit organisationUnit;
+  @NotNull @ManyToOne private OrganisationUnit organisationUnit;
 
   @OneToOne
   @JoinColumn(name = "account_id")

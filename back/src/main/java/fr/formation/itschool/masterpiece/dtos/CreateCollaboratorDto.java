@@ -14,7 +14,7 @@ public class CreateCollaboratorDto {
 
   @NotNull
   @Size(min = 2, max = 255)
-  private String firstname;
+  private String firstName;
 
   @NotNull
   @UniqueSesameId
@@ -27,5 +27,5 @@ public class CreateCollaboratorDto {
 
   @NotNull
   @Size(min = 3, max = 25)
-  private String ouCode;
+  private String organisationUnitCode;
 }
