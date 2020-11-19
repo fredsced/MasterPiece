@@ -19,21 +19,9 @@ import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import CollaboratorService from '../services/CollaboratorService';
 import MuiAlert from '@material-ui/lab/Alert';
-import { useHistory } from 'react-router-dom';
 import AuthService from '../services/AuthService';
 import CountriesService from '../services/CountriesService';
 import OrgUnitService from '../services/OrgUnitService';
-
-
-const fakeCountries = [
-  { iso: 'FRA', name: 'France' },
-  { iso: 'USA', name: 'United States' },
-  { iso: 'GBR', name: 'United KingDom' },
-];
-
-const fakeOrganisationUnits = [{ code: 'GBIS' }, { code: 'BSC' }, { code: 'GTS' }];
-
-const LOCAL_STORAGE_USER = process.env.REACT_APP_LOCAL_STORAGE_USER;
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant='filled' {...props} />;
@@ -94,8 +82,6 @@ const ValidationSchema = (countries, organisationUnits) => {
 };
 
 export default function Createprofile(props) {
-  const { user } = props;
-  const history = useHistory();
   const classes = useStyles();
   const [successOpen, setSuccessOpen] = useState(false);
   const [uqSesameId, setUqSesameId] = useState();
