@@ -19,48 +19,44 @@ import java.util.Set;
 
 @Service
 public class AccountServiceImpl implements AccountService {
-  private final AccountRepository accounts;
-  private final RoleRepository roles;
+  private final AccountRepository accountRepository;
+  private final RoleRepository roleRepository;
   private final PasswordEncoder encoder;
 
   protected AccountServiceImpl(
-      AccountRepository accounts, RoleRepository roles, PasswordEncoder encoder) {
+      AccountRepository accountRepository, RoleRepository roleRepository, PasswordEncoder encoder) {
 
-    this.accounts = accounts;
-    this.roles = roles;
+    this.accountRepository = accountRepository;
+    this.roleRepository = roleRepository;
     this.encoder = encoder;
   }
 
   @Override
   public void create(CreateAccountDto createAccountDto) {
-    Account accountToSave = new Account();
-    accountToSave.setEmail(createAccountDto.getEmail());
-    String rawPassword = createAccountDto.getPassword();
-    String passwordEncoded = encoder.encode(rawPassword);
-    accountToSave.setPassword(passwordEncoded);
-    Role defaultRole = roles.findByDefaultRoleTrue();
+    String passwordEncoded = encoder.encode(createAccountDto.getPassword());
+    Role defaultRole = roleRepository.findByDefaultRoleTrue();
     Set<Role> roleToSave = new HashSet<>();
     roleToSave.add(defaultRole);
-    accountToSave.setRoles(roleToSave);
-    accounts.save(accountToSave);
+    Account accountToSave = new Account(createAccountDto.getEmail(), passwordEncoded, roleToSave);
+    accountRepository.save(accountToSave);
   }
 
   @Override
   public AccountInfoDto getCurrentAccountInfo(Long id) {
-    return accounts
+    return accountRepository
         .getById(id)
         .orElseThrow(() -> new ResourceNotFoundException("No account found with this id:" + id));
   }
 
   @Override
   public boolean isEmailPresentInDB(String email) {
-    return accounts.existsByEmailIgnoreCase(email);
+    return accountRepository.existsByEmailIgnoreCase(email);
   }
 
   @Override
   public UserDetails loadUserByUsername(String email) {
     AccountAuthDto userAccount =
-        accounts
+        accountRepository
             .findByEmailIgnoreCase(email)
             .orElseThrow(
                 () -> new UsernameNotFoundException("No account found with email:" + email));
