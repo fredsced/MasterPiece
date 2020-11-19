@@ -12,7 +12,6 @@ import { IntlProvider } from 'react-intl';
 import AuthService from './services/AuthService';
 import message_en from './lang/en.json';
 import message_fr from './lang/fr.json';
-import SearchComplianceOfficer from './components/SearchComplianceOfficer';
 
 function App() {
   const [currentUser, setCurrentUser] = useState(AuthService.getCurrentUser);
