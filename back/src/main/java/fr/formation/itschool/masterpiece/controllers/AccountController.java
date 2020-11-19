@@ -12,17 +12,17 @@ import javax.validation.Valid;
 
 @CrossOrigin
 @RestController
-@RequestMapping(value = "/private")
+@RequestMapping(value = "/private/accounts")
 class AccountController {
 
-  private final AccountService service;
+  private final AccountService accountService;
 
-  protected AccountController(AccountService service) {
-    this.service = service;
+  protected AccountController(AccountService accountService) {
+    this.accountService = accountService;
   }
 
-  @PostMapping("/accounts")
+  @PostMapping()
   public void createAccount(@Valid @RequestBody CreateAccountDto createAccountDto) {
-    service.create(createAccountDto);
+    accountService.create(createAccountDto);
   }
 }
