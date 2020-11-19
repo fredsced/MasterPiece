@@ -18,7 +18,7 @@ public class CreateAccountDto {
   private String email;
 
   @NotBlank
-  @Size(min = 8, max = 255)
+  @Size(min = 8, max = 30)
   @PasswordComplexity
   private String password;
 }
