@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class OrganisationUnitServiceImpl implements OrganisationunitService {
+public class OrganisationUnitServiceImpl implements OrganisationUnitService {
 
   private final OrganisationUnitRepository organisationUnitRepository;
   private final ModelMapper modelMapper;

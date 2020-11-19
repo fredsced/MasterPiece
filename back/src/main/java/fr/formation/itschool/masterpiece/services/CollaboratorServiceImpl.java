@@ -67,7 +67,7 @@ public class CollaboratorServiceImpl implements CollaboratorService {
     collaboratorToCreate.setAccount(account);
     collaboratorToCreate.setCountry(country);
     collaboratorToCreate.setOrganisationUnit(organisationunit);
-    collaboratorToCreate.setFirstname(createCollaboratorDto.getFirstName());
+    collaboratorToCreate.setFirstName(createCollaboratorDto.getFirstName());
     collaboratorToCreate.setName(createCollaboratorDto.getName());
     collaboratorToCreate.setSesameId(createCollaboratorDto.getSesameId());
     collaboratorRepository.save(collaboratorToCreate);
@@ -87,7 +87,7 @@ public class CollaboratorServiceImpl implements CollaboratorService {
   public List<LcoViewDto> getLcoByRisk(String riskCode) {
     Collaborator currentCollaborator =
         collaboratorRepository.findByAccountId(SecurityHelper.getAccountId(), Collaborator.class);
-    return complianceReferentRepository.findLcoByRisk(
+    return complianceReferentRepository.findMyComplianceReferentByRisk(
         riskCode,
         currentCollaborator.getCountry().getId(),
         currentCollaborator.getOrganisationUnit().getId());
