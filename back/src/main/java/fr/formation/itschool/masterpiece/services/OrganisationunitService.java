@@ -5,5 +5,5 @@ import fr.formation.itschool.masterpiece.dtos.OrganisationunitViewDto;
 import java.util.List;
 
 public interface OrganisationunitService {
-  List<OrganisationunitViewDto> getAllOrgUnit();
+  List<OrganisationunitViewDto> getAllOrganisationUnits();
 }
