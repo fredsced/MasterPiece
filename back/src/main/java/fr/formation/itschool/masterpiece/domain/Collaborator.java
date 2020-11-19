@@ -36,7 +36,7 @@ public class Collaborator {
   @NotBlank
   @Size(max = 255)
   @Column(name = "firstname")
-  private String firstname;
+  private String firstName;
 
   @NotBlank
   @Size(min = 7, max = 7)
