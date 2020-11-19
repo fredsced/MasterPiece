@@ -1,5 +1,6 @@
 package fr.formation.itschool.masterpiece.dtos;
 
+import fr.formation.itschool.masterpiece.validators.PasswordComplexity;
 import fr.formation.itschool.masterpiece.validators.UniqueEmail;
 import lombok.Getter;
 
@@ -18,5 +19,6 @@ public class CreateAccountDto {
 
   @NotBlank
   @Size(min = 8, max = 255)
+  @PasswordComplexity
   private String password;
 }
