@@ -50,50 +50,12 @@ public class Account {
               foreignKey = @ForeignKey(name = "account_roles_role_id_FK")))
   private Set<Role> roles;
 
-  public Account() {}
+  protected Account() {}
 
+  /** Create a new account. */
   public Account(String email, String password, Set<Role> roles) {
     this.email = email;
     this.password = password;
-    this.roles = roles;
-  }
-
-  public Account(Long id, String email, String password, Set<Role> roles) {
-    this.id = id;
-    this.email = email;
-    this.password = password;
-    this.roles = roles;
-  }
-
-  public Long getId() {
-    return id;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
-  }
-
-  public String getEmail() {
-    return email;
-  }
-
-  public void setEmail(String email) {
-    this.email = email;
-  }
-
-  public String getPassword() {
-    return password;
-  }
-
-  public void setPassword(String password) {
-    this.password = password;
-  }
-
-  public Set<Role> getRoles() {
-    return roles;
-  }
-
-  public void setRoles(Set<Role> roles) {
     this.roles = roles;
   }
 
@@ -106,7 +68,7 @@ public class Account {
         + email
         + '\''
         + ", password='"
-        + password
+        + "*******"
         + '\''
         + ", roles="
         + roles

@@ -11,26 +11,21 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Size;
 
 @Entity
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@Table(name="RISKS")
+@Table(
+    name = "risks",
+    uniqueConstraints = @UniqueConstraint(name = "risks_code_UQ", columnNames = "code"))
 public class Risk {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @NotBlank
-  @Size(max=45)
-  @Column(unique = true, nullable = false)
+  @Column(unique = true, nullable = false, length = 45)
   private String code;
 
-  @Size(max=255)
+  @Size(max = 255)
   private String label;
-
 }
