@@ -18,7 +18,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Objects;
 
 @Service
 public class CollaboratorServiceImpl implements CollaboratorService {
@@ -52,9 +51,29 @@ public class CollaboratorServiceImpl implements CollaboratorService {
 
   @Override
   public void createCollaborator(CreateCollaboratorDto createCollaboratorDto, Long accountId) {
-    Account collaboratorAccount = accountRepository.getOne(accountId);
-    Collaborator collaboratorToCreate = modelmapper.map(createCollaboratorDto, Collaborator.class);
-    collaboratorToCreate.setAccount(Objects.requireNonNull(collaboratorAccount));
+    Collaborator collaboratorToCreate = new Collaborator();
+    Country country =
+        countryRepository
+            .findById(createCollaboratorDto.getCountry().getId())
+            .orElseThrow(
+                () ->
+                    new ResourceNotFoundException(
+                        "No country with this id :" + createCollaboratorDto.getCountry().getId()));
+    OrganisationUnit ou =
+        organisationUnitRepository
+            .findById(createCollaboratorDto.getOrganisationUnit().getId())
+            .orElseThrow(
+                () ->
+                    new ResourceNotFoundException(
+                        "No organisation unit  with this id :"
+                            + createCollaboratorDto.getOrganisationUnit().getId()));
+    Account account = accountRepository.getOne(accountId);
+    collaboratorToCreate.setAccount(account);
+    collaboratorToCreate.setCountry(country);
+    collaboratorToCreate.setOrganisationUnit(ou);
+    collaboratorToCreate.setFirstname(createCollaboratorDto.getFirstname());
+    collaboratorToCreate.setLastname(createCollaboratorDto.getLastname());
+    collaboratorToCreate.setSesameId(createCollaboratorDto.getSesameId());
     collaboratorRepository.save(collaboratorToCreate);
   }
 

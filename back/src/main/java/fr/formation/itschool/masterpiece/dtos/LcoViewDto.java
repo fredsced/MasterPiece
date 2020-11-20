@@ -3,15 +3,14 @@ package fr.formation.itschool.masterpiece.dtos;
 public class LcoViewDto {
 
   private String firstname;
-  private String firstName;
+  private String lastname;
   private String country;
   private String buCode;
   private String riskCode;
 
-  public LcoViewDto(
-      String firstname, String firstName, String country, String buCode, String riskCode) {
+  public LcoViewDto(String firstname, String lastname, String riskCode, String country, String buCode) {
     this.firstname = firstname;
-    this.firstName = firstName;
+    this.lastname = lastname;
     this.country = country;
     this.buCode = buCode;
     this.riskCode = riskCode;
@@ -25,12 +24,12 @@ public class LcoViewDto {
     this.firstname = firstname;
   }
 
-  public String getFirstName() {
-    return firstName;
+  public String getLastname() {
+    return lastname;
   }
 
-  public void setFirstName(String firstName) {
-    this.firstName = firstName;
+  public void setLastname(String lastname) {
+    this.lastname = lastname;
   }
 
   public String getCountry() {

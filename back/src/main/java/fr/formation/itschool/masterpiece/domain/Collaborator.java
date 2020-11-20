@@ -51,8 +51,23 @@ public class Collaborator {
   private OrganisationUnit organisationUnit;
 
   @OneToOne
-  @JoinColumn(name = "account_id", foreignKey = @ForeignKey(name = "collaborators_account_id_FK"))
+  @JoinColumn(
+      name = "account_id",
+      nullable = true,
+      foreignKey = @ForeignKey(name = "collaborators_account_id_FK"))
   private Account account;
+
+  public void setLastname(String lastname) {
+    this.lastname = lastname;
+  }
+
+  public void setFirstname(String firstname) {
+    this.firstname = firstname;
+  }
+
+  public void setSesameId(String sesameId) {
+    this.sesameId = sesameId;
+  }
 
   public void setAccount(Account account) {
     this.account = account;
@@ -62,7 +77,15 @@ public class Collaborator {
     return country;
   }
 
+  public void setCountry(Country country) {
+    this.country = country;
+  }
+
   public OrganisationUnit getOrganisationUnit() {
     return organisationUnit;
+  }
+
+  public void setOrganisationUnit(OrganisationUnit organisationUnit) {
+    this.organisationUnit = organisationUnit;
   }
 }
