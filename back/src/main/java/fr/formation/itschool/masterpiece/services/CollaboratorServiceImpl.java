@@ -5,7 +5,7 @@ import fr.formation.itschool.masterpiece.domain.Account;
 import fr.formation.itschool.masterpiece.domain.Collaborator;
 import fr.formation.itschool.masterpiece.domain.Country;
 import fr.formation.itschool.masterpiece.domain.OrganisationUnit;
-import fr.formation.itschool.masterpiece.dtos.CollaboratorNameDto;
+import fr.formation.itschool.masterpiece.dtos.CollaboratorInfoDto;
 import fr.formation.itschool.masterpiece.dtos.CreateCollaboratorDto;
 import fr.formation.itschool.masterpiece.dtos.LcoViewDto;
 import fr.formation.itschool.masterpiece.exceptions.ResourceNotFoundException;
@@ -78,8 +78,8 @@ public class CollaboratorServiceImpl implements CollaboratorService {
   }
 
   @Override
-  public CollaboratorNameDto getNameByAccountId(Long accountId) {
-    return collaboratorRepository.findByAccountId(accountId, CollaboratorNameDto.class);
+  public CollaboratorInfoDto getCollaboratorInfoByAccountId(Long accountId) {
+    return collaboratorRepository.findByAccountId(accountId, CollaboratorInfoDto.class);
   }
 
   @Override

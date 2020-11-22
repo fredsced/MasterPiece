@@ -1,6 +1,6 @@
 package fr.formation.itschool.masterpiece.services;
 
-import fr.formation.itschool.masterpiece.dtos.CollaboratorNameDto;
+import fr.formation.itschool.masterpiece.dtos.CollaboratorInfoDto;
 import fr.formation.itschool.masterpiece.dtos.CreateCollaboratorDto;
 import fr.formation.itschool.masterpiece.dtos.LcoViewDto;
 
@@ -12,7 +12,7 @@ public interface CollaboratorService {
 
   void createCollaborator(CreateCollaboratorDto createCollaboratorDto, Long accountId);
 
-  CollaboratorNameDto getNameByAccountId(Long accoundId);
+  CollaboratorInfoDto getCollaboratorInfoByAccountId(Long accountId);
 
   boolean isSesameIdPresentsInDB(String sesameId);
 
