@@ -17,13 +17,9 @@ public class CustomTokenEnhancer implements TokenEnhancer {
   static final String ACCOUNT_EMAIL = "accountEmail";
   static final String ACCOUNT_ROLES = "accountRoles";
   static final String ACCOUNT_HAS_PROFILE = "accountHasProfile";
-  static final String COLLABORATOR_LASTNAME = "collaboratorLastname";
-  static final String COLLABORATOR_FIRSTNAME = "collaboratorFirstname";
-  static final String COLLABORATOR_ID = "collaboratorId";
-  static final String COLLABORATOR_COUNTRY_ID = "collaboratorCountryId";
-  static final String COLLABORATOR_ORG_UNIT_ID = "collaboratorOrgUnitId";
+  static final String COLLABORATOR_INFO = "collaboratorInfo";
 
-  // need to conserve the enhance method signature
+  // @Autowired because need to conserve the enhance method signature
   @Autowired private CollaboratorService collaboratorService;
 
   @Override
@@ -41,11 +37,7 @@ public class CustomTokenEnhancer implements TokenEnhancer {
     additionalInfo.put(ACCOUNT_HAS_PROFILE, hasProfile);
     if (hasProfile){
         CollaboratorInfoDto collaboratorInfo = collaboratorService.getCollaboratorInfoByAccountId(account.getId());
-        additionalInfo.put(COLLABORATOR_ID, collaboratorInfo.getId());
-        additionalInfo.put(COLLABORATOR_LASTNAME, collaboratorInfo.getLastname());
-        additionalInfo.put(COLLABORATOR_FIRSTNAME, collaboratorInfo.getFirstname());
-        additionalInfo.put(COLLABORATOR_COUNTRY_ID, collaboratorInfo.getCountryId());
-        additionalInfo.put(COLLABORATOR_ORG_UNIT_ID, collaboratorInfo.getOrganisationUnitId());
+        additionalInfo.put(COLLABORATOR_INFO, collaboratorInfo);
     }
     ((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(additionalInfo);
     return accessToken;
