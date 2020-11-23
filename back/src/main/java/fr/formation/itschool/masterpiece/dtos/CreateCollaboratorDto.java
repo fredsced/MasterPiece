@@ -1,6 +1,8 @@
 package fr.formation.itschool.masterpiece.dtos;
 
-import fr.formation.itschool.masterpiece.validators.UniqueSesameId;
+import fr.formation.itschool.masterpiece.domain.Country;
+import fr.formation.itschool.masterpiece.domain.OrganisationUnit;
+import fr.formation.itschool.masterpiece.validators.UniqueSesame;
 import lombok.Getter;
 
 import javax.validation.constraints.NotNull;
@@ -17,11 +19,11 @@ public class CreateCollaboratorDto {
   private String firstname;
 
   @NotNull
-  @UniqueSesameId
+  @UniqueSesame
   @Size(min = 7, max = 7)
-  private String sesameId;
+  private String sesame;
 
-  @NotNull private Long countryId;
+  @NotNull Country country;
 
-  @NotNull private Long organisationUnitId;
+  @NotNull OrganisationUnit organisationUnit;
 }

@@ -11,8 +11,8 @@ import java.lang.annotation.Target;
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ ElementType.FIELD, ElementType.TYPE })
-@Constraint(validatedBy = UniqueSesameIdValidator.class)
-public @interface UniqueSesameId {
+@Constraint(validatedBy = UniqueSesameValidator.class)
+public @interface UniqueSesame {
   String message() default "sesameIdNotUnique";
 
   Class<?>[] groups() default {};

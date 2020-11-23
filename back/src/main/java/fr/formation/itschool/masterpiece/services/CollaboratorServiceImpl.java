@@ -51,22 +51,25 @@ public class CollaboratorServiceImpl implements CollaboratorService {
 
   @Override
   public void createCollaborator(CreateCollaboratorDto createCollaboratorDto, Long accountId) {
-    Collaborator collaboratorToCreate = new Collaborator();
-    Country country =
+    Collaborator collaboratorToCreate = modelmapper.map(createCollaboratorDto, Collaborator.class);
+    Account account = accountRepository.getOne(accountId);
+    collaboratorToCreate.setAccount(account);
+    collaboratorRepository.save(collaboratorToCreate);
+    /*Country country =
         countryRepository
-            .findById(createCollaboratorDto.getCountry().getId())
+            .findById(createCollaboratorDto.getCountryId())
             .orElseThrow(
                 () ->
                     new ResourceNotFoundException(
-                        "No country with this id :" + createCollaboratorDto.getCountry().getId()));
+                        "No country with this id :" + createCollaboratorDto.getCountryId()));
     OrganisationUnit ou =
         organisationUnitRepository
-            .findById(createCollaboratorDto.getOrganisationUnit().getId())
+            .findById(createCollaboratorDto.getOrganisationUnitId())
             .orElseThrow(
                 () ->
                     new ResourceNotFoundException(
                         "No organisation unit  with this id :"
-                            + createCollaboratorDto.getOrganisationUnit().getId()));
+                            + createCollaboratorDto.getOrganisationUnitId()));
     Account account = accountRepository.getOne(accountId);
     collaboratorToCreate.setAccount(account);
     collaboratorToCreate.setCountry(country);
@@ -75,6 +78,8 @@ public class CollaboratorServiceImpl implements CollaboratorService {
     collaboratorToCreate.setLastname(createCollaboratorDto.getLastname());
     collaboratorToCreate.setSesameId(createCollaboratorDto.getSesameId());
     collaboratorRepository.save(collaboratorToCreate);
+
+     */
   }
 
   @Override
@@ -83,8 +88,8 @@ public class CollaboratorServiceImpl implements CollaboratorService {
   }
 
   @Override
-  public boolean isSesameIdPresentsInDB(String sesameId) {
-    return !collaboratorRepository.existsBySesameIdIgnoreCase(sesameId);
+  public boolean isSesamePresentsInDB(String sesameId) {
+    return !collaboratorRepository.existsBySesameIgnoreCase(sesameId);
   }
 
   @Override

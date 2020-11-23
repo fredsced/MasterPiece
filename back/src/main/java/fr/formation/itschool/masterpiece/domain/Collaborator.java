@@ -38,7 +38,7 @@ public class Collaborator {
   private String firstname;
 
   @Column(name = "sesame_id", nullable = false)
-  private String sesameId;
+  private String sesame;
 
   @ManyToOne
   @JoinColumn(name = "country_id", foreignKey = @ForeignKey(name = "collaborators_country_id_FK"))
@@ -65,8 +65,12 @@ public class Collaborator {
     this.firstname = firstname;
   }
 
-  public void setSesameId(String sesameId) {
-    this.sesameId = sesameId;
+  public String getSesame() {
+    return sesame;
+  }
+
+  public void setSesame(String sesame) {
+    this.sesame = sesame;
   }
 
   public void setAccount(Account account) {

@@ -7,7 +7,7 @@ public interface CollaboratorRepository extends JpaRepository<Collaborator, Long
 
   boolean existsByAccountId(Long accountId);
 
-  boolean existsBySesameIdIgnoreCase(String sesameId);
+  boolean existsBySesameIgnoreCase(String sesameId);
 
   <T> T findByAccountId(Long accountId, Class<T> tClass);
 }
