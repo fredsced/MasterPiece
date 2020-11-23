@@ -63,7 +63,7 @@ const ValidationSchema = (countries, organisationUnits) => {
       .min(2, 'tooShort')
       .max(50, 'tooLong')
       .required('required'),
-    name: Yup.string()
+    lastname: Yup.string()
       .min(2, 'tooShort')
       .max(50, 'tooLong')
       .required('required'),
@@ -72,12 +72,8 @@ const ValidationSchema = (countries, organisationUnits) => {
       .max(7, 'tooLong')
       .matches(/[a,x]{1}\d{6}/i, 'notASesamId')
       .required('required'),
-    countryIso: Yup.mixed()
-      .oneOf(Array.from(countries, (country) => country.iso))
-      .required('required'),
-    ouCode: Yup.mixed()
-      .oneOf(Array.from(organisationUnits, (ou) => ou.code))
-      .required('required'),
+    countryId: Yup.mixed().required('required'),
+    organisationUnitId: Yup.mixed().required('required'),
   });
 };
 
@@ -119,10 +115,11 @@ export default function Createprofile(props) {
     switch (errorMessage) {
       case 'Network Error':
         errorMessage = <FormattedMessage id='networkError' />;
+        setApiErrorResponse(errorMessage);
         break;
       default:
     }
-    setApiErrorResponse(errorMessage);
+
     if (
       Array.isArray(errorMessage) &&
       errorMessage.find(
@@ -135,7 +132,13 @@ export default function Createprofile(props) {
           defaultMessage='Sesame ID not unique'
         />
       );
-    } else {
+    } else if (Array.isArray(errorMessage)) {
+      const err = errorMessage
+        .map((error) => error.field + ' ' + error.message)
+        .join(' ');
+      //const myerr = err.join("\n");
+      console.log(err);
+      setApiErrorResponse(err);
       setErrorOpen(true);
     }
   };
@@ -149,10 +152,10 @@ export default function Createprofile(props) {
     <Formik
       initialValues={{
         firstname: '',
-        name: '',
+        lastname: '',
         sesameId: '',
-        countryIso: '',
-        ouCode: '',
+        countryId: '',
+        organisationUnitId: '',
       }}
       validationSchema={() => ValidationSchema(countries, organisationUnits)}
       onSubmit={(values, { setSubmitting }) => {
@@ -165,7 +168,6 @@ export default function Createprofile(props) {
           })
           .catch((error) => {
             handleCreationError(error);
-            console.log(error.response.data);
           })
           .then(() => {
             setSubmitting(false);
@@ -234,23 +236,23 @@ export default function Createprofile(props) {
                       type='text'
                       variant='standard'
                       size='small'
-                      id='name'
+                      id='lastname'
                       label={
                         <FormattedMessage
                           id='lastname'
                           defaultMessage='Lastname'
                         />
                       }
-                      name='name'
-                      value={values.name}
+                      name='lastname'
+                      value={values.lastname}
                       onChange={handleChange}
-                      error={touched.name && !!errors.name}
+                      error={touched.lastname && !!errors.lastname}
                       helperText={
-                        touched.name &&
-                        !!errors.name && (
+                        touched.lastname &&
+                        !!errors.lastname && (
                           <FormattedMessage
-                            id={errors.name}
-                            defaultMessage={errors.name}
+                            id={errors.lastname}
+                            defaultMessage={errors.lastname}
                           />
                         )
                       }
@@ -292,7 +294,7 @@ export default function Createprofile(props) {
                   <Grid container justify='center'>
                     <TextField
                       variant='standard'
-                      id='ouCode'
+                      id='organisationUnitId'
                       size='small'
                       width='115'
                       select
@@ -302,19 +304,19 @@ export default function Createprofile(props) {
                           defaultMessage='Organisation Unit'
                         />
                       }
-                      name='ouCode'
+                      name='organisationUnitId'
                       onChange={handleChange}
-                      value={values.ouCode}
-                      error={touched.ouCode && !!errors.ouCode}
+                      value={values.organisationUnitId}
+                      error={touched.organisationUnitId && !!errors.organisationUnitId}
                       helperText={
-                        touched.ouCode &&
-                        !!errors.ouCode && (
+                        touched.organisationUnitId &&
+                        !!errors.organisationUnitId && (
                           <FormattedMessage id={errors.ouCode} />
                         )
                       }
                     >
                       {organisationUnits.map((ou) => (
-                        <MenuItem key={ou.code} value={ou.code}>
+                        <MenuItem key={ou.id} value={ou.id}>
                           {ou.code}
                         </MenuItem>
                       ))}
@@ -325,31 +327,31 @@ export default function Createprofile(props) {
                   <Grid container justify='center'>
                     <TextField
                       variant='standard'
-                      id='country'
+                      id='countryId'
                       size='small'
                       width='115'
                       select
-                      value={values.countryIso}
+                      value={values.countryId}
                       label={
                         <FormattedMessage
                           id='country'
                           defaultMessage='Country'
                         />
                       }
-                      name='countryIso'
+                      name='countryId'
                       onChange={handleChange}
-                      error={touched.countryIso && !!errors.countryIso}
+                      error={touched.countryId && !!errors.countryId}
                       helperText={
-                        touched.countryIso &&
-                        !!errors.countryIso && (
+                        touched.countryId &&
+                        !!errors.countryId && (
                           <FormattedMessage id={errors.countryIso} />
                         )
                       }
                     >
                       {countries.map((country) => (
-                        <MenuItem key={country.iso} value={country.iso}>
+                        <MenuItem key={country.id} value={country.id}>
                           <FormattedMessage
-                            id={country.name}
+                            id={country.iso}
                             defaultMessage={country.name}
                           />
                         </MenuItem>
