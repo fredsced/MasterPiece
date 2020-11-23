@@ -19,7 +19,7 @@ public class CustomTokenEnhancer implements TokenEnhancer {
   static final String ACCOUNT_HAS_PROFILE = "accountHasProfile";
   static final String COLLABORATOR_INFO = "collaboratorInfo";
 
-  // @Autowired because need to conserve the enhance method signature
+  // @Autowired because need to conserve the empty constructor
   @Autowired private CollaboratorService collaboratorService;
 
   @Override
