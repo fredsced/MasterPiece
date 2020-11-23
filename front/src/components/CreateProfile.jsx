@@ -67,13 +67,13 @@ const ValidationSchema = (countries, organisationUnits) => {
       .min(2, 'tooShort')
       .max(50, 'tooLong')
       .required('required'),
-    sesameId: Yup.string()
+    sesame: Yup.string()
       .min(7, 'tooShort')
       .max(7, 'tooLong')
       .matches(/[a,x]{1}\d{6}/i, 'notASesamId')
       .required('required'),
-    countryId: Yup.mixed().required('required'),
-    organisationUnitId: Yup.mixed().required('required'),
+    country: Yup.mixed().required('required'),
+    organisationUnit: Yup.mixed().required('required'),
   });
 };
 
@@ -153,9 +153,9 @@ export default function Createprofile(props) {
       initialValues={{
         firstname: '',
         lastname: '',
-        sesameId: '',
-        countryId: '',
-        organisationUnitId: '',
+        sesame: '',
+        country: '',
+        organisationUnit: '',
       }}
       validationSchema={() => ValidationSchema(countries, organisationUnits)}
       onSubmit={(values, { setSubmitting }) => {
@@ -265,25 +265,25 @@ export default function Createprofile(props) {
                       type='text'
                       variant='standard'
                       size='small'
-                      id='sesameId'
+                      id='sesame'
                       label={
                         <FormattedMessage
                           id='sesameId'
                           defaultMessage='Sesame ID'
                         />
                       }
-                      name='sesameId'
-                      value={values.sesameId}
+                      name='sesame'
+                      value={values.sesame}
                       onChange={handleChange}
                       error={
-                        !!uqSesameId || (touched.sesameId && !!errors.sesameId)
+                        !!uqSesameId || (touched.sesame && !!errors.sesame)
                       }
                       helperText={
                         uqSesameId ||
-                        (touched.sesameId && errors.sesameId && (
+                        (touched.sesame && errors.sesame && (
                           <FormattedMessage
-                            id={errors.sesameId}
-                            defaultMessage={errors.sesameId}
+                            id={errors.sesame}
+                            defaultMessage={errors.sesame}
                           />
                         ))
                       }
@@ -294,7 +294,7 @@ export default function Createprofile(props) {
                   <Grid container justify='center'>
                     <TextField
                       variant='standard'
-                      id='organisationUnitId'
+                      id='organisationUnit'
                       size='small'
                       width='115'
                       select
@@ -304,20 +304,25 @@ export default function Createprofile(props) {
                           defaultMessage='Organisation Unit'
                         />
                       }
-                      name='organisationUnitId'
+                      name='organisationUnit'
                       onChange={handleChange}
-                      value={values.organisationUnitId}
-                      error={touched.organisationUnitId && !!errors.organisationUnitId}
+                      value={values.organisationUnit}
+                      error={
+                        touched.organisationUnit && !!errors.organisationUnit
+                      }
                       helperText={
-                        touched.organisationUnitId &&
-                        !!errors.organisationUnitId && (
-                          <FormattedMessage id={errors.ouCode} />
+                        touched.organisationUnit &&
+                        !!errors.organisationUnit && (
+                          <FormattedMessage id={errors.organisationUnit} />
                         )
                       }
                     >
-                      {organisationUnits.map((ou) => (
-                        <MenuItem key={ou.id} value={ou.id}>
-                          {ou.code}
+                      {organisationUnits.map((organisationUnit) => (
+                        <MenuItem
+                          key={organisationUnit.id}
+                          value={organisationUnit}
+                        >
+                          {organisationUnit.code}
                         </MenuItem>
                       ))}
                     </TextField>
@@ -327,29 +332,29 @@ export default function Createprofile(props) {
                   <Grid container justify='center'>
                     <TextField
                       variant='standard'
-                      id='countryId'
+                      id='country'
                       size='small'
                       width='115'
                       select
-                      value={values.countryId}
+                      value={values.country}
                       label={
                         <FormattedMessage
                           id='country'
                           defaultMessage='Country'
                         />
                       }
-                      name='countryId'
+                      name='country'
                       onChange={handleChange}
-                      error={touched.countryId && !!errors.countryId}
+                      error={touched.country && !!errors.country}
                       helperText={
-                        touched.countryId &&
-                        !!errors.countryId && (
-                          <FormattedMessage id={errors.countryIso} />
+                        touched.country &&
+                        !!errors.country && (
+                          <FormattedMessage id={errors.country} />
                         )
                       }
                     >
                       {countries.map((country) => (
-                        <MenuItem key={country.id} value={country.id}>
+                        <MenuItem key={country.id} value={country}>
                           <FormattedMessage
                             id={country.iso}
                             defaultMessage={country.name}

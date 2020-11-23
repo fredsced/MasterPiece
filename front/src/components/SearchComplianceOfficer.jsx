@@ -233,20 +233,20 @@ export default function SearchComplianceOfficer(props) {
                       <TableCell key={row.firstname + id} align='center'>
                         {row.firstname}
                       </TableCell>
-                      <TableCell key={row.name + id} align='center'>
-                        {row.name}
+                      <TableCell key={row.lastname + id} align='center'>
+                        {row.lastname}
                       </TableCell>
                       <TableCell key={row.country + id} align='center'>
                         {row.country}
                       </TableCell>
-                      <TableCell key={row.code + id} align='center'>
-                        {row.code}
+                      <TableCell key={row.buCode + id} align='center'>
+                        {row.buCode}
                       </TableCell>
-                      <TableCell key={row.risk + id} align='center'>
+                      <TableCell key={row.riskCode + id} align='center'>
                         {
                           <FormattedMessage
-                            id={row.risk}
-                            defaultMessage={row.risk}
+                            id={row.riskCode}
+                            defaultMessage={row.riskCode}
                           />
                         }
                       </TableCell>
