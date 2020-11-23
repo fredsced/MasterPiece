@@ -65,8 +65,8 @@ export default function Header(props) {
             <Box pr={6}>
               <Box>
                 <Typography variant='subtitle1'>
-                  {user.collaboratorFirstname && user.collaboratorName
-                    ? `${user.collaboratorFirstname} ${user.collaboratorName}`
+                  {user.collaboratorInfo && user.collaboratorInfo.firstname && user.collaboratorInfo.lastname
+                    ? `${user.collaboratorInfo.firstname} ${user.collaboratorInfo.lastname}`
                     : user.accountEmail}
                 </Typography>
               </Box>
