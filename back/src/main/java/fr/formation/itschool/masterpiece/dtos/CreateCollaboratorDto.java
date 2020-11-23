@@ -1,7 +1,5 @@
 package fr.formation.itschool.masterpiece.dtos;
 
-import fr.formation.itschool.masterpiece.domain.Country;
-import fr.formation.itschool.masterpiece.domain.OrganisationUnit;
 import fr.formation.itschool.masterpiece.validators.UniqueSesameId;
 import lombok.Getter;
 
@@ -23,10 +21,7 @@ public class CreateCollaboratorDto {
   @Size(min = 7, max = 7)
   private String sesameId;
 
-  @NotNull
-  private Country country;
+  @NotNull private Long countryId;
 
-  @NotNull
-  private OrganisationUnit organisationUnit;
-
+  @NotNull private Long organisationUnitId;
 }
