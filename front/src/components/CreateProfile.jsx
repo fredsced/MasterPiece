@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import * as Yup from 'yup';
+import { object, string, mixed } from 'yup';
 import {
   Container,
   Paper,
@@ -58,22 +58,22 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ValidationSchema = (countries, organisationUnits) => {
-  return Yup.object().shape({
-    firstname: Yup.string()
+  return object().shape({
+    firstname: string()
       .min(2, 'tooShort')
       .max(50, 'tooLong')
       .required('required'),
-    lastname: Yup.string()
+    lastname: string()
       .min(2, 'tooShort')
       .max(50, 'tooLong')
       .required('required'),
-    sesame: Yup.string()
+    sesame: string()
       .min(7, 'tooShort')
       .max(7, 'tooLong')
       .matches(/[a,x]{1}\d{6}/i, 'notASesamId')
       .required('required'),
-    country: Yup.mixed().required('required'),
-    organisationUnit: Yup.mixed().required('required'),
+    country: mixed().required('required'),
+    organisationUnit: mixed().required('required'),
   });
 };
 
@@ -119,7 +119,6 @@ export default function Createprofile(props) {
         break;
       default:
     }
-
     if (
       Array.isArray(errorMessage) &&
       errorMessage.find(

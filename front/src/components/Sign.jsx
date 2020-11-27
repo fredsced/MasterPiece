@@ -19,7 +19,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import AuthService from '../services/AuthService';
 import { useHistory } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
-import * as Yup from 'yup';
+import { object, string, ref } from 'yup';
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant='filled' {...props} />;
@@ -59,12 +59,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 const ValidationSchema = (type) => {
   if (type === 'register') {
-    return Yup.object().shape({
-      email: Yup.string()
+    return object().shape({
+      email: string()
         .email('emailNotValid')
         .required('emailRequired')
         .max(255, 'tooLong'),
-      password: Yup.string()
+      password: string()
         .min(8, 'tooShort')
         .max(30, 'tooLong')
         .matches(
@@ -72,14 +72,14 @@ const ValidationSchema = (type) => {
           'passwordNotComplex'
         )
         .required('passwordRequired'),
-      password_confirmation: Yup.string()
-        .oneOf([Yup.ref('password'), null], 'passwordNotMatch')
+      password_confirmation: string()
+        .oneOf([ref('password'), null], 'passwordNotMatch')
         .required('required'),
     });
   } else {
-    return Yup.object().shape({
-      email: Yup.string().email('emailNotValid').required('emailRequired'),
-      password: Yup.string().required('passwordRequired'),
+    return object().shape({
+      email: string().email('emailNotValid').required('emailRequired'),
+      password: string().required('passwordRequired'),
     });
   }
 };
