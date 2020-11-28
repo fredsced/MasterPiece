@@ -5,9 +5,9 @@ import SearchComplianceOfficer from './SearchComplianceOfficer';
 
 export default function Collaborator(props) {
   const user = props.user;
-  function updateUser(userUpdated) {
+  const updateUser = (userUpdated) => {
     props.updateUser(userUpdated);
-  }
+  };
 
   return (
     <>
@@ -16,7 +16,7 @@ export default function Collaborator(props) {
       ) : !user.accountHasProfile ? (
         <CreateProfile
           user={user}
-          updateUser={(userUpdated) => updateUser(userUpdated)}
+          updateUser={updateUser}
         />
       ) : (
         <SearchComplianceOfficer user={user} />
