@@ -30,9 +30,6 @@ function App() {
     AuthService.logout();
   }
 
-  function handleUserLogged(user) {
-    setCurrentUser(user);
-  }
   function updateUser(userUpdated) {
     setCurrentUser(userUpdated);
   }
@@ -50,10 +47,7 @@ function App() {
             />
             <Switch>
               <Route exact path={['/', '/login']}>
-                <Sign
-                  type='login'
-                  userLogged={(user) => handleUserLogged(user)}
-                />
+                <Sign type='login' userLogged={(user) => updateUser(user)} />
               </Route>
               <Route path='/register'>
                 <Sign type='register' />
