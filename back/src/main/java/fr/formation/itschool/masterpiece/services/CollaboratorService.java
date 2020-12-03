@@ -2,7 +2,7 @@ package fr.formation.itschool.masterpiece.services;
 
 import fr.formation.itschool.masterpiece.dtos.CollaboratorInfoDto;
 import fr.formation.itschool.masterpiece.dtos.CreateCollaboratorDto;
-import fr.formation.itschool.masterpiece.dtos.LcoViewDto;
+import fr.formation.itschool.masterpiece.dtos.ComplianceReferentViewDto;
 
 import java.util.List;
 
@@ -16,5 +16,5 @@ public interface CollaboratorService {
 
   boolean isSesamePresentsInDB(String sesameId);
 
-  List<LcoViewDto> getLcoByRisk(String riskCode);
+  List<ComplianceReferentViewDto> getLcoByRisk(String riskCode);
 }

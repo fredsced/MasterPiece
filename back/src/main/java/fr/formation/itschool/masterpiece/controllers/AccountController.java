@@ -12,7 +12,7 @@ import javax.validation.Valid;
 
 @CrossOrigin
 @RestController
-@RequestMapping(value = "/private/accounts")
+@RequestMapping(value = "/accounts")
 class AccountController {
 
   private final AccountService accountService;

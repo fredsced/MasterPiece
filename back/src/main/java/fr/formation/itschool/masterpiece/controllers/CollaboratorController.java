@@ -1,8 +1,8 @@
 package fr.formation.itschool.masterpiece.controllers;
 
 import fr.formation.itschool.masterpiece.config.SecurityHelper;
+import fr.formation.itschool.masterpiece.dtos.ComplianceReferentViewDto;
 import fr.formation.itschool.masterpiece.dtos.CreateCollaboratorDto;
-import fr.formation.itschool.masterpiece.dtos.LcoViewDto;
 import fr.formation.itschool.masterpiece.services.CollaboratorService;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +17,7 @@ import java.util.List;
 
 @CrossOrigin
 @RestController
-@RequestMapping(value = "/private/collaborators")
+@RequestMapping(value = "/collaborators")
 public class CollaboratorController {
 
   private final CollaboratorService collaboratorService;
@@ -26,18 +26,18 @@ public class CollaboratorController {
     this.collaboratorService = collaboratorService;
   }
 
-  @GetMapping("/hasprofile")
-  public boolean hasProfile() {
-    return collaboratorService.hasProfile(SecurityHelper.getAccountId());
-  }
-
   @PostMapping()
   public void createCollaborator(@RequestBody @Valid CreateCollaboratorDto createCollaboratorDto) {
     collaboratorService.createCollaborator(createCollaboratorDto, SecurityHelper.getAccountId());
   }
+
+  // TODO : rename & rework this end point to make it more generic
+  // and should be in the complianceReferents end point as it retrieves CR...
+  // and a query because it filters the CR entities.
+  // like this : api/complianceReferents?countryId=..&organisationUnitId=...&riskId=...
+  //
   @GetMapping("/getmylco")
-  public List<LcoViewDto> getLcoByRisk(@RequestParam String riskCode) {
-    // TODO SANITIZE inputs riskCode to avoid SQL Injection ?
+  public List<ComplianceReferentViewDto> getLcoByRisk(@RequestParam String riskCode) {
     return collaboratorService.getLcoByRisk(riskCode);
   }
 }

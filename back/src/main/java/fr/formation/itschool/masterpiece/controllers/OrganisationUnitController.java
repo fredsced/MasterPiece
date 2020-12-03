@@ -11,18 +11,17 @@ import java.util.List;
 
 @CrossOrigin
 @RestController
-@RequestMapping(value = "/private/organisation-units")
+@RequestMapping(value = "/organisationUnits")
 public class OrganisationUnitController {
 
   private final OrganisationUnitService organisationUnitService;
 
-  protected OrganisationUnitController(OrganisationUnitService organisationUnitService){
+  protected OrganisationUnitController(OrganisationUnitService organisationUnitService) {
     this.organisationUnitService = organisationUnitService;
   }
 
   @GetMapping()
-  public List<OrganisationUnitViewDto> getAllOrganisationUnits(){
+  public List<OrganisationUnitViewDto> getAllOrganisationUnits() {
     return organisationUnitService.getAllOrganisationUnits();
   }
-
 }

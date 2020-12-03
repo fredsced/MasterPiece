@@ -1,6 +1,6 @@
 package fr.formation.itschool.masterpiece.dtos;
 
-public class LcoViewDto {
+public class ComplianceReferentViewDto {
 
   private String firstname;
   private String lastname;
@@ -8,7 +8,7 @@ public class LcoViewDto {
   private String buCode;
   private String riskCode;
 
-  public LcoViewDto(String firstname, String lastname, String riskCode, String country, String buCode) {
+  public ComplianceReferentViewDto(String firstname, String lastname, String riskCode, String country, String buCode) {
     this.firstname = firstname;
     this.lastname = lastname;
     this.country = country;

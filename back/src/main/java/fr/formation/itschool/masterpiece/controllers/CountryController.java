@@ -11,15 +11,16 @@ import java.util.List;
 
 @CrossOrigin
 @RestController
-@RequestMapping(value = "/private/countries")
+@RequestMapping(value = "/countries")
 public class CountryController {
   private final CountryService countryService;
 
-  protected CountryController(CountryService countryService){
+  protected CountryController(CountryService countryService) {
     this.countryService = countryService;
   }
+
   @GetMapping()
-  public List<CountryViewDto> getAllCountries(){
+  public List<CountryViewDto> getAllCountries() {
     return countryService.getAll();
   }
 }
