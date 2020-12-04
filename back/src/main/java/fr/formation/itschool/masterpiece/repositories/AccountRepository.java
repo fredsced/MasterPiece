@@ -9,6 +9,8 @@ import java.util.Optional;
 
 public interface AccountRepository extends JpaRepository<Account, Long> {
   Optional<AccountAuthDto> findByEmailIgnoreCase(String email);
+
   Boolean existsByEmailIgnoreCase(String email);
+
   Optional<AccountInfoDto> getById(Long id);
 }

@@ -1,6 +1,10 @@
 package fr.formation.itschool.masterpiece.dtos;
 
-/** A DTO representation of a {@code Organisationunit} */
+import java.util.StringJoiner;
+
+/**
+ * A DTO representation of a {@code Organisationunit}
+ */
 public class OrganisationUnitViewDto {
   private Long id;
   private String code;
@@ -21,24 +25,18 @@ public class OrganisationUnitViewDto {
     return name;
   }
 
+
   public String getDescription() {
     return description;
   }
 
   @Override
   public String toString() {
-    return "OrganisationUnitViewDto{"
-        + "id="
-        + id
-        + ", code='"
-        + code
-        + '\''
-        + ", name='"
-        + name
-        + '\''
-        + ", description='"
-        + description
-        + '\''
-        + '}';
+    return new StringJoiner(", ", OrganisationUnitViewDto.class.getSimpleName() + "[", "]")
+      .add("id=" + id)
+      .add("code=" + code)
+      .add("name=" + name)
+      .add("description=" + description)
+      .toString();
   }
 }

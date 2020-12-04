@@ -9,11 +9,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.util.StringJoiner;
 
 @Setter
 @Getter
 @Entity
-@Table(name="roles")
+@Table(name = "roles")
 public class Role {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,4 +25,13 @@ public class Role {
 
   @Column(nullable = false)
   private boolean defaultRole;
+
+  @Override
+  public String toString() {
+    return new StringJoiner(", ", Role.class.getSimpleName() + "[", "]")
+      .add("id=" + id)
+      .add("code=" + code)
+      .add("defaultRole=" + defaultRole)
+      .toString();
+  }
 }

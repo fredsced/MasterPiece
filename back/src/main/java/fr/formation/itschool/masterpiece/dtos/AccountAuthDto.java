@@ -4,7 +4,9 @@ import fr.formation.itschool.masterpiece.domain.Role;
 
 import java.util.Set;
 
-/** A projection of {@code Account} for authentication */
+/**
+ * A projection of {@code Account} for authentication
+ */
 public interface AccountAuthDto {
 
   Long getId();

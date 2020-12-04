@@ -21,8 +21,8 @@ public class CorsFilter implements Filter {
 
   @Override
   public void doFilter(
-      ServletRequest servletRequest, ServletResponse servletResponse, FilterChain chain)
-      throws IOException, ServletException {
+    ServletRequest servletRequest, ServletResponse servletResponse, FilterChain chain)
+    throws IOException, ServletException {
     HttpServletResponse response = (HttpServletResponse) servletResponse;
     response.setHeader("Access-Control-Allow-Origin", myFront);
     response.setHeader("Access-Control-Allow-Credentials", "true");

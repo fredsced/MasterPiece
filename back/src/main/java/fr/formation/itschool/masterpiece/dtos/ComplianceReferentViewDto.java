@@ -1,14 +1,21 @@
 package fr.formation.itschool.masterpiece.dtos;
 
+import java.util.StringJoiner;
+
+/**
+ * A DTO representation of a {@code ComplianceReferent}
+ */
+
 public class ComplianceReferentViewDto {
 
-  private String firstname;
-  private String lastname;
-  private String country;
-  private String buCode;
-  private String riskCode;
+  private final String firstname;
+  private final String lastname;
+  private final String country;
+  private final String buCode;
+  private final String riskCode;
 
-  public ComplianceReferentViewDto(String firstname, String lastname, String riskCode, String country, String buCode) {
+  public ComplianceReferentViewDto(
+    String firstname, String lastname, String riskCode, String country, String buCode) {
     this.firstname = firstname;
     this.lastname = lastname;
     this.country = country;
@@ -20,39 +27,30 @@ public class ComplianceReferentViewDto {
     return firstname;
   }
 
-  public void setFirstname(String firstname) {
-    this.firstname = firstname;
-  }
-
   public String getLastname() {
     return lastname;
-  }
-
-  public void setLastname(String lastname) {
-    this.lastname = lastname;
   }
 
   public String getCountry() {
     return country;
   }
 
-  public void setCountry(String country) {
-    this.country = country;
-  }
-
   public String getBuCode() {
     return buCode;
-  }
-
-  public void setBuCode(String buCode) {
-    this.buCode = buCode;
   }
 
   public String getRiskCode() {
     return riskCode;
   }
 
-  public void setRiskCode(String riskCode) {
-    this.riskCode = riskCode;
+  @Override
+  public String toString() {
+    return new StringJoiner(", ", ComplianceReferentViewDto.class.getSimpleName() + "[", "]")
+      .add("firstname=" + firstname)
+      .add("lastname=" + lastname)
+      .add("country=" + country)
+      .add("buCode=" + buCode)
+      .add("riskCode=" + riskCode)
+      .toString();
   }
 }

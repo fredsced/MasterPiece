@@ -2,13 +2,12 @@ package fr.formation.itschool.masterpiece.dtos;
 
 import fr.formation.itschool.masterpiece.validators.PasswordComplexityRequirement;
 import fr.formation.itschool.masterpiece.validators.UniqueEmail;
-import lombok.Getter;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.StringJoiner;
 
-@Getter
 public class CreateAccountDto {
 
   @NotBlank
@@ -21,4 +20,20 @@ public class CreateAccountDto {
   @Size(min = 8, max = 30)
   @PasswordComplexityRequirement
   private String password;
+
+  public String getEmail() {
+    return email;
+  }
+
+  public String getPassword() {
+    return password;
+  }
+
+  @Override
+  public String toString() {
+    return new StringJoiner(", ", CreateAccountDto.class.getSimpleName() + "[", "]")
+      .add("email=" + email)
+      .add("password=" + password)
+      .toString();
+  }
 }

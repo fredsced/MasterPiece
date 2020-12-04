@@ -17,13 +17,13 @@ public class AccountDetails extends User {
 
   public AccountDetails(AccountAuthDto user) {
     super(user.getEmail(), user.getPassword(),
-       buildAuthorities(user.getRoles()));
+      buildAuthorities(user.getRoles()));
     id = user.getId();
   }
 
   private static Set<GrantedAuthority> buildAuthorities(Set<Role> roles) {
     return roles.stream().map(role -> new SimpleGrantedAuthority(role.getCode()))
-        .collect(Collectors.toUnmodifiableSet());
+      .collect(Collectors.toUnmodifiableSet());
   }
 
 
@@ -34,11 +34,11 @@ public class AccountDetails extends User {
   @Override
   public String toString() {
     return "{id=" + id + ", authorities=" + getAuthorities()
-        + ", password=[PROTECTED], username=" + getUsername()
-        + ", enabled=" + isEnabled() + ", accountNonExpired="
-        + isAccountNonExpired() + ", accountNonLocked="
-        + isAccountNonLocked() + ", credentialsNonExpired="
-        + isCredentialsNonExpired() + "}";
+      + ", password=[PROTECTED], username=" + getUsername()
+      + ", enabled=" + isEnabled() + ", accountNonExpired="
+      + isAccountNonExpired() + ", accountNonLocked="
+      + isAccountNonLocked() + ", credentialsNonExpired="
+      + isCredentialsNonExpired() + "}";
   }
 }
 

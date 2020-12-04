@@ -7,12 +7,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import java.util.StringJoiner;
 
 @Entity
 @Table(
-    name = "compliance_levels",
-    uniqueConstraints = @UniqueConstraint(name = "compliance_levels_code_UQ", columnNames = "code"))
-public class ComplianceLevel {
+  name = "compliance_levels",
+  uniqueConstraints = @UniqueConstraint(name = "compliance_levels_code_UQ", columnNames = "code"))
+public class Level {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
@@ -22,5 +23,12 @@ public class ComplianceLevel {
 
   private String label;
 
-
+  @Override
+  public String toString() {
+    return new StringJoiner(", ", Level.class.getSimpleName() + "[", "]")
+      .add("id=" + id)
+      .add("code=" + code)
+      .add("label=" + label)
+      .toString();
+  }
 }

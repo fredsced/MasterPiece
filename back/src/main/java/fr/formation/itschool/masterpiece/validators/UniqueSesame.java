@@ -10,7 +10,7 @@ import java.lang.annotation.Target;
 
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ ElementType.FIELD, ElementType.TYPE })
+@Target({ElementType.FIELD, ElementType.TYPE})
 @Constraint(validatedBy = UniqueSesameValidator.class)
 public @interface UniqueSesame {
   String message() default "sesameIdNotUnique";

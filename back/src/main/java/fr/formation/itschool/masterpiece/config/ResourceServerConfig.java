@@ -27,32 +27,29 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     // Disable CORS if API is public, better to enable in general.
     // Anonymous is enabled by default.
     http.httpBasic()
-        .disable()
-        .csrf()
-        .disable()
-        .cors()
-        .disable()
-        .sessionManagement()
-        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-        .and()
-        .authorizeRequests()
-        .antMatchers(HttpMethod.OPTIONS)
-        .permitAll()
-        .and()
-        // "/api/public/**" for anyone even anonymous
-        .authorizeRequests()
-        .antMatchers(HttpMethod.POST,"/api/private/accounts")
-        .permitAll()
-        .and()
-        // "/api/public/**" for anyone even anonymous
-        .authorizeRequests()
-        .antMatchers("/api/public/**")
-        .permitAll()
-        /*
-         * "/api/userInfo", "/api/private/**" for fully authenticated
-         * (not anonymous)
-         */
-        .antMatchers("/api/userInfo", "/api/private/**")
-        .authenticated();
+      .disable()
+      .csrf()
+      .disable()
+      .cors()
+      .disable()
+      .sessionManagement()
+      .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+      .and()
+      .authorizeRequests()
+      .antMatchers(HttpMethod.OPTIONS)
+      .permitAll()
+      .and()
+      .authorizeRequests()
+      .antMatchers(HttpMethod.POST, "/api/accounts")
+      .permitAll()
+      .and()
+      // "/api/public/**" for anyone even anonymous
+      .authorizeRequests()
+      /*
+       *"/api/**" for fully authenticated
+       * (not anonymous)
+       */
+      .antMatchers("/api/**")
+      .authenticated();
   }
 }

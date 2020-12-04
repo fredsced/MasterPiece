@@ -7,5 +7,5 @@ import java.util.List;
 public interface ComplianceReferentService {
 
   List<ComplianceReferentViewDto> findByCountryAndOrganisationUnitAndRisk(
-      Long countryId, Long organisationUnitId, Long riskId);
+    Long countryId, Long organisationUnitId, Long riskId);
 }

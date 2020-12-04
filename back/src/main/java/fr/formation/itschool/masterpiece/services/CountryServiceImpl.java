@@ -9,15 +9,16 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class CountryServiceImpl  implements CountryService{
+public class CountryServiceImpl implements CountryService {
 
   private final CountryRepository countryRepository;
   private final ModelMapper modelMapper;
 
-  protected CountryServiceImpl(CountryRepository countryRepository, ModelMapper modelMapper){
+  protected CountryServiceImpl(CountryRepository countryRepository, ModelMapper modelMapper) {
     this.countryRepository = countryRepository;
     this.modelMapper = modelMapper;
   }
+
   @Override
   public List<CountryViewDto> getAll() {
     return countryRepository.findAll().stream()

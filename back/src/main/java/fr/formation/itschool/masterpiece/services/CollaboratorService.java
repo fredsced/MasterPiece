@@ -1,8 +1,8 @@
 package fr.formation.itschool.masterpiece.services;
 
 import fr.formation.itschool.masterpiece.dtos.CollaboratorInfoDto;
-import fr.formation.itschool.masterpiece.dtos.CreateCollaboratorDto;
 import fr.formation.itschool.masterpiece.dtos.ComplianceReferentViewDto;
+import fr.formation.itschool.masterpiece.dtos.CreateCollaboratorDto;
 
 import java.util.List;
 

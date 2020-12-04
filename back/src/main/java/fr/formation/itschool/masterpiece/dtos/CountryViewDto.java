@@ -1,6 +1,10 @@
 package fr.formation.itschool.masterpiece.dtos;
 
-/** A DTO representation of a {@code Country} */
+import java.util.StringJoiner;
+
+/**
+ * A DTO representation of a {@code Country}
+ */
 public class CountryViewDto {
 
   private Long id;
@@ -23,6 +27,11 @@ public class CountryViewDto {
 
   @Override
   public String toString() {
-    return "CountryViewDto{" + "id=" + id + ", iso='" + iso + '\'' + ", name='" + name + '\'' + '}';
+    return new StringJoiner(", ", CountryViewDto.class.getSimpleName() + "[", "]")
+      .add("id=" + id)
+      .add("iso=" + iso)
+      .add("name=" + name)
+      .toString();
   }
+
 }

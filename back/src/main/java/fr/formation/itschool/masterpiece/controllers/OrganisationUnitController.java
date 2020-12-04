@@ -11,7 +11,7 @@ import java.util.List;
 
 @CrossOrigin
 @RestController
-@RequestMapping(value = "/organisationUnits")
+@RequestMapping(value = "/organisation-units")
 public class OrganisationUnitController {
 
   private final OrganisationUnitService organisationUnitService;

@@ -9,12 +9,13 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.StringJoiner;
 
 @Entity
 @Table(
-    name = "organisation_units",
-    uniqueConstraints =
-        @UniqueConstraint(name = "organisation_units_code_UQ", columnNames = "code"))
+  name = "organisation_units",
+  uniqueConstraints =
+  @UniqueConstraint(name = "organisation_units_code_UQ", columnNames = "code"))
 public class OrganisationUnit {
 
   @Id
@@ -34,5 +35,15 @@ public class OrganisationUnit {
 
   public Long getId() {
     return id;
+  }
+
+  @Override
+  public String toString() {
+    return new StringJoiner(", ", OrganisationUnit.class.getSimpleName() + "[", "]")
+      .add("id=" + id)
+      .add("code=" + code)
+      .add("name=" + name)
+      .add("description=" + description)
+      .toString();
   }
 }

@@ -14,7 +14,7 @@ public class PasswordComplexityValidator implements ConstraintValidator<Password
     Password must have at least one uppercase, one lowercase, one digit and 8 characters
      */
     Pattern pattern =
-        Pattern.compile("(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])\\S{8,}");
+      Pattern.compile("(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])\\S{8,}");
     Matcher matcher = pattern.matcher(password);
     return matcher.matches();
 

@@ -25,6 +25,7 @@ public class MasterpieceApplication {
   protected PasswordEncoder passwordEncoder() {
     return new BCryptPasswordEncoder();
   }
+
   /**
    * The modelMapper for application. Used to make the mapping between dtos and entities.
    *
@@ -34,10 +35,10 @@ public class MasterpieceApplication {
   protected ModelMapper modelMapper() {
     ModelMapper modelMapper = new ModelMapper();
     modelMapper
-        .getConfiguration()
-        .setFieldMatchingEnabled(true)
-        .setFieldAccessLevel(Configuration.AccessLevel.PRIVATE)
-        .setMatchingStrategy(MatchingStrategies.STANDARD);
+      .getConfiguration()
+      .setFieldMatchingEnabled(true)
+      .setFieldAccessLevel(Configuration.AccessLevel.PRIVATE)
+      .setMatchingStrategy(MatchingStrategies.STANDARD);
     return modelMapper;
   }
 }

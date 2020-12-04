@@ -7,11 +7,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import java.util.StringJoiner;
 
 @Entity
 @Table(
-    name = "countries",
-    uniqueConstraints = @UniqueConstraint(name = "countries_iso_UQ", columnNames = "iso"))
+  name = "countries",
+  uniqueConstraints = @UniqueConstraint(name = "countries_iso_UQ", columnNames = "iso"))
 public class Country {
 
   @Id
@@ -21,10 +22,19 @@ public class Country {
   @Column(nullable = false, length = 3)
   private String iso;
 
-  @Column(length = 100)
+  @Column(length = 60)
   private String name;
 
   public Long getId() {
     return id;
+  }
+
+  @Override
+  public String toString() {
+    return new StringJoiner(", ", Country.class.getSimpleName() + "[", "]")
+      .add("id=" + id)
+      .add("iso=" + iso)
+      .add("name=" + name)
+      .toString();
   }
 }

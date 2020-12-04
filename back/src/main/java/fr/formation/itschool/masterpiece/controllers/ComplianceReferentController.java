@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin
-@RequestMapping(value = "/complianceReferents")
+@RequestMapping(value = "/compliance-referents")
 public class ComplianceReferentController {
 
   private final ComplianceReferentService complianceReferentService;
@@ -23,10 +23,10 @@ public class ComplianceReferentController {
 
   @GetMapping()
   public List<ComplianceReferentViewDto> findByCountryAndOrganisationUnitAndRisk(
-      @RequestParam Long countryId,
-      @RequestParam Long organisationUnitId,
-      @RequestParam Long riskId) {
+    @RequestParam Long countryId,
+    @RequestParam Long organisationUnitId,
+    @RequestParam Long riskId) {
     return complianceReferentService.findByCountryAndOrganisationUnitAndRisk(
-        countryId, organisationUnitId, riskId);
+      countryId, organisationUnitId, riskId);
   }
 }

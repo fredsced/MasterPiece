@@ -23,7 +23,7 @@ public class OrganisationUnitServiceImpl implements OrganisationUnitService {
   @Override
   public List<OrganisationUnitViewDto> getAllOrganisationUnits() {
     return organisationUnitRepository.findAll().stream()
-        .map(organisationUnit -> modelMapper.map(organisationUnit, OrganisationUnitViewDto.class))
-        .collect(Collectors.toList());
+      .map(organisationUnit -> modelMapper.map(organisationUnit, OrganisationUnitViewDto.class))
+      .collect(Collectors.toList());
   }
 }

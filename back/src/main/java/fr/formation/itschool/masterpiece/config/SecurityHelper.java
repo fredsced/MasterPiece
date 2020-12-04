@@ -1,11 +1,11 @@
 package fr.formation.itschool.masterpiece.config;
 
 
-import java.util.Map;
-
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationDetails;
+
+import java.util.Map;
 
 /**
  * Helper class to access the Spring security context.
@@ -27,11 +27,11 @@ public final class SecurityHelper {
   public static Long getAccountId() {
     Authentication auth = getAuthentication();
     OAuth2AuthenticationDetails details = (OAuth2AuthenticationDetails) auth
-        .getDetails();
+      .getDetails();
     Map<String, Object> decodedDetails = (Map<String, Object>) details
-        .getDecodedDetails();
+      .getDecodedDetails();
     Integer value = (Integer) decodedDetails
-        .get(CustomTokenEnhancer.ACCOUNT_ID_KEY);
+      .get(CustomTokenEnhancer.ACCOUNT_ID_KEY);
     return value.longValue();
   }
 
@@ -64,7 +64,7 @@ public final class SecurityHelper {
    * authenticated principal, or an authentication request token.
    *
    * @return the Authentication or {@code null} if no
-   *         authenticationinformation is available
+   * authenticationinformation is available
    */
   public static Authentication getAuthentication() {
     return SecurityContextHolder.getContext().getAuthentication();

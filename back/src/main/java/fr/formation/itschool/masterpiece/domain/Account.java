@@ -14,14 +14,15 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import java.util.Set;
+import java.util.StringJoiner;
 
 @Entity
 @Table(
-    name = "accounts",
-    uniqueConstraints =
-        @UniqueConstraint(
-            name = "accounts_email_UQ",
-            columnNames = {"email"}))
+  name = "accounts",
+  uniqueConstraints =
+  @UniqueConstraint(
+    name = "accounts_email_UQ",
+    columnNames = {"email"}))
 public class Account {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,24 +36,23 @@ public class Account {
 
   @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(
-      name = "accounts_roles",
-      indexes = {
-        @Index(name = "accounts_roles_account_id_IDX", columnList = "account_id"),
-        @Index(name = "account_roles_role_id_IDX", columnList = "role_id")
-      },
-      joinColumns =
-          @JoinColumn(
-              name = "account_id",
-              foreignKey = @ForeignKey(name = "accounts_roles_account_id_FK")),
-      inverseJoinColumns =
-          @JoinColumn(
-              name = "role_id",
-              foreignKey = @ForeignKey(name = "account_roles_role_id_FK")))
+    name = "accounts_roles",
+    indexes = {
+      @Index(name = "accounts_roles_account_id_IDX", columnList = "account_id"),
+      @Index(name = "account_roles_role_id_IDX", columnList = "role_id")
+    },
+    joinColumns =
+    @JoinColumn(
+      name = "account_id",
+      foreignKey = @ForeignKey(name = "accounts_roles_account_id_FK")),
+    inverseJoinColumns =
+    @JoinColumn(
+      name = "role_id",
+      foreignKey = @ForeignKey(name = "account_roles_role_id_FK")))
   private Set<Role> roles;
 
   protected Account() {}
 
-  /** Create a new account. */
   public Account(String email, String password, Set<Role> roles) {
     this.email = email;
     this.password = password;
@@ -61,17 +61,11 @@ public class Account {
 
   @Override
   public String toString() {
-    return "Account{"
-        + "id="
-        + id
-        + ", email='"
-        + email
-        + '\''
-        + ", password='"
-        + "*******"
-        + '\''
-        + ", roles="
-        + roles
-        + '}';
+    return new StringJoiner(", ", Account.class.getSimpleName() + "[", "]")
+      .add("id=" + id)
+      .add("email=" + email)
+      .add("password=" + password)
+      .add("roles=" + roles)
+      .toString();
   }
 }

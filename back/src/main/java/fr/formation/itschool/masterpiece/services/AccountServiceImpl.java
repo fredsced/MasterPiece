@@ -24,7 +24,7 @@ public class AccountServiceImpl implements AccountService {
   private final PasswordEncoder encoder;
 
   protected AccountServiceImpl(
-      AccountRepository accountRepository, RoleRepository roleRepository, PasswordEncoder encoder) {
+    AccountRepository accountRepository, RoleRepository roleRepository, PasswordEncoder encoder) {
 
     this.accountRepository = accountRepository;
     this.roleRepository = roleRepository;
@@ -44,8 +44,8 @@ public class AccountServiceImpl implements AccountService {
   @Override
   public AccountInfoDto getCurrentAccountInfo(Long id) {
     return accountRepository
-        .getById(id)
-        .orElseThrow(() -> new ResourceNotFoundException("No account found with this id:" + id));
+      .getById(id)
+      .orElseThrow(() -> new ResourceNotFoundException("No account found with this id:" + id));
   }
 
   @Override
@@ -56,10 +56,10 @@ public class AccountServiceImpl implements AccountService {
   @Override
   public UserDetails loadUserByUsername(String email) {
     AccountAuthDto userAccount =
-        accountRepository
-            .findByEmailIgnoreCase(email)
-            .orElseThrow(
-                () -> new UsernameNotFoundException("No account found with email:" + email));
+      accountRepository
+        .findByEmailIgnoreCase(email)
+        .orElseThrow(
+          () -> new UsernameNotFoundException("No account found with email:" + email));
 
     return new AccountDetails(userAccount);
   }

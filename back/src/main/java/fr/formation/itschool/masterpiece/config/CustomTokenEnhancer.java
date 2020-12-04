@@ -20,11 +20,12 @@ public class CustomTokenEnhancer implements TokenEnhancer {
   static final String COLLABORATOR_INFO = "collaboratorInfo";
 
   // @Autowired because need to conserve the empty constructor
-  @Autowired private CollaboratorService collaboratorService;
+  @Autowired
+  private CollaboratorService collaboratorService;
 
   @Override
   public OAuth2AccessToken enhance(
-      OAuth2AccessToken accessToken, OAuth2Authentication authentication) {
+    OAuth2AccessToken accessToken, OAuth2Authentication authentication) {
     // Store account id in access token as additional info
     Map<String, Object> additionalInfo = new HashMap<>();
     // Authentication principal not yet flattened to username
@@ -35,9 +36,9 @@ public class CustomTokenEnhancer implements TokenEnhancer {
     additionalInfo.put(ACCOUNT_ROLES, account.getAuthorities());
     boolean hasProfile = collaboratorService.hasProfile(account.getId());
     additionalInfo.put(ACCOUNT_HAS_PROFILE, hasProfile);
-    if (hasProfile){
-        CollaboratorInfoDto collaboratorInfo = collaboratorService.getCollaboratorInfoByAccountId(account.getId());
-        additionalInfo.put(COLLABORATOR_INFO, collaboratorInfo);
+    if (hasProfile) {
+      CollaboratorInfoDto collaboratorInfo = collaboratorService.getCollaboratorInfoByAccountId(account.getId());
+      additionalInfo.put(COLLABORATOR_INFO, collaboratorInfo);
     }
     ((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(additionalInfo);
     return accessToken;
