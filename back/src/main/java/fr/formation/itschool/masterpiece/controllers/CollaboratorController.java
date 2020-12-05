@@ -4,7 +4,6 @@ import fr.formation.itschool.masterpiece.config.SecurityHelper;
 import fr.formation.itschool.masterpiece.dtos.ComplianceReferentViewDto;
 import fr.formation.itschool.masterpiece.dtos.CreateCollaboratorDto;
 import fr.formation.itschool.masterpiece.services.CollaboratorService;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 import java.util.List;
 
-@CrossOrigin
+
 @RestController
 @RequestMapping(value = "/collaborators")
 public class CollaboratorController {
