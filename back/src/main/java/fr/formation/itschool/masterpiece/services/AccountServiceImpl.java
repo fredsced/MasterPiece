@@ -49,7 +49,7 @@ public class AccountServiceImpl implements AccountService {
   }
 
   @Override
-  public boolean isEmailPresentInDB(String email) {
+  public boolean existsByEmail(String email) {
     return accountRepository.existsByEmailIgnoreCase(email);
   }
 

@@ -9,5 +9,5 @@ public interface AccountService extends UserDetailsService {
 
   AccountInfoDto getCurrentAccountInfo(Long id);
 
-  boolean isEmailPresentInDB(String email);
+  boolean existsByEmail(String email);
 }
