@@ -14,7 +14,7 @@ public interface CollaboratorService {
 
   CollaboratorInfoDto getCollaboratorInfoByAccountId(Long accountId);
 
-  boolean isSesamePresentsInDB(String sesameId);
+  boolean existsBySesame(String sesameId);
 
   List<ComplianceReferentViewDto> getLcoByRisk(String riskCode);
 }

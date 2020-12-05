@@ -60,17 +60,12 @@ public class CollaboratorServiceImpl implements CollaboratorService {
   }
 
   @Override
-  public boolean isSesamePresentsInDB(String sesameId) {
+  public boolean existsBySesame(String sesameId) {
     return !collaboratorRepository.existsBySesameIgnoreCase(sesameId);
   }
 
   @Override
   public List<ComplianceReferentViewDto> getLcoByRisk(String riskCode) {
-    // this function  will make 5 requests...
-    // Two to retrieve currentCollaborator
-    // One for the country
-    // One for the orgUnit
-    // One for the select with filter risk, country, orgunit
     Collaborator currentCollaborator =
       collaboratorRepository.findByAccountId(SecurityHelper.getAccountId(), Collaborator.class);
     return complianceReferentRepository.findMyComplianceReferentByRisk(
