@@ -1,4 +1,4 @@
-package fr.formation.itschool.masterpiece.dtos;
+package fr.formation.itschool.masterpiece.dtos.account;
 
 import fr.formation.itschool.masterpiece.validators.PasswordComplexityRequirement;
 import fr.formation.itschool.masterpiece.validators.UniqueEmail;
@@ -10,9 +10,8 @@ import java.util.StringJoiner;
 
 public class CreateAccountDto {
 
-  @NotBlank
-  @UniqueEmail
   @Email
+  @UniqueEmail
   @Size(max = 255)
   private String email;
 

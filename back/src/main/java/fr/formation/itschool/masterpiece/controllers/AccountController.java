@@ -1,6 +1,6 @@
 package fr.formation.itschool.masterpiece.controllers;
 
-import fr.formation.itschool.masterpiece.dtos.CreateAccountDto;
+import fr.formation.itschool.masterpiece.dtos.account.CreateAccountDto;
 import fr.formation.itschool.masterpiece.services.AccountService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

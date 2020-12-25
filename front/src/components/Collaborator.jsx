@@ -14,10 +14,7 @@ export default function Collaborator(props) {
       {!user ? (
         <NotConnected />
       ) : !user.accountHasProfile ? (
-        <CreateProfile
-          user={user}
-          updateUser={updateUser}
-        />
+        <CreateProfile user={user} updateUser={updateUser} />
       ) : (
         <SearchComplianceOfficer user={user} />
       )}

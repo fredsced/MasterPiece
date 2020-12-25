@@ -1,7 +1,7 @@
 package fr.formation.itschool.masterpiece.services;
 
-import fr.formation.itschool.masterpiece.dtos.AccountInfoDto;
-import fr.formation.itschool.masterpiece.dtos.CreateAccountDto;
+import fr.formation.itschool.masterpiece.dtos.account.AccountInfoDto;
+import fr.formation.itschool.masterpiece.dtos.account.CreateAccountDto;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 public interface AccountService extends UserDetailsService {

@@ -1,4 +1,4 @@
-package fr.formation.itschool.masterpiece.dtos;
+package fr.formation.itschool.masterpiece.dtos.account;
 
 import fr.formation.itschool.masterpiece.domain.Role;
 

@@ -1,4 +1,4 @@
-package fr.formation.itschool.masterpiece.dtos;
+package fr.formation.itschool.masterpiece.dtos.collaborator;
 
 import fr.formation.itschool.masterpiece.domain.Country;
 import fr.formation.itschool.masterpiece.domain.OrganisationUnit;

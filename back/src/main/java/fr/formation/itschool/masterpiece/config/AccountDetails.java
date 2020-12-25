@@ -1,7 +1,7 @@
 package fr.formation.itschool.masterpiece.config;
 
 import fr.formation.itschool.masterpiece.domain.Role;
-import fr.formation.itschool.masterpiece.dtos.AccountAuthDto;
+import fr.formation.itschool.masterpiece.dtos.account.AccountAuthDto;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;

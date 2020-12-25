@@ -1,4 +1,4 @@
-package fr.formation.itschool.masterpiece.dtos;
+package fr.formation.itschool.masterpiece.dtos.collaborator;
 
 /**
  * A projection of {@code Collaborator} name and firstName

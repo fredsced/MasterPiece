@@ -1,10 +1,7 @@
 package fr.formation.itschool.masterpiece.services;
 
-import fr.formation.itschool.masterpiece.dtos.CollaboratorInfoDto;
-import fr.formation.itschool.masterpiece.dtos.ComplianceReferentViewDto;
-import fr.formation.itschool.masterpiece.dtos.CreateCollaboratorDto;
-
-import java.util.List;
+import fr.formation.itschool.masterpiece.dtos.collaborator.CollaboratorInfoDto;
+import fr.formation.itschool.masterpiece.dtos.collaborator.CreateCollaboratorDto;
 
 public interface CollaboratorService {
 
@@ -15,6 +12,4 @@ public interface CollaboratorService {
   CollaboratorInfoDto getCollaboratorInfoByAccountId(Long accountId);
 
   boolean existsBySesame(String sesameId);
-
-  List<ComplianceReferentViewDto> getLcoByRisk(String riskCode);
 }

@@ -26,7 +26,7 @@
   "organisationUnit": "Organisation Unit",
   "country": "Country",
   "createProfile": "Create your profile",
-  "findLCO": "Find my compliance officer",
+  "findMyCR": "Find my compliance referent",
   "tooShort": "Too short",
   "tooLong" : "Too long",
   "required": "Required",
@@ -41,5 +41,7 @@
   "KYC": "Know Your Customer",
   "Corruption": "Corruption",
   "CORR": "Corruption",
-  "Org.Unit.": "Org.Unit."
+  "Org.Unit.": "Org.Unit.",
+  "chooseYourCountry": "Choose your country",
+  "chooseYourOrgUnit": "Choose your Org.Unit."
 }

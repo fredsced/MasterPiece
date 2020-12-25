@@ -57,7 +57,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ValidationSchema = (countries, organisationUnits) => {
+const ValidationSchema = () => {
   return object().shape({
     firstname: string()
       .min(2, 'tooShort')
@@ -70,14 +70,14 @@ const ValidationSchema = (countries, organisationUnits) => {
     sesame: string()
       .min(7, 'tooShort')
       .max(7, 'tooLong')
-      .matches(/[a,x]{1}\d{6}/i, 'notASesamId')
+      .matches(/[a,x]\d{6}/i, 'notASesameId')
       .required('required'),
     country: mixed().required('required'),
     organisationUnit: mixed().required('required'),
   });
 };
 
-export default function Createprofile(props) {
+export default function CreateProfile(props) {
   const classes = useStyles();
   const [successOpen, setSuccessOpen] = useState(false);
   const [uqSesameId, setUqSesameId] = useState();
@@ -142,9 +142,9 @@ export default function Createprofile(props) {
     }
   };
   const resetApiErrors = () => {
-    setUqSesameId();
+    setUqSesameId(null);
     setErrorOpen(false);
-    setApiErrorResponse();
+    setApiErrorResponse(null);
   };
 
   return (
@@ -156,7 +156,7 @@ export default function Createprofile(props) {
         country: '',
         organisationUnit: '',
       }}
-      validationSchema={() => ValidationSchema(countries, organisationUnits)}
+      validationSchema={() => ValidationSchema()}
       onSubmit={(values, { setSubmitting }) => {
         setSubmitting(true);
         resetApiErrors();
@@ -179,7 +179,6 @@ export default function Createprofile(props) {
         handleChange,
         handleSubmit,
         isSubmitting,
-        isValid,
         touched,
       }) => (
         <Container component='main' className={classes.main} maxWidth='sm'>
@@ -402,10 +401,7 @@ export default function Createprofile(props) {
                       disabled={isSubmitting}
                       className={classes.submit}
                     >
-                      <FormattedMessage
-                        id='send'
-                        defaultMessage='Send'
-                      ></FormattedMessage>
+                      <FormattedMessage id='send' defaultMessage='Send' />
                     </Button>
                     <Backdrop className={classes.backdrop} open={isSubmitting}>
                       <CircularProgress color='primary' />

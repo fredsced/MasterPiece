@@ -1,4 +1,4 @@
-package fr.formation.itschool.masterpiece.dtos;
+package fr.formation.itschool.masterpiece.dtos.compliancereferent;
 
 import java.util.StringJoiner;
 

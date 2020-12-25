@@ -1,6 +1,6 @@
 package fr.formation.itschool.masterpiece.config;
 
-import fr.formation.itschool.masterpiece.dtos.AccountInfoDto;
+import fr.formation.itschool.masterpiece.dtos.account.AccountInfoDto;
 import fr.formation.itschool.masterpiece.services.AccountService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

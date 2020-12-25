@@ -1,6 +1,6 @@
 package fr.formation.itschool.masterpiece.config;
 
-import fr.formation.itschool.masterpiece.dtos.CollaboratorInfoDto;
+import fr.formation.itschool.masterpiece.dtos.collaborator.CollaboratorInfoDto;
 import fr.formation.itschool.masterpiece.services.CollaboratorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;

@@ -11,14 +11,14 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/countries")
 public class CountryController {
-  private final CountryService countryService;
+    private final CountryService countryService;
 
-  protected CountryController(CountryService countryService) {
-    this.countryService = countryService;
-  }
+    protected CountryController(CountryService countryService) {
+        this.countryService = countryService;
+    }
 
-  @GetMapping()
-  public List<CountryViewDto> getAllCountries() {
-    return countryService.getAll();
-  }
+    @GetMapping()
+    public List<CountryViewDto> getAllCountries() {
+        return countryService.getAll();
+    }
 }
