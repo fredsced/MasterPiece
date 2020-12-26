@@ -1,17 +1,16 @@
 package fr.formation.itschool.masterpiece.dtos.compliancereferent;
 
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
-public class ParametersDto {
+public class ComplianceReferentCriteria {
 
-    @NotNull
+
     @Positive
     Long countryId;
-    @NotNull
+
     @Positive
     Long organisationUnitId;
-    @NotNull
+
     @Positive
     Long riskId;
 

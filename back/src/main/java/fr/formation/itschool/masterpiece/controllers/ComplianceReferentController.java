@@ -1,7 +1,7 @@
 package fr.formation.itschool.masterpiece.controllers;
 
 import fr.formation.itschool.masterpiece.dtos.compliancereferent.ComplianceReferentViewDto;
-import fr.formation.itschool.masterpiece.dtos.compliancereferent.ParametersDto;
+import fr.formation.itschool.masterpiece.dtos.compliancereferent.ComplianceReferentCriteria;
 import fr.formation.itschool.masterpiece.services.ComplianceReferentService;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,8 +19,8 @@ public class ComplianceReferentController {
     }
 
     @GetMapping()
-    public List<ComplianceReferentViewDto> findByParameters(
-            @Valid ParametersDto parameters) {
-        return complianceReferentService.findByParameters(parameters);
+    public List<ComplianceReferentViewDto> search(
+            @Valid ComplianceReferentCriteria criteria) {
+        return complianceReferentService.search(criteria);
     }
 }
