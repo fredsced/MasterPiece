@@ -19,6 +19,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import AuthService from '../services/AuthService';
 import { useHistory } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
+import { object, string, ref } from 'yup';
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant='filled' {...props} />;
@@ -56,9 +57,35 @@ const useStyles = makeStyles((theme) => ({
     color: '#fff',
   },
 }));
+const ValidationSchema = (type) => {
+  if (type === 'register') {
+    return object().shape({
+      email: string()
+        .email('emailNotValid')
+        .required('emailRequired')
+        .max(255, 'tooLong'),
+      password: string()
+        .min(8, 'tooShort')
+        .max(30, 'tooLong')
+        .matches(
+          /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])\S{8,30}/,
+          'passwordNotComplex'
+        )
+        .required('passwordRequired'),
+      password_confirmation: string()
+        .oneOf([ref('password'), null], 'passwordNotMatch')
+        .required('required'),
+    });
+  } else {
+    return object().shape({
+      email: string().email('emailNotValid').required('emailRequired'),
+      password: string().required('passwordRequired'),
+    });
+  }
+};
 
 export default function Sign(props) {
-  let history = useHistory();
+  const history = useHistory();
   const classes = useStyles();
   const [apiErrorResponse, setApiErrorResponse] = useState();
   const [uniqueEmailErr, setUniqueEmailErr] = useState();
@@ -70,7 +97,7 @@ export default function Sign(props) {
   };
   const handleSuccessClose = () => {
     if (props.type === 'register') history.push('/login');
-    else history.push('/profile');
+    else history.push('/collaborator');
     setSuccessOpen(false);
   };
   const handleLoginError = (error) => {
@@ -105,7 +132,7 @@ export default function Sign(props) {
     setApiErrorResponse(errorMessage);
     if (
       Array.isArray(errorMessage) &&
-      errorMessage.find((e) => e.code === 'UniqueEmail')
+      errorMessage.find((e) => e.field === 'email' && e.code === 'UniqueEmail')
     ) {
       setUniqueEmailErr(
         <FormattedMessage
@@ -126,63 +153,7 @@ export default function Sign(props) {
   return (
     <Formik
       initialValues={{ email: '', password: '', password_confirmation: '' }}
-      validate={(values, apiErrorResponse) => {
-        const errors = {};
-        if (!values.email) {
-          errors.email = (
-            <FormattedMessage
-              id='emailRequired'
-              defaultMessage='Email required'
-            />
-          );
-        } else if (
-          !/^[A-Z0-9._%+-]{1,64}@[A-Z0-9.-]{1,64}\.[A-Z]{1,64}$/i.test(
-            values.email
-          )
-        ) {
-          errors.email = (
-            <FormattedMessage
-              id='emailNotValid'
-              defaultMessage='Email not valid'
-            />
-          );
-        }
-        if (apiErrorResponse) {
-          errors.email = (
-            <FormattedMessage
-              id='emailNotUnique'
-              defaultMessage='Email not unique'
-            />
-          );
-        }
-        if (!values.password) {
-          errors.password = (
-            <FormattedMessage
-              id='passwordRequired'
-              defaultMessage='Password required'
-            />
-          );
-        } else if (values.password.length < 8 || values.password.length > 50) {
-          errors.password = (
-            <FormattedMessage
-              id='passwordMinMax'
-              defaultMessage='Password between 8 and 50 characteres'
-            />
-          );
-        }
-        if (
-          props.type === 'register' &&
-          values.password !== values.password_confirmation
-        ) {
-          errors.password_confirmation = (
-            <FormattedMessage
-              id='passwordNotMatch'
-              defaultMessage="Password doesn't match"
-            />
-          );
-        }
-        return errors;
-      }}
+      validationSchema={() => ValidationSchema(props.type)}
       onSubmit={(values, { setSubmitting }) => {
         resetApiErrors();
         const { email, password } = values;
@@ -251,8 +222,11 @@ export default function Sign(props) {
                     fullWidth
                     id='email'
                     label={
-                      dirty && errors.email ? (
-                        errors.email
+                      touched.email && errors.email ? (
+                        <FormattedMessage
+                          id={errors.email}
+                          defaultMessage={errors.email}
+                        />
                       ) : (
                         <FormattedMessage id='email' defaultMessage='Email' />
                       )
@@ -260,7 +234,9 @@ export default function Sign(props) {
                     name='email'
                     value={values.email}
                     onChange={handleChange}
-                    error={(dirty && !!errors.email) || !!uniqueEmailErr}
+                    error={
+                      (touched.email && !!errors.email) || !!uniqueEmailErr
+                    }
                   />
                   {!!uniqueEmailErr ? (
                     <Grid item xs={12}>
@@ -281,8 +257,11 @@ export default function Sign(props) {
                     fullWidth
                     name='password'
                     label={
-                      dirty && !!errors.password ? (
-                        errors.password
+                      touched.password && !!errors.password ? (
+                        <FormattedMessage
+                          id={errors.password}
+                          defaultMessage={errors.password}
+                        />
                       ) : (
                         <FormattedMessage
                           id='password'
@@ -294,7 +273,7 @@ export default function Sign(props) {
                     id='password'
                     onChange={handleChange}
                     value={values.password}
-                    error={dirty && !!errors.password}
+                    error={touched.password && !!errors.password}
                   />
                   <Dialog open={errorOpen} onClose={handleErrorClose}>
                     <Alert severity='error'>
@@ -344,8 +323,12 @@ export default function Sign(props) {
                         fullWidth
                         name='password_confirmation'
                         label={
-                          dirty && !!errors.password_confirmation ? (
-                            errors.password_confirmation
+                          touched.password_confirmation &&
+                          !!errors.password_confirmation ? (
+                            <FormattedMessage
+                              id={errors.password_confirmation}
+                              defaultMessage={errors.password_confirmation}
+                            />
                           ) : (
                             <FormattedMessage
                               id='passwordConfirmation'
@@ -372,7 +355,7 @@ export default function Sign(props) {
                 color='primary'
                 fullWidth
                 disableElevation
-                disabled={isSubmitting || !isValid}
+                disabled={isSubmitting}
                 className={classes.submit}
               >
                 {props.type === 'register' ? (

@@ -1,6 +1,6 @@
 package fr.formation.itschool.masterpiece.config;
 
-import fr.formation.itschool.masterpiece.dtos.AccountInfoDto;
+import fr.formation.itschool.masterpiece.dtos.account.AccountInfoDto;
 import fr.formation.itschool.masterpiece.services.AccountService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -55,10 +55,10 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
   private String clientId;
 
   protected AuthorizationServerConfig(
-      PasswordEncoder encoder,
-      AuthenticationManager authenticationManagerBean,
-      AccountService accountService,
-      CustomAccessTokenConverter customAccessTokenConverter) {
+    PasswordEncoder encoder,
+    AuthenticationManager authenticationManagerBean,
+    AccountService accountService,
+    CustomAccessTokenConverter customAccessTokenConverter) {
     this.encoder = encoder;
     authenticationManager = authenticationManagerBean;
     this.accountService = accountService;
@@ -77,7 +77,9 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     return services;
   }
 
-  /** JwtTokenStore can read and write JWT thanks to the token converter. */
+  /**
+   * JwtTokenStore can read and write JWT thanks to the token converter.
+   */
   @Bean
   protected TokenStore tokenStore() {
     return new JwtTokenStore(accessTokenConverter());
@@ -88,19 +90,23 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     return new CustomTokenEnhancer();
   }
 
-  /** All in one. */
+  /**
+   * All in one.
+   */
   @Override
   public void configure(AuthorizationServerEndpointsConfigurer configurer) throws Exception {
     TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();
     tokenEnhancerChain.setTokenEnhancers(Arrays.asList(tokenEnhancer(), accessTokenConverter()));
     configurer
-        .tokenStore(tokenStore())
-        .tokenEnhancer(tokenEnhancerChain)
-        .authenticationManager(authenticationManager)
-        .userDetailsService(accountService);
+      .tokenStore(tokenStore())
+      .tokenEnhancer(tokenEnhancerChain)
+      .authenticationManager(authenticationManager)
+      .userDetailsService(accountService);
   }
 
-  /** A token converter for JWT and specifies a signing key (private/public key pair). */
+  /**
+   * A token converter for JWT and specifies a signing key (private/public key pair).
+   */
   @Bean
   protected JwtAccessTokenConverter accessTokenConverter() {
     JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
@@ -133,12 +139,12 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
   @Override
   public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
     clients
-        .inMemory()
-        .withClient(clientId)
-        .secret(encoder.encode(""))
-        .scopes("trusted")
-        .authorizedGrantTypes("password")
-        .accessTokenValiditySeconds(accessTokenValiditySeconds);
+      .inMemory()
+      .withClient(clientId)
+      .secret(encoder.encode(""))
+      .scopes("trusted")
+      .authorizedGrantTypes("password")
+      .accessTokenValiditySeconds(accessTokenValiditySeconds);
   }
 
   /**
@@ -148,7 +154,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
    */
   @GetMapping("/accountInfo")
   public AccountInfoDto userInfo() {
-    Long userId = SecurityHelper.getUserId();
+    Long userId = SecurityHelper.getAccountId();
     return accountService.getCurrentAccountInfo(userId);
   }
 }

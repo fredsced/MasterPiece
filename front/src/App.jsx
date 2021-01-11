@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Sign from './components/Sign';
 import Admin from './components/Admin';
-import UserProfile from './components/UserProfile';
+import Collaborator from './components/Collaborator';
 import Footer from './components/Footer';
 import Header from './components/Header';
 import { Switch, Route } from 'react-router-dom';
@@ -30,8 +30,8 @@ function App() {
     AuthService.logout();
   }
 
-  function handleUserLogged(user) {
-    setCurrentUser(user);
+  function updateUser(userUpdated) {
+    setCurrentUser(userUpdated);
   }
 
   return (
@@ -47,16 +47,16 @@ function App() {
             />
             <Switch>
               <Route exact path={['/', '/login']}>
-                <Sign
-                  type='login'
-                  userLogged={(user) => handleUserLogged(user)}
-                />
+                <Sign type='login' userLogged={(user) => updateUser(user)} />
               </Route>
               <Route path='/register'>
                 <Sign type='register' />
               </Route>
-              <Route path='/profile'>
-                <UserProfile user={currentUser} />
+              <Route path='/collaborator'>
+                <Collaborator
+                  user={currentUser}
+                  updateUser={(user) => updateUser(user)}
+                />
               </Route>
               <Route path='/admin'>
                 <Admin user={currentUser} />

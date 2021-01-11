@@ -18,17 +18,20 @@ import java.util.stream.Collectors;
 public class ControllerAdvice extends ResponseEntityExceptionHandler {
   @Override
   protected ResponseEntity<Object> handleMethodArgumentNotValid(
-      MethodArgumentNotValidException ex,
-      HttpHeaders headers,
-      HttpStatus status,
-      WebRequest webRequest) {
+    MethodArgumentNotValidException ex,
+    HttpHeaders headers,
+    HttpStatus status,
+    WebRequest webRequest) {
     BindingResult result = ex.getBindingResult();
     List<FieldError> fieldErrors = result.getFieldErrors();
 
     List<ValidationError> validationErrors =
-        fieldErrors.stream()
-            .map(error -> new ValidationError(error.getCode(), error.getField(), error.getDefaultMessage()))
-            .collect(Collectors.toList());
+      fieldErrors.stream()
+        .map(
+          error ->
+            new ValidationError(
+              error.getCode(), error.getField(), error.getDefaultMessage()))
+        .collect(Collectors.toList());
     return super.handleExceptionInternal(ex, validationErrors, headers, status, webRequest);
   }
 }

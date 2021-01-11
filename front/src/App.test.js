@@ -4,6 +4,6 @@ import App from './App';
 
 test('control title in page', () => {
   const { getByText } = render(<App />);
-  const linkElement = getByText('sylvie.martin@banquegen.com');
+  const linkElement = getByText('myCompliancePal');
   expect(linkElement).toBeInTheDocument();
 });

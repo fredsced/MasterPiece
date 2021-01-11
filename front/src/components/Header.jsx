@@ -57,7 +57,7 @@ export default function Header(props) {
           </div>
         </Box>
 
-        {user && user.userEmail ? (
+        {user && user.accountEmail ? (
           <>
             <Box pr={1}>
               <AccountCircleIcon className={classes.accountIcon} />
@@ -65,9 +65,9 @@ export default function Header(props) {
             <Box pr={6}>
               <Box>
                 <Typography variant='subtitle1'>
-                  {user.firstName && user.lastName
-                    ? `${user.firstName} ${user.lastName}`
-                    : user.userEmail}
+                  {user.collaboratorFirstname && user.collaboratorLastname
+                    ? `${user.collaboratorFirstname} ${user.collaboratorLastname}`
+                    : user.accountEmail}
                 </Typography>
               </Box>
               <Box>

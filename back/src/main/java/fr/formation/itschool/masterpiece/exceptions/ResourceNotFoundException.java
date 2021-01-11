@@ -1,8 +1,12 @@
 package fr.formation.itschool.masterpiece.exceptions;
 
-public class ResourceNotFoundException extends RuntimeException{
+public class ResourceNotFoundException extends RuntimeException {
 
-  public ResourceNotFoundException(String message){
+  public ResourceNotFoundException(String message) {
     super(message);
+  }
+
+  public ResourceNotFoundException() {
+    super();
   }
 }
