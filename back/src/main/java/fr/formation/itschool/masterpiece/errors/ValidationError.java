@@ -1,8 +1,5 @@
 package fr.formation.itschool.masterpiece.errors;
 
-import lombok.Getter;
-
-@Getter
 public class ValidationError {
   private final String code;
   private final String field;
@@ -12,5 +9,17 @@ public class ValidationError {
     this.code = code;
     this.field = field;
     this.message = message;
+  }
+
+  public String getCode() {
+    return code;
+  }
+
+  public String getField() {
+    return field;
+  }
+
+  public String getMessage() {
+    return message;
   }
 }

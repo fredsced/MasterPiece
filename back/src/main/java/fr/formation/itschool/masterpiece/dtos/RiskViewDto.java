@@ -8,7 +8,8 @@ public class RiskViewDto {
     private String code;
     private String label;
 
-    protected RiskViewDto(){};
+    protected RiskViewDto() {
+    }
 
     public Long getId() {
         return id;
