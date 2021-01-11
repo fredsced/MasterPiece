@@ -1,5 +1,8 @@
 .idea
 .vscode
+/0_docs
+/1_exemples
+/retour\ Frank
 /Présentation
 /capture ecran slide
 /gestion projet
@@ -18,6 +21,7 @@ coverage
 
 # production
 /front/build
+/front/.gradle
 
 # misc
 .DS_Store
