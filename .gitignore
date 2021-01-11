@@ -21,6 +21,7 @@ coverage
 
 # production
 /front/build
+/front/.gradle
 
 # misc
 .DS_Store
