@@ -11,6 +11,7 @@ public class RiskViewDto {
     protected RiskViewDto() {
     }
 
+
     public Long getId() {
         return id;
     }

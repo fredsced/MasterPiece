@@ -18,6 +18,7 @@ public class CollaboratorServiceImpl implements CollaboratorService {
   private final ComplianceReferentRepository complianceReferentRepository;
   private final ModelMapper modelMapper;
 
+
   protected CollaboratorServiceImpl(
     CollaboratorRepository collaboratorRepository,
     AccountRepository accountRepository,
@@ -37,6 +38,7 @@ public class CollaboratorServiceImpl implements CollaboratorService {
   @Override
   public void createCollaborator(CreateCollaboratorDto createCollaboratorDto, Long accountId) {
     Collaborator collaboratorToCreate = modelMapper.map(createCollaboratorDto, Collaborator.class);
+
     Account account = accountRepository.getOne(accountId);
     collaboratorToCreate.setAccount(account);
     collaboratorRepository.save(collaboratorToCreate);
