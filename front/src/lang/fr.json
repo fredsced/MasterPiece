@@ -15,6 +15,7 @@
   "passwordRequired": "Mot de passe obligatoire",
   "passwordMinMax": "Mode de passe entre 8 et 50 caractères",
   "passwordNotMatch": "Le mot de passe n'est pas identique",
+  "passwordNotComplex": "Le mot de passe doit contenir une majuscule, une minuscule et un chiffre",
   "networkError": "Erreur réseau",
   "invalidGrant": "Identifiants non valides",
   "accountCreated": "Compte créé",
