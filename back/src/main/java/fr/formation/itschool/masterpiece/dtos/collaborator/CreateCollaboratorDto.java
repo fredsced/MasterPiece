@@ -23,10 +23,10 @@ public class CreateCollaboratorDto {
   private String sesame;
 
   @NotNull
-  private Country country;
+  Long  countryId;
 
   @NotNull
-  private OrganisationUnit organisationUnit;
+  Long  organisationUnitId;
 
   public String getLastname() {
     return lastname;
@@ -40,12 +40,12 @@ public class CreateCollaboratorDto {
     return sesame;
   }
 
-  public Country getCountry() {
-    return country;
+  public Long getCountryId() {
+    return countryId;
   }
 
-  public OrganisationUnit getOrganisationUnit() {
-    return organisationUnit;
+  public Long getOrganisationUnitId() {
+    return organisationUnitId;
   }
 
   @Override
@@ -54,8 +54,8 @@ public class CreateCollaboratorDto {
       .add("lastname=" + lastname)
       .add("firstname=" + firstname)
       .add("sesame=" + sesame)
-      .add("country=" + country)
-      .add("organisationUnit=" + organisationUnit)
+      .add("countryId=" + countryId)
+      .add("organisationUnitId=" + organisationUnitId)
       .toString();
   }
 }

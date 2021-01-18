@@ -1,5 +1,6 @@
 package fr.formation.itschool.masterpiece.services;
 
+import fr.formation.itschool.masterpiece.config.SecurityHelper;
 import fr.formation.itschool.masterpiece.domain.Account;
 import fr.formation.itschool.masterpiece.domain.Collaborator;
 import fr.formation.itschool.masterpiece.dtos.collaborator.CollaboratorInfoDto;
@@ -15,18 +16,15 @@ public class CollaboratorServiceImpl implements CollaboratorService {
 
   private final CollaboratorRepository collaboratorRepository;
   private final AccountRepository accountRepository;
-  private final ComplianceReferentRepository complianceReferentRepository;
   private final ModelMapper modelMapper;
 
 
   protected CollaboratorServiceImpl(
     CollaboratorRepository collaboratorRepository,
     AccountRepository accountRepository,
-    ComplianceReferentRepository complianceReferentRepository,
     ModelMapper modelMapper) {
     this.collaboratorRepository = collaboratorRepository;
     this.accountRepository = accountRepository;
-    this.complianceReferentRepository = complianceReferentRepository;
     this.modelMapper = modelMapper;
   }
 
@@ -38,9 +36,12 @@ public class CollaboratorServiceImpl implements CollaboratorService {
   @Override
   public void createCollaborator(CreateCollaboratorDto createCollaboratorDto, Long accountId) {
     Collaborator collaboratorToCreate = modelMapper.map(createCollaboratorDto, Collaborator.class);
-
     Account account = accountRepository.getOne(accountId);
     collaboratorToCreate.setAccount(account);
+    Collaborator previousCollaborator = collaboratorRepository.findByAccountId(accountId, Collaborator.class);
+    if (previousCollaborator != null){
+      collaboratorToCreate.setId(previousCollaborator.getId());
+    }
     collaboratorRepository.save(collaboratorToCreate);
   }
 
@@ -50,8 +51,12 @@ public class CollaboratorServiceImpl implements CollaboratorService {
   }
 
   @Override
-  public boolean existsBySesame(String sesameId) {
-    return !collaboratorRepository.existsBySesameIgnoreCase(sesameId);
+  public boolean uniqueSesame(String sesame) {
+    Collaborator currentCollaborator = collaboratorRepository.findByAccountId(SecurityHelper.getAccountId(), Collaborator.class);
+    if (currentCollaborator != null) {
+      return (sesame.equals(currentCollaborator.getSesame())) || !collaboratorRepository.existsBySesameIgnoreCase(sesame);
+    } else {
+      return !collaboratorRepository.existsBySesameIgnoreCase(sesame);
+    }
   }
-
 }

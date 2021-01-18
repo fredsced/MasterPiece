@@ -10,6 +10,8 @@ public interface CollaboratorInfoDto {
 
   String getFirstname();
 
+  String getSesame();
+
   Long getCountryId();
 
   Long getOrganisationUnitId();

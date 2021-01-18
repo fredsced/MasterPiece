@@ -59,7 +59,6 @@ public class AccountServiceImpl implements AccountService {
         .findByEmailIgnoreCase(email)
         .orElseThrow(
           () -> new UsernameNotFoundException("No account found with email:" + email));
-
     return new AccountDetails(userAccount);
   }
 }

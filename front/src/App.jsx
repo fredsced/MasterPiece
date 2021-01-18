@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Sign from './components/Sign';
 import Admin from './components/Admin';
 import Collaborator from './components/Collaborator';
+import AlreadyConnected from './components/AlreadyConnected';
+import NotConnected from './components/NotConnected';
 import Footer from './components/Footer';
 import Header from './components/Header';
 import { Switch, Route } from 'react-router-dom';
@@ -12,6 +14,8 @@ import { IntlProvider } from 'react-intl';
 import AuthService from './services/AuthService';
 import message_en from './lang/en.json';
 import message_fr from './lang/fr.json';
+import CreateProfile from './components/CreateProfile';
+import SearchComplianceOfficer from './components/SearchComplianceOfficer';
 
 function App() {
   const [currentUser, setCurrentUser] = useState(AuthService.getCurrentUser);
@@ -19,8 +23,19 @@ function App() {
   const startLanguage =
     browserlanguage === ('fr' || 'en') ? browserlanguage : 'en';
   const [language, setLanguage] = useState(startLanguage);
+  const [isAuthenticated, setIsAuthenticated] = useState(
+    AuthService.isAuthenticated
+  );
 
   const messages = { en: message_en, fr: message_fr };
+
+  useEffect(() => {
+    const updateIsAuthenticated = () => {
+      const result = AuthService.isAuthenticated();
+      setIsAuthenticated(result);
+    };
+    updateIsAuthenticated();
+  });
 
   function handleLanguage(lang) {
     setLanguage(lang);
@@ -47,16 +62,45 @@ function App() {
             />
             <Switch>
               <Route exact path={['/', '/login']}>
-                <Sign type='login' userLogged={(user) => updateUser(user)} />
+                {isAuthenticated ? (
+                  <AlreadyConnected />
+                ) : (
+                  <Sign type='login' userLogged={(user) => updateUser(user)} />
+                )}
               </Route>
               <Route path='/register'>
-                <Sign type='register' />
+                {isAuthenticated ? (
+                  <AlreadyConnected />
+                ) : (
+                  <Sign type='register' />
+                )}
               </Route>
-              <Route path='/collaborator'>
-                <Collaborator
-                  user={currentUser}
-                  updateUser={(user) => updateUser(user)}
-                />
+              <Route exact path='/collaborator'>
+                {!isAuthenticated ? (
+                  <NotConnected />
+                ) : (
+                  <Collaborator
+                    user={currentUser}
+                    updateUser={(user) => updateUser(user)}
+                  />
+                )}
+              </Route>
+              <Route exact path='/collaborator/profile'>
+                {!isAuthenticated ? (
+                  <NotConnected />
+                ) : (
+                  <CreateProfile
+                    user={currentUser}
+                    updateUser={(user) => updateUser(user)}
+                  />
+                )}
+              </Route>
+              <Route exact path='/collaborator/searchlco'>
+                {!isAuthenticated ? (
+                  <NotConnected />
+                ) : (
+                  <SearchComplianceOfficer user={currentUser} />
+                )}
               </Route>
               <Route path='/admin'>
                 <Admin user={currentUser} />

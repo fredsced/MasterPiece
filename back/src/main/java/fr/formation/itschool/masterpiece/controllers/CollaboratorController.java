@@ -3,7 +3,7 @@ package fr.formation.itschool.masterpiece.controllers;
 import fr.formation.itschool.masterpiece.config.SecurityHelper;
 import fr.formation.itschool.masterpiece.dtos.collaborator.CreateCollaboratorDto;
 import fr.formation.itschool.masterpiece.services.CollaboratorService;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,8 +21,9 @@ public class CollaboratorController {
     this.collaboratorService = collaboratorService;
   }
 
-  @PostMapping()
+  @PutMapping()
   public void createCollaborator(@RequestBody @Valid CreateCollaboratorDto createCollaboratorDto) {
     collaboratorService.createCollaborator(createCollaboratorDto, SecurityHelper.getAccountId());
   }
 }
+

@@ -10,7 +10,7 @@ const CollaboratorService = {
   create: async (values) => {
     const optionsToCreateProfile = {
       url: `${API_BASE_URL}${COLLABORATORS_END_POINT}`,
-      method: 'POST',
+      method: 'PUT',
       data: JSON.stringify(values),
       headers: authHeaders(),
     };
@@ -22,9 +22,15 @@ const CollaboratorService = {
   updateCollaboratorProfile: (values) => {
     const userToUpdate = JSON.parse(localStorage.getItem(LOCAL_STORAGE_USER));
     userToUpdate.accountHasProfile = true;
-    userToUpdate.collaboratorLastname = values.lastname;
-    userToUpdate.collaboratorFirstname = values.firstname;
+    userToUpdate.collaboratorInfo = {
+      lastname: values.lastname,
+      firstname: values.firstname,
+      sesame: values.sesame,
+      countryId: values.countryId,
+      organisationUnitId: values.organisationUnitId,
+    };
     localStorage.setItem(LOCAL_STORAGE_USER, JSON.stringify(userToUpdate));
+    console.log('profile updated');
   },
 };
 export default CollaboratorService;

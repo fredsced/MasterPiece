@@ -58,6 +58,14 @@ public class Collaborator {
     foreignKey = @ForeignKey(name = "collaborators_account_id_FK"))
   private Account account;
 
+  public Long getId() {
+    return id;
+  }
+
+  public void setId(Long id) {
+    this.id = id;
+  }
+
   public void setLastname(String lastname) {
     this.lastname = lastname;
   }

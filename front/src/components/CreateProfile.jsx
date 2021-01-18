@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { object, string, mixed } from 'yup';
+import { object, string, number } from 'yup';
 import {
   Container,
   Paper,
@@ -22,6 +22,7 @@ import MuiAlert from '@material-ui/lab/Alert';
 import AuthService from '../services/AuthService';
 import CountriesService from '../services/CountriesService';
 import OrgUnitService from '../services/OrgUnitService';
+import { useHistory } from 'react-router-dom';
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant='filled' {...props} />;
@@ -72,12 +73,13 @@ const ValidationSchema = () => {
       .max(7, 'tooLong')
       .matches(/[a,x]\d{6}/i, 'notASesameId')
       .required('required'),
-    country: mixed().required('required'),
-    organisationUnit: mixed().required('required'),
+    countryId: number().required('required'),
+    organisationUnitId: number().required('required'),
   });
 };
 
 export default function CreateProfile(props) {
+  const history = useHistory();
   const classes = useStyles();
   const [successOpen, setSuccessOpen] = useState(false);
   const [uqSesameId, setUqSesameId] = useState();
@@ -85,6 +87,23 @@ export default function CreateProfile(props) {
   const [apiErrorResponse, setApiErrorResponse] = useState();
   const [countries, setCountries] = useState([]);
   const [organisationUnits, setOrganisationUnits] = useState([]);
+  const [hasProfile, setHasProfile] = useState(
+    AuthService.getCurrentUser().accountHasProfile
+  );
+  const [fetchingDatas, setFetchingDatas] = useState(true);
+  const currentUser = AuthService.getCurrentUser();
+  let userFirstname = '';
+  let userLastname = '';
+  let userSesame = '';
+  let userCountryId = '';
+  let userOrganisationUnitId = '';
+  if (currentUser.accountHasProfile) {
+    userFirstname = currentUser.collaboratorInfo.firstname;
+    userLastname = currentUser.collaboratorInfo.lastname;
+    userCountryId = currentUser.collaboratorInfo.countryId;
+    userSesame = currentUser.collaboratorInfo.sesame;
+    userOrganisationUnitId = currentUser.collaboratorInfo.organisationUnitId;
+  }
 
   useEffect(() => {
     const fetchCountries = async () => {
@@ -97,12 +116,14 @@ export default function CreateProfile(props) {
     };
     fetchCountries();
     fetchOrgUnits();
+    setFetchingDatas(false);
   }, []);
 
   const handleSuccessClose = () => {
     const updatedUser = AuthService.getCurrentUser();
     props.updateUser(updatedUser);
     setSuccessOpen(false);
+    history.push('/collaborator');
   };
   const handleErrorClose = () => {
     setErrorOpen(false);
@@ -150,11 +171,11 @@ export default function CreateProfile(props) {
   return (
     <Formik
       initialValues={{
-        firstname: '',
-        lastname: '',
-        sesame: '',
-        country: '',
-        organisationUnit: '',
+        firstname: userFirstname,
+        lastname: userLastname,
+        sesame: userSesame,
+        countryId: userCountryId,
+        organisationUnitId: userOrganisationUnitId,
       }}
       validationSchema={() => ValidationSchema()}
       onSubmit={(values, { setSubmitting }) => {
@@ -162,6 +183,7 @@ export default function CreateProfile(props) {
         resetApiErrors();
         CollaboratorService.create(values)
           .then(() => {
+            console.log('profile created');
             CollaboratorService.updateCollaboratorProfile(values);
             setSuccessOpen(true);
           })
@@ -185,10 +207,17 @@ export default function CreateProfile(props) {
           <Paper className={classes.paper}>
             <Grid container spacing={2} justify='center'>
               <Typography component='h1' variant='h3'>
-                <FormattedMessage
-                  id='createProfile'
-                  defaultMessage='Create your profile'
-                />
+                {!hasProfile ? (
+                  <FormattedMessage
+                    id='createProfile'
+                    defaultMessage='Create your profile'
+                  />
+                ) : (
+                  <FormattedMessage
+                    id='updateProfile'
+                    defaultMessage='Update your profile'
+                  />
+                )}
               </Typography>
             </Grid>
             <form className={classes.form} onSubmit={handleSubmit}>
@@ -302,23 +331,24 @@ export default function CreateProfile(props) {
                           defaultMessage='Organisation Unit'
                         />
                       }
-                      name='organisationUnit'
+                      name='organisationUnitId'
                       onChange={handleChange}
-                      value={values.organisationUnit}
+                      value={values.organisationUnitId}
                       error={
-                        touched.organisationUnit && !!errors.organisationUnit
+                        touched.organisationUnitId &&
+                        !!errors.organisationUnitId
                       }
                       helperText={
-                        touched.organisationUnit &&
-                        !!errors.organisationUnit && (
-                          <FormattedMessage id={errors.organisationUnit} />
+                        touched.organisationUnitId &&
+                        !!errors.organisationUnitId && (
+                          <FormattedMessage id={errors.organisationUnitId} />
                         )
                       }
                     >
                       {organisationUnits.map((organisationUnit) => (
                         <MenuItem
                           key={organisationUnit.id}
-                          value={organisationUnit}
+                          value={organisationUnit.id}
                         >
                           {organisationUnit.code}
                         </MenuItem>
@@ -334,25 +364,25 @@ export default function CreateProfile(props) {
                       size='small'
                       width='115'
                       select
-                      value={values.country}
+                      value={values.countryId}
                       label={
                         <FormattedMessage
                           id='country'
                           defaultMessage='Country'
                         />
                       }
-                      name='country'
+                      name='countryId'
                       onChange={handleChange}
-                      error={touched.country && !!errors.country}
+                      error={touched.countryId && !!errors.countryId}
                       helperText={
-                        touched.country &&
-                        !!errors.country && (
-                          <FormattedMessage id={errors.country} />
+                        touched.countryId &&
+                        !!errors.countryId && (
+                          <FormattedMessage id={errors.countryId} />
                         )
                       }
                     >
                       {countries.map((country) => (
-                        <MenuItem key={country.id} value={country}>
+                        <MenuItem key={country.id} value={country.id}>
                           <FormattedMessage
                             id={country.iso}
                             defaultMessage={country.name}
@@ -364,10 +394,18 @@ export default function CreateProfile(props) {
                 </Grid>
                 <Dialog open={successOpen} onClose={handleSuccessClose}>
                   <Alert severity='success'>
-                    <FormattedMessage
-                      id='collaboratorCreated'
-                      defaultMessage='Collaborator profile created'
-                    />
+                    {hasProfile ? (
+                      <FormattedMessage
+                        id='collaboratorUpdated'
+                        defaultMessage='Collaborator profile updated'
+                      />
+                    ) : (
+                      <FormattedMessage
+                        id='collaboratorCreated'
+                        defaultMessage='Collaborator profile created'
+                      />
+                    )}
+
                     <IconButton
                       size='small'
                       aria-label='close'

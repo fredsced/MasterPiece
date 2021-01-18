@@ -11,5 +11,5 @@ public interface CollaboratorService {
 
   CollaboratorInfoDto getCollaboratorInfoByAccountId(Long accountId);
 
-  boolean existsBySesame(String sesameId);
+  boolean uniqueSesame(String sesameId);
 }
