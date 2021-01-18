@@ -15,7 +15,7 @@ public class UniqueSesameValidator implements ConstraintValidator<UniqueSesame, 
 
   @Override
   public boolean isValid(String sesame, ConstraintValidatorContext context) {
-    return collaboratorService.existsBySesame(sesame);
+    return collaboratorService.uniqueSesame(sesame);
   }
 }
 

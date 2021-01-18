@@ -97,7 +97,6 @@ export default function Sign(props) {
   };
   const handleSuccessClose = () => {
     if (props.type === 'register') history.push('/login');
-    else history.push('/collaborator');
     setSuccessOpen(false);
   };
   const handleLoginError = (error) => {
@@ -161,9 +160,9 @@ export default function Sign(props) {
         props.type === 'login'
           ? AuthService.login(email, password)
               .then((response) => {
-                props.userLogged(response);
                 setSubmitting(false);
-                setSuccessOpen(true);
+                props.userLogged(response);
+                history.push('/collaborator');
               })
               .catch((error) => {
                 handleLoginError(error);
