@@ -3,9 +3,6 @@ package fr.formation.itschool.masterpiece.domain;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -27,10 +24,7 @@ import java.util.StringJoiner;
     @Index(name = "collaborators_organisation_unit_id_IDX", columnList = "organisation_unit_id"),
     @Index(name = "collaborators_sesame_id_IDX", columnList = "sesame_id")
   })
-public class Collaborator {
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+public class Collaborator extends AbstractEntity {
 
   @Column(nullable = false)
   private String lastname;
@@ -57,14 +51,6 @@ public class Collaborator {
     nullable = true,
     foreignKey = @ForeignKey(name = "collaborators_account_id_FK"))
   private Account account;
-
-  public Long getId() {
-    return id;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
-  }
 
   public void setLastname(String lastname) {
     this.lastname = lastname;
@@ -105,7 +91,7 @@ public class Collaborator {
   @Override
   public String toString() {
     return new StringJoiner(", ", Collaborator.class.getSimpleName() + "[", "]")
-      .add("id=" + id)
+      .add("id=" + super.getId())
       .add("lastname=" + lastname)
       .add("firstname=" + firstname)
       .add("sesame=" + sesame)

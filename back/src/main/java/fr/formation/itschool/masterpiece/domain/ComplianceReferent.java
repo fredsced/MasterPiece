@@ -1,9 +1,6 @@
 package fr.formation.itschool.masterpiece.domain;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
@@ -18,10 +15,7 @@ import java.util.StringJoiner;
   @UniqueConstraint(
     name = "compliance_referents_collaborator_id",
     columnNames = "collaborator_id"))
-public class ComplianceReferent {
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+public class ComplianceReferent extends AbstractEntity {
 
   @OneToOne
   @JoinColumn(name = "collaborator_id", nullable = false)
@@ -38,7 +32,7 @@ public class ComplianceReferent {
   @Override
   public String toString() {
     return new StringJoiner(", ", ComplianceReferent.class.getSimpleName() + "[", "]")
-      .add("id=" + id)
+      .add("id=" + super.getId())
       .add("collaborator=" + collaborator)
       .add("level=" + level)
       .add("risk=" + risk)

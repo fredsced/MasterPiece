@@ -4,9 +4,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ForeignKey;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -23,10 +20,7 @@ import java.util.StringJoiner;
   @UniqueConstraint(
     name = "accounts_email_UQ",
     columnNames = {"email"}))
-public class Account {
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+public class Account extends AbstractEntity {
 
   @Column(nullable = false)
   private String email;
@@ -62,7 +56,7 @@ public class Account {
   @Override
   public String toString() {
     return new StringJoiner(", ", Account.class.getSimpleName() + "[", "]")
-      .add("id=" + id)
+      .add("id=" + super.getId())
       .add("email=" + email)
       .add("password=" + password)
       .add("roles=" + roles)

@@ -9,7 +9,6 @@ public class OrganisationUnitViewDto {
   private Long id;
   private String code;
   private String name;
-  private String description;
 
   protected OrganisationUnitViewDto() {}
 
@@ -26,17 +25,12 @@ public class OrganisationUnitViewDto {
   }
 
 
-  public String getDescription() {
-    return description;
-  }
-
   @Override
   public String toString() {
     return new StringJoiner(", ", OrganisationUnitViewDto.class.getSimpleName() + "[", "]")
       .add("id=" + id)
       .add("code=" + code)
       .add("name=" + name)
-      .add("description=" + description)
       .toString();
   }
 }
