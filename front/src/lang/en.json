@@ -44,5 +44,10 @@
   "CORR": "Corruption",
   "Org.Unit.": "Org.Unit.",
   "chooseYourCountry": "Choose your country",
-  "chooseYourOrgUnit": "Choose your Org.Unit."
+  "chooseYourOrgUnit": "Choose your Org.Unit.",
+  "collaboratorPage": "Collaborator Page",
+  "createUpdateProfile": "Create/Update Profile",
+  "collaboratorUpdated": "Profile updated",
+  "findComplianceReferent": "Find Compliance Referent",
+  "alreadyConnected": "Already connected"
 }

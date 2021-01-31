@@ -45,5 +45,11 @@
   "Corruption": "Corruption",
   "Org.Unit.": "Unit.Org.",
   "chooseYourCountry": "Choisissez votre pays",
-  "chooseYourOrgUnit": "Choisissez votre Unit.Org."
+  "chooseYourOrgUnit": "Choisissez votre Unit.Org.",
+  "collaboratorPage": "Page collaborateur",
+  "createUpdateProfile": "Créer/Modifier son profil",
+  "collaboratorUpdated": "Profil mis à jour",
+  "updateProfile": "Modifier son profil",
+  "findComplianceReferent": "Rechercher son référent conformité",
+  "alreadyConnected": "Déjà connecté"
 }
