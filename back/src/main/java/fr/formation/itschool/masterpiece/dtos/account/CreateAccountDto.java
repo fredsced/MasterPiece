@@ -32,7 +32,7 @@ public class CreateAccountDto {
   public String toString() {
     return new StringJoiner(", ", CreateAccountDto.class.getSimpleName() + "[", "]")
       .add("email=" + email)
-      .add("password=" + password)
+      .add("password=" + "[hide]")
       .toString();
   }
 }
