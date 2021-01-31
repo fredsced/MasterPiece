@@ -13,17 +13,14 @@ import logo from '../logo.svg';
 import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { Dialog } from '@material-ui/core';
-import MuiAlert from '@material-ui/lab/Alert';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import AuthService from '../services/AuthService';
 import { useHistory } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 import { object, string, ref } from 'yup';
+import Alert from './Alert';
 
-function Alert(props) {
-  return <MuiAlert elevation={6} variant='filled' {...props} />;
-}
 const useStyles = makeStyles((theme) => ({
   main: {
     minHeight: 'calc(100vh - 110px)',
