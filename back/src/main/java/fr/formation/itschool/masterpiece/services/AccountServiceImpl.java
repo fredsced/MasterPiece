@@ -13,6 +13,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -30,6 +31,7 @@ public class AccountServiceImpl implements AccountService {
     this.encoder = encoder;
   }
 
+  @Transactional(readOnly = false)
   @Override
   public void create(CreateAccountDto createAccountDto) {
     String passwordEncoded = encoder.encode(createAccountDto.getPassword());
@@ -40,6 +42,7 @@ public class AccountServiceImpl implements AccountService {
     accountRepository.save(accountToSave);
   }
 
+  @Transactional(readOnly = true)
   @Override
   public AccountInfoDto getCurrentAccountInfo(Long id) {
     return accountRepository
@@ -47,11 +50,13 @@ public class AccountServiceImpl implements AccountService {
       .orElseThrow(() -> new ResourceNotFoundException("No account found with this id:" + id));
   }
 
+  @Transactional(readOnly = true)
   @Override
   public boolean existsByEmail(String email) {
     return accountRepository.existsByEmailIgnoreCase(email);
   }
 
+  @Transactional(readOnly = true)
   @Override
   public UserDetails loadUserByUsername(String email) {
     AccountAuthDto userAccount =

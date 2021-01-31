@@ -4,6 +4,7 @@ import fr.formation.itschool.masterpiece.dtos.OrganisationUnitViewDto;
 import fr.formation.itschool.masterpiece.repositories.OrganisationUnitRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,6 +21,7 @@ public class OrganisationUnitServiceImpl implements OrganisationUnitService {
     this.modelMapper = modelMapper;
   }
 
+  @Transactional(readOnly = true)
   @Override
   public List<OrganisationUnitViewDto> getAllOrganisationUnits() {
     return organisationUnitRepository.findAll().stream()

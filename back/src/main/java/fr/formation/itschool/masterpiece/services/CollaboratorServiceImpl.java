@@ -7,9 +7,9 @@ import fr.formation.itschool.masterpiece.dtos.collaborator.CollaboratorInfoDto;
 import fr.formation.itschool.masterpiece.dtos.collaborator.CreateCollaboratorDto;
 import fr.formation.itschool.masterpiece.repositories.AccountRepository;
 import fr.formation.itschool.masterpiece.repositories.CollaboratorRepository;
-import fr.formation.itschool.masterpiece.repositories.ComplianceReferentRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class CollaboratorServiceImpl implements CollaboratorService {
@@ -28,13 +28,16 @@ public class CollaboratorServiceImpl implements CollaboratorService {
     this.modelMapper = modelMapper;
   }
 
+  @Transactional(readOnly = true)
   @Override
   public boolean hasProfile(Long id) {
     return collaboratorRepository.existsByAccountId(id);
   }
 
+  @Transactional(readOnly = false)
   @Override
   public void createCollaborator(CreateCollaboratorDto createCollaboratorDto, Long accountId) {
+    modelMapper.typeMap(CreateCollaboratorDto.class, Collaborator.class).addMappings(mapper -> mapper.skip(Collaborator::setId));
     Collaborator collaboratorToCreate = modelMapper.map(createCollaboratorDto, Collaborator.class);
     Account account = accountRepository.getOne(accountId);
     collaboratorToCreate.setAccount(account);
@@ -45,11 +48,13 @@ public class CollaboratorServiceImpl implements CollaboratorService {
     collaboratorRepository.save(collaboratorToCreate);
   }
 
+  @Transactional(readOnly = true)
   @Override
   public CollaboratorInfoDto getCollaboratorInfoByAccountId(Long accountId) {
     return collaboratorRepository.findByAccountId(accountId, CollaboratorInfoDto.class);
   }
 
+  @Transactional(readOnly = true)
   @Override
   public boolean uniqueSesame(String sesame) {
     Collaborator currentCollaborator = collaboratorRepository.findByAccountId(SecurityHelper.getAccountId(), Collaborator.class);

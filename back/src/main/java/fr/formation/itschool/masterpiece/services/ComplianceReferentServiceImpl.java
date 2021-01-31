@@ -4,6 +4,7 @@ import fr.formation.itschool.masterpiece.dtos.compliancereferent.ComplianceRefer
 import fr.formation.itschool.masterpiece.dtos.compliancereferent.ComplianceReferentViewDto;
 import fr.formation.itschool.masterpiece.repositories.ComplianceReferentRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -16,6 +17,7 @@ public class ComplianceReferentServiceImpl implements ComplianceReferentService 
     this.complianceReferentRepository = complianceReferentRepository;
   }
 
+  @Transactional(readOnly = true)
   @Override
   public List<ComplianceReferentViewDto> search(ComplianceReferentCriteria criteria) {
     return complianceReferentRepository.findWithCriteria(
