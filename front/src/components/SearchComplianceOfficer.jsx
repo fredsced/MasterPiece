@@ -88,34 +88,40 @@ export default function SearchComplianceOfficer() {
   const [risks, setRisks] = useState([]);
   const [countries, setCountries] = useState([]);
   const [organisationUnits, setOrganisationUnits] = useState([]);
-  const [fetchingDatas, setFetchingDatas] = useState(true);
+  const [fetchingCountries, setFetchingCountries] = useState(true);
+  const [fetchingOrgUnits, setFetchingOrgUnits] = useState(true);
 
   useEffect(() => {
     const fetchRisks = async () => {
-      setFetchingDatas(true);
       const result = await RisksService.getAll();
       setRisks(result);
     };
     const fetchCountries = async () => {
-      setFetchingDatas(true);
       const result = await CountriesService.getAll();
       setCountries(result);
+      setFetchingCountries(false);
     };
-    const fetchOrgUnits = async () => {
-      setFetchingDatas(true);
+    const fetchOrgUnits = async () => {    
       const orgUnits = await OrgUnitService.getAll();
       setOrganisationUnits(orgUnits);
+      setFetchingOrgUnits(false);
     };
     fetchRisks();
     fetchCountries();
     fetchOrgUnits();
-    setFetchingDatas(false);
   }, []);
 
   return (
     <>
-      {fetchingDatas ? (
-        <div> Fetching datas</div>
+      {fetchingCountries || fetchingOrgUnits ? (
+        <Container component='main' className={classes.main} maxWidth='sm'>
+          <Backdrop
+            className={classes.backdrop}
+            open={fetchingCountries || fetchingOrgUnits}
+          >
+            <CircularProgress color='primary' />
+          </Backdrop>
+        </Container>
       ) : (
         <Container component='main' className={classes.main} maxWidth='md'>
           <Paper className={classes.paper}>
