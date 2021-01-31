@@ -74,7 +74,7 @@ const ValidationSchema = () => {
   });
 };
 
-export default function CreateProfile(props) {
+export default function Profile(props) {
   const history = useHistory();
   const classes = useStyles();
   const [successOpen, setSuccessOpen] = useState(false);
@@ -188,7 +188,7 @@ export default function CreateProfile(props) {
           onSubmit={(values, { setSubmitting }) => {
             setSubmitting(true);
             resetApiErrors();
-            CollaboratorService.create(values)
+            CollaboratorService.save(values)
               .then(() => {
                 CollaboratorService.updateCollaboratorProfile(values);
                 setSuccessOpen(true);

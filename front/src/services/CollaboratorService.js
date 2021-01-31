@@ -7,7 +7,7 @@ const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 const COLLABORATORS_END_POINT = process.env.REACT_APP_COLLABORATORS_END_POINT;
 
 const CollaboratorService = {
-  create: async (values) => {
+  save: async (values) => {
     const optionsToCreateProfile = {
       url: `${API_BASE_URL}${COLLABORATORS_END_POINT}`,
       method: 'PUT',
