@@ -58,7 +58,7 @@ public class Account extends AbstractEntity {
     return new StringJoiner(", ", Account.class.getSimpleName() + "[", "]")
       .add("id=" + super.getId())
       .add("email=" + email)
-      .add("password=" + password)
+      .add("password=" + "[HIDE]")
       .add("roles=" + roles)
       .toString();
   }
