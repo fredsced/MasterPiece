@@ -1,14 +1,12 @@
 package fr.formation.itschool.masterpiece.dtos.collaborator;
 
-import fr.formation.itschool.masterpiece.domain.Country;
-import fr.formation.itschool.masterpiece.domain.OrganisationUnit;
 import fr.formation.itschool.masterpiece.validators.UniqueSesame;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.StringJoiner;
 
-public class CreateCollaboratorDto {
+public class SaveCollaboratorDto {
   @NotNull
   @Size(min = 2, max = 255)
   private String lastname;
@@ -50,7 +48,7 @@ public class CreateCollaboratorDto {
 
   @Override
   public String toString() {
-    return new StringJoiner(", ", CreateCollaboratorDto.class.getSimpleName() + "[", "]")
+    return new StringJoiner(", ", SaveCollaboratorDto.class.getSimpleName() + "[", "]")
       .add("lastname=" + lastname)
       .add("firstname=" + firstname)
       .add("sesame=" + sesame)
