@@ -30,7 +30,6 @@ const CollaboratorService = {
       organisationUnitId: values.organisationUnitId,
     };
     localStorage.setItem(LOCAL_STORAGE_USER, JSON.stringify(userToUpdate));
-    console.log('profile updated');
   },
 };
 export default CollaboratorService;

@@ -190,7 +190,6 @@ export default function CreateProfile(props) {
             resetApiErrors();
             CollaboratorService.create(values)
               .then(() => {
-                console.log('profile created');
                 CollaboratorService.updateCollaboratorProfile(values);
                 setSuccessOpen(true);
               })
