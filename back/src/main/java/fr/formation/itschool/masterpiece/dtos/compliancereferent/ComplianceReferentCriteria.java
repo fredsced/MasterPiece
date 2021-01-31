@@ -1,6 +1,7 @@
 package fr.formation.itschool.masterpiece.dtos.compliancereferent;
 
 import javax.validation.constraints.Positive;
+import java.util.StringJoiner;
 
 public class ComplianceReferentCriteria {
 
@@ -40,10 +41,10 @@ public class ComplianceReferentCriteria {
 
     @Override
     public String toString() {
-        return "ParametersDto{" +
-                "countryId=" + countryId +
-                ", organisationUnitId=" + organisationUnitId +
-                ", riskId=" + riskId +
-                '}';
+        return new StringJoiner(", ", ComplianceReferentCriteria.class.getSimpleName() + "[", "]")
+          .add("countryId=" + countryId)
+          .add("organisationUnitId=" + organisationUnitId)
+          .add("riskId=" + riskId)
+          .toString();
     }
 }
