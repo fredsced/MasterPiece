@@ -52,40 +52,12 @@ public class Collaborator extends AbstractEntity {
     foreignKey = @ForeignKey(name = "collaborators_account_id_FK"))
   private Account account;
 
-  public void setLastname(String lastname) {
-    this.lastname = lastname;
-  }
-
-  public void setFirstname(String firstname) {
-    this.firstname = firstname;
-  }
-
   public String getSesame() {
     return sesame;
   }
 
-  public void setSesame(String sesame) {
-    this.sesame = sesame;
-  }
-
   public void setAccount(Account account) {
     this.account = account;
-  }
-
-  public Country getCountry() {
-    return country;
-  }
-
-  public void setCountry(Country country) {
-    this.country = country;
-  }
-
-  public OrganisationUnit getOrganisationUnit() {
-    return organisationUnit;
-  }
-
-  public void setOrganisationUnit(OrganisationUnit organisationUnit) {
-    this.organisationUnit = organisationUnit;
   }
 
   @Override
