@@ -31,9 +31,6 @@ const useStyles = makeStyles((theme) => ({
 export default function Collaborator(props) {
   const classes = useStyles();
   const user = props.user;
-  const updateUser = (userUpdated) => {
-    props.updateUser(userUpdated);
-  };
 
   return (
     <>
@@ -51,13 +48,7 @@ export default function Collaborator(props) {
               </Typography>
             </Grid>
 
-            <Grid
-              container
-              spacing={2}
-              direction='row'
-              justify='space-evenly'
-              //alignItems='baseline'
-            >
+            <Grid container spacing={2} direction='row' justify='space-evenly'>
               <Link
                 to={{
                   pathname: '/collaborator/profile',
@@ -67,7 +58,7 @@ export default function Collaborator(props) {
                   <Grid container item xs={12} justify='space-evenly'>
                     <Typography component='h2' variant='h6'>
                       <FormattedMessage
-                        id='Create Update profile'
+                        id='createUpdateProfile'
                         defaultMessage='Create/Update profile'
                       />
                     </Typography>
@@ -80,7 +71,7 @@ export default function Collaborator(props) {
                   <Grid container item justify='space-evenly' xs={12}>
                     <Typography component='h2' variant='h6'>
                       <FormattedMessage
-                        id='Find Compliance Referent'
+                        id='findComplianceReferent'
                         defaultMessage='Find Compliance Referent'
                       />
                     </Typography>
@@ -90,8 +81,6 @@ export default function Collaborator(props) {
               </Link>
             </Grid>
           </Container>
-          {/*<CreateProfile user={user} updateUser={updateUser} />
-          <SearchComplianceOfficer user={user} />*/}
         </>
       )}
     </>
