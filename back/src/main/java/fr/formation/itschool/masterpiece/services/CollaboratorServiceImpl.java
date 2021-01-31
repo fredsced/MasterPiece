@@ -59,7 +59,7 @@ public class CollaboratorServiceImpl implements CollaboratorService {
   public boolean uniqueSesame(String sesame) {
     Collaborator currentCollaborator = collaboratorRepository.findByAccountId(SecurityHelper.getAccountId(), Collaborator.class);
     if (currentCollaborator != null) {
-      return (sesame.equals(currentCollaborator.getSesame())) || !collaboratorRepository.existsBySesameIgnoreCase(sesame);
+      return (sesame.equalsIgnoreCase(currentCollaborator.getSesame())) || !collaboratorRepository.existsBySesameIgnoreCase(sesame);
     } else {
       return !collaboratorRepository.existsBySesameIgnoreCase(sesame);
     }
