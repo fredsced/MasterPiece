@@ -3,6 +3,7 @@ package fr.formation.itschool.masterpiece.services;
 import fr.formation.itschool.masterpiece.dtos.OrganisationUnitViewDto;
 import fr.formation.itschool.masterpiece.repositories.OrganisationUnitRepository;
 import org.modelmapper.ModelMapper;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,6 +22,7 @@ public class OrganisationUnitServiceImpl implements OrganisationUnitService {
     this.modelMapper = modelMapper;
   }
 
+  @Cacheable("organisationUnits")
   @Transactional(readOnly = true)
   @Override
   public List<OrganisationUnitViewDto> getAllOrganisationUnits() {

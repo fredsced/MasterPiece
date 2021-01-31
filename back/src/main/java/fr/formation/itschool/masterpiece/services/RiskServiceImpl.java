@@ -3,6 +3,7 @@ package fr.formation.itschool.masterpiece.services;
 import fr.formation.itschool.masterpiece.dtos.RiskViewDto;
 import fr.formation.itschool.masterpiece.repositories.RiskRepository;
 import org.modelmapper.ModelMapper;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,6 +21,7 @@ public class RiskServiceImpl implements RiskService{
         this.modelMapper = modelMapper;
     }
 
+    @Cacheable("risks")
     @Transactional(readOnly = true)
     @Override
     public List<RiskViewDto> getAll() {

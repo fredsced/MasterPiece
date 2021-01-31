@@ -3,6 +3,7 @@ package fr.formation.itschool.masterpiece.services;
 import fr.formation.itschool.masterpiece.dtos.CountryViewDto;
 import fr.formation.itschool.masterpiece.repositories.CountryRepository;
 import org.modelmapper.ModelMapper;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,6 +21,7 @@ public class CountryServiceImpl implements CountryService {
     this.modelMapper = modelMapper;
   }
 
+  @Cacheable("countries")
   @Transactional(readOnly = true)
   @Override
   public List<CountryViewDto> getAll() {

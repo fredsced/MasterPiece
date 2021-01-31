@@ -2,6 +2,8 @@ package fr.formation.itschool.masterpiece.config;
 
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.concurrent.ConcurrentMapCacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -33,6 +35,12 @@ public class BeanConfig {
                 .setFieldAccessLevel(org.modelmapper.config.Configuration.AccessLevel.PRIVATE)
                 .setMatchingStrategy(MatchingStrategies.STANDARD);
         return modelMapper;
+    }
+
+    @Bean
+    public CacheManager cacheManager(){
+        return new ConcurrentMapCacheManager("countries","organisationUnits","risks");
+
     }
 
 }
