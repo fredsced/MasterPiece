@@ -6,6 +6,7 @@ import AlreadyConnected from './components/AlreadyConnected';
 import NotConnected from './components/NotConnected';
 import Footer from './components/Footer';
 import Header from './components/Header';
+import NoMatch from './components/NoMatch';
 import { Switch, Route } from 'react-router-dom';
 import { ThemeProvider } from '@material-ui/core';
 import bgtheme from './themes/bgTheme';
@@ -14,8 +15,8 @@ import { IntlProvider } from 'react-intl';
 import AuthService from './services/AuthService';
 import message_en from './lang/en.json';
 import message_fr from './lang/fr.json';
-import CreateProfile from './components/CreateProfile';
-import SearchComplianceOfficer from './components/SearchComplianceOfficer';
+import Profile from './components/Profile';
+import SearchComplianceReferent from './components/SearchComplianceReferent';
 
 function App() {
   const [currentUser, setCurrentUser] = useState(AuthService.getCurrentUser);
@@ -68,7 +69,7 @@ function App() {
                   <Sign type='login' userLogged={(user) => updateUser(user)} />
                 )}
               </Route>
-              <Route path='/register'>
+              <Route exact path='/register'>
                 {isAuthenticated ? (
                   <AlreadyConnected />
                 ) : (
@@ -89,7 +90,7 @@ function App() {
                 {!isAuthenticated ? (
                   <NotConnected />
                 ) : (
-                  <CreateProfile
+                  <Profile
                     user={currentUser}
                     updateUser={(user) => updateUser(user)}
                   />
@@ -99,10 +100,10 @@ function App() {
                 {!isAuthenticated ? (
                   <NotConnected />
                 ) : (
-                  <SearchComplianceOfficer user={currentUser} />
+                  <SearchComplianceReferent user={currentUser} />
                 )}
               </Route>
-              <Route path='/admin'>
+              <Route exact path='/admin'>
                 <Admin user={currentUser} />
               </Route>
             </Switch>

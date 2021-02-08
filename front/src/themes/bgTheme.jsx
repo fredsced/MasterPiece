@@ -5,6 +5,7 @@ const bgTheme = createMuiTheme({
     primary: {
       main: '#444',
       light: '#ccc',
+      light2: '#f9f9f9',
     },
     secondary: {
       main: '#ff0000',
@@ -42,6 +43,12 @@ const bgTheme = createMuiTheme({
     subtitle2: {
       fontSize: '0.6rem',
       fontWeight: 300,
+      padding: 0,
+      lineHeight: 1.5,
+    },
+    body2: {
+      fontSize: '0.9rem',
+      fontWeight: 400,
       padding: 0,
       lineHeight: 1.5,
     },

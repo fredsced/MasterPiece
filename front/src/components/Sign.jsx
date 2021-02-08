@@ -9,7 +9,7 @@ import Container from '@material-ui/core/Container';
 import Paper from '@material-ui/core/Paper';
 import { Formik } from 'formik';
 import { Link as RouterLink } from 'react-router-dom';
-import logo from '../logo.svg';
+import logo from '../assets/logo.svg';
 import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { Dialog } from '@material-ui/core';

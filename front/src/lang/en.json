@@ -46,8 +46,10 @@
   "chooseYourCountry": "Choose your country",
   "chooseYourOrgUnit": "Choose your Org.Unit.",
   "collaboratorPage": "Collaborator Page",
-  "createUpdateProfile": "Create/Update Profile",
+  "createUpdateProfile": "Create or update your collaborator profile",
   "collaboratorUpdated": "Profile updated",
-  "findComplianceReferent": "Find Compliance Referent",
-  "alreadyConnected": "Already connected"
+  "findComplianceReferent": "Find Compliance Referent filtered by risk scope",
+  "alreadyConnected": "Already connected",
+  "manageProfile": "Manage profile",
+  "findReferent": "Find referent"
 }

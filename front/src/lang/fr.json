@@ -47,9 +47,11 @@
   "chooseYourCountry": "Choisissez votre pays",
   "chooseYourOrgUnit": "Choisissez votre Unit.Org.",
   "collaboratorPage": "Page collaborateur",
-  "createUpdateProfile": "Créer/Modifier son profil",
+  "createUpdateProfile": "Créer ou modifier son profil collaborateur",
   "collaboratorUpdated": "Profil mis à jour",
   "updateProfile": "Modifier son profil",
-  "findComplianceReferent": "Rechercher son référent conformité",
-  "alreadyConnected": "Déjà connecté"
+  "findComplianceReferent": "Rechercher son référent conformité en fonction du risque",
+  "alreadyConnected": "Déjà connecté",
+  "manageProfile": "Gérer son profil",
+  "findReferent": "Rechercher son référent"
 }

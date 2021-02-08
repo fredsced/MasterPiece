@@ -9,12 +9,6 @@ import {
   Button,
   Backdrop,
   CircularProgress,
-  Table,
-  TableContainer,
-  TableRow,
-  TableHead,
-  TableBody,
-  TableCell,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { FormattedMessage } from 'react-intl';
@@ -25,6 +19,7 @@ import ComplianceService from '../services/ComplianceService';
 import CountriesService from '../services/CountriesService';
 import OrgUnitService from '../services/OrgUnitService';
 import AuthService from '../services/AuthService';
+import ListComplianceReferents from './ListComplianceReferents';
 
 const useStyles = makeStyles((theme) => ({
   main: {
@@ -73,7 +68,7 @@ const ValidationSchema = Yup.object().shape({
     .required('required'),
 });
 
-export default function SearchComplianceOfficer() {
+export default function SearchComplianceReferent() {
   const classes = useStyles();
 
   const currentUser = AuthService.getCurrentUser();
@@ -101,7 +96,7 @@ export default function SearchComplianceOfficer() {
       setCountries(result);
       setFetchingCountries(false);
     };
-    const fetchOrgUnits = async () => {    
+    const fetchOrgUnits = async () => {
       const orgUnits = await OrgUnitService.getAll();
       setOrganisationUnits(orgUnits);
       setFetchingOrgUnits(false);
@@ -387,67 +382,7 @@ export default function SearchComplianceOfficer() {
               justify='center'
             >
               {myCR && myCR.length > 0 && (
-                <TableContainer>
-                  <Table className={classes.table} aria-label='simple table'>
-                    <TableHead>
-                      <TableRow>
-                        <TableCell align='center'>
-                          <FormattedMessage
-                            id='firstname'
-                            defaultMessage='Firstname'
-                          />
-                        </TableCell>
-                        <TableCell align='center'>
-                          <FormattedMessage
-                            id='lastname'
-                            defaultMessage='Lastname'
-                          />
-                        </TableCell>
-                        <TableCell align='center'>
-                          <FormattedMessage
-                            id='country'
-                            defaultMessage='Country'
-                          />
-                        </TableCell>
-                        <TableCell align='center'>
-                          <FormattedMessage
-                            id='Org.Unit.'
-                            defaultMessage='Org.Unit.'
-                          />
-                        </TableCell>
-                        <TableCell align='center'>
-                          <FormattedMessage id='Risk' defaultMessage='Risk' />
-                        </TableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {myCR.map((row, id) => (
-                        <TableRow key={id}>
-                          <TableCell key={row.firstname + id} align='center'>
-                            {row.firstname}
-                          </TableCell>
-                          <TableCell key={row.lastname + id} align='center'>
-                            {row.lastname}
-                          </TableCell>
-                          <TableCell key={row.country + id} align='center'>
-                            {row.country}
-                          </TableCell>
-                          <TableCell key={row.buCode + id} align='center'>
-                            {row.buCode}
-                          </TableCell>
-                          <TableCell key={row.riskCode + id} align='center'>
-                            {
-                              <FormattedMessage
-                                id={row.riskCode}
-                                defaultMessage={row.riskCode}
-                              />
-                            }
-                          </TableCell>
-                        </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
-                </TableContainer>
+                <ListComplianceReferents myCR={myCR} />
               )}
             </Grid>
           </Paper>
