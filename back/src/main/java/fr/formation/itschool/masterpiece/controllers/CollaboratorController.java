@@ -22,8 +22,8 @@ public class CollaboratorController {
   }
 
   @PutMapping()
-  public void saveCollaborator(@RequestBody @Valid SaveCollaboratorDto createCollaboratorDto) {
-    collaboratorService.saveCollaborator(createCollaboratorDto, SecurityHelper.getAccountId());
+  public void saveCollaborator(@RequestBody @Valid SaveCollaboratorDto saveCollaboratorDto) {
+    collaboratorService.saveCollaborator(saveCollaboratorDto, SecurityHelper.getAccountId());
   }
 }
 
