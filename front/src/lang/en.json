@@ -51,5 +51,7 @@
   "findComplianceReferent": "Find Compliance Referent filtered by risk scope",
   "alreadyConnected": "Already connected",
   "manageProfile": "Manage profile",
-  "findReferent": "Find referent"
+  "findReferent": "Find referent",
+  "noPageFound": "No page found with this url",
+  "hompage": "Back to home page"
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import NotConnected from './NotConnected';
+import RedirectedContent from '../components/RedirectedContent';
 import { Container, Paper, Grid, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { FormattedMessage } from 'react-intl';
@@ -55,7 +55,11 @@ export default function Collaborator(props) {
   return (
     <>
       {!user ? (
-        <NotConnected />
+        <RedirectedContent
+          mainMessage='notConnected'
+          link='/login'
+          linkMessage='connection'
+        />
       ) : (
         <>
           <Container component='main' className={classes.main} maxWidth='md'>

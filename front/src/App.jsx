@@ -2,11 +2,9 @@ import React, { useState, useEffect } from 'react';
 import Sign from './components/Sign';
 import Admin from './components/Admin';
 import Collaborator from './components/Collaborator';
-import AlreadyConnected from './components/AlreadyConnected';
-import NotConnected from './components/NotConnected';
+import RedirectedContent from './components/RedirectedContent';
 import Footer from './components/Footer';
 import Header from './components/Header';
-import NoMatch from './components/NoMatch';
 import { Switch, Route } from 'react-router-dom';
 import { ThemeProvider } from '@material-ui/core';
 import bgtheme from './themes/bgTheme';
@@ -64,21 +62,33 @@ function App() {
             <Switch>
               <Route exact path={['/', '/login']}>
                 {isAuthenticated ? (
-                  <AlreadyConnected />
+                  <RedirectedContent
+                    mainMessage='alreadyConnected'
+                    link='/collaborator'
+                    linkMessage='collaboratorPage'
+                  />
                 ) : (
                   <Sign type='login' userLogged={(user) => updateUser(user)} />
                 )}
               </Route>
               <Route exact path='/register'>
                 {isAuthenticated ? (
-                  <AlreadyConnected />
+                  <RedirectedContent
+                    mainMessage='alreadyConnected'
+                    link='/collaborator'
+                    linkMessage='collaboratorPage'
+                  />
                 ) : (
                   <Sign type='register' />
                 )}
               </Route>
               <Route exact path='/collaborator'>
                 {!isAuthenticated ? (
-                  <NotConnected />
+                  <RedirectedContent
+                    mainMessage='notConnected'
+                    link='/login'
+                    linkMessage='connection'
+                  />
                 ) : (
                   <Collaborator
                     user={currentUser}
@@ -88,7 +98,11 @@ function App() {
               </Route>
               <Route exact path='/collaborator/profile'>
                 {!isAuthenticated ? (
-                  <NotConnected />
+                  <RedirectedContent
+                    mainMessage='notConnected'
+                    link='/login'
+                    linkMessage='connection'
+                  />
                 ) : (
                   <Profile
                     user={currentUser}
@@ -98,13 +112,24 @@ function App() {
               </Route>
               <Route exact path='/collaborator/searchlco'>
                 {!isAuthenticated ? (
-                  <NotConnected />
+                  <RedirectedContent
+                    mainMessage='notConnected'
+                    link='/login'
+                    linkMessage='connection'
+                  />
                 ) : (
                   <SearchComplianceReferent user={currentUser} />
                 )}
               </Route>
               <Route exact path='/admin'>
                 <Admin user={currentUser} />
+              </Route>
+              <Route path='*'>
+                <RedirectedContent
+                  mainMessage='noPageFound'
+                  link='/'
+                  linkMessage='hompage'
+                />
               </Route>
             </Switch>
             <Footer />

@@ -1,12 +1,8 @@
 import React from 'react';
-import Paper from '@material-ui/core/Paper';
-import Container from '@material-ui/core/Container';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
+import { Paper, Grid, Typography, Link, Container } from '@material-ui/core';
 import { FormattedMessage } from 'react-intl';
-import Link from '@material-ui/core/Link';
 import { Link as RouterLink } from 'react-router-dom';
+import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   main: {
@@ -22,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function AlreadyConnected() {
+export default function RedirectedContent({ mainMessage, link, linkMessage }) {
   const classes = useStyles();
   return (
     <Container component='main' className={classes.main} maxWidth='sm'>
@@ -31,18 +27,14 @@ export default function AlreadyConnected() {
           <Grid item>
             <Typography component='h1' variant='h4'>
               <FormattedMessage
-                id='alreadyConnected'
-                defaultMessage='Already connected'
+                id={mainMessage}
               />
             </Typography>
           </Grid>
           <Grid container spacing={2} justify='flex-end'>
             <Grid item>
-              <Link component={RouterLink} to='/collaborator' variant='body2'>
-                <FormattedMessage
-                  id='collaboratorPage'
-                  defaultMessage='Collaborator Page'
-                />
+              <Link component={RouterLink} to={link} variant='body2'>
+                <FormattedMessage id={linkMessage} defaultMessage='Connection' />
               </Link>
             </Grid>
           </Grid>

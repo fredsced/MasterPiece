@@ -53,5 +53,7 @@
   "findComplianceReferent": "Rechercher son référent conformité en fonction du risque",
   "alreadyConnected": "Déjà connecté",
   "manageProfile": "Gérer son profil",
-  "findReferent": "Rechercher son référent"
+  "findReferent": "Rechercher son référent",
+  "noPageFound": "Aucune page trouvée avec cette url",
+  "hompage": "Retour à l'accueil"
 }
