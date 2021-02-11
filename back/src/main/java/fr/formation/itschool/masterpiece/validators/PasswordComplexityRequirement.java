@@ -11,7 +11,7 @@ import java.lang.annotation.Target;
 
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.FIELD, ElementType.TYPE})
+@Target({ElementType.FIELD})
 @Constraint(validatedBy = PasswordComplexityRequirementValidator.class)
 public @interface PasswordComplexityRequirement {
   String message() default "PasswordComplexityRequirement";
