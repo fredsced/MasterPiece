@@ -1,5 +1,6 @@
 package fr.formation.itschool.masterpiece.dtos.collaborator;
 
+import fr.formation.itschool.masterpiece.validators.SesamePattern;
 import fr.formation.itschool.masterpiece.validators.UniqueSesame;
 
 import javax.validation.constraints.NotNull;
@@ -16,6 +17,7 @@ public class SaveCollaboratorDto {
   private String firstname;
 
   @NotNull
+  @SesamePattern
   @UniqueSesame
   @Size(min = 7, max = 7)
   private String sesame;
