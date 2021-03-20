@@ -1,21 +1,37 @@
 package fr.formation.itschool.masterpiece.controllers;
 
 import fr.formation.itschool.masterpiece.errors.ValidationError;
+import fr.formation.itschool.masterpiece.exceptions.ResourceNotFoundException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import javax.persistence.EntityNotFoundException;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @RestControllerAdvice
 public class ControllerAdvice extends ResponseEntityExceptionHandler {
+
+  @ExceptionHandler(ResourceNotFoundException.class)
+  protected ResponseEntity<Object> handleResourceNotFountException(ResourceNotFoundException ex, WebRequest request){
+    return super.handleExceptionInternal(ex, ex.getMessage(),  null, HttpStatus.NOT_FOUND, request);
+  }
+
+  @ExceptionHandler(EntityNotFoundException.class)
+  protected ResponseEntity<Object> handleEntityNotFoundException(EntityNotFoundException ex, WebRequest request){
+    ValidationError validationError = new ValidationError("EntityNotFoundException", Collections.singletonList(ex.getMessage()));
+    return super.handleExceptionInternal(ex, validationError, null, HttpStatus.NOT_FOUND, request);
+  }
+
   @Override
   protected ResponseEntity<Object> handleMethodArgumentNotValid(
     MethodArgumentNotValidException ex,
@@ -24,14 +40,12 @@ public class ControllerAdvice extends ResponseEntityExceptionHandler {
     WebRequest webRequest) {
     BindingResult result = ex.getBindingResult();
     List<FieldError> fieldErrors = result.getFieldErrors();
+    List<String> errors = fieldErrors.stream()
+      .map(fieldError -> fieldError.getField() + "-" + fieldError.getCode()).collect(Collectors.toList());
+    ValidationError validationError = new ValidationError("ValidationFailed", errors);
 
-    List<ValidationError> validationErrors =
-      fieldErrors.stream()
-        .map(
-          error ->
-            new ValidationError(
-              error.getCode(), error.getField(), error.getDefaultMessage()))
-        .collect(Collectors.toList());
-    return super.handleExceptionInternal(ex, validationErrors, headers, status, webRequest);
+    return super.handleExceptionInternal(ex, validationError, headers, status, webRequest);
   }
+
+
 }
