@@ -2,6 +2,7 @@ package fr.formation.itschool.masterpiece.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ForeignKey;
 import javax.persistence.Index;
 import javax.persistence.JoinColumn;
@@ -35,16 +36,17 @@ public class Collaborator extends AbstractEntity {
   @Column(name = "sesame_id", nullable = false)
   private String sesame;
 
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "country_id", foreignKey = @ForeignKey(name = "collaborators_country_id_FK"))
   private Country country;
 
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(
     name = "organisation_unit_id",
     foreignKey = @ForeignKey(name = "collaborators_organisation_unit_id_FK"))
   private OrganisationUnit organisationUnit;
 
+  @ManyToOne(fetch = FetchType.LAZY)
   @OneToOne
   @JoinColumn(
     name = "account_id",
