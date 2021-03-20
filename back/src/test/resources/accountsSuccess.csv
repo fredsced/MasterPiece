@@ -1,0 +1,4 @@
+create_account_succes_json|$|
+{"email":"fred@bg.com","password":"Azertyu1"}|$|
+{"email":"rene@bg.com","password":"123456aA"}|$|
+{"email":"paul@bg.com","password":"QSDFGHa1"}|$|

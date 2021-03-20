@@ -1,0 +1,10 @@
+create_account_fail_json|$|
+{"email":null,"password":"Azertyu1"}|$|
+{"email":"","password":"Azertyu1"}|$|
+{"email":" ","password":"Azertyu1"}|$|
+{"email":"badEmail@Failedbg","password":"Azertyu1"}|$|
+{"email":"badEmailFailedbg.com","password":"Azertyu1"}|$|
+{"email":"tooShortFailed@bg.com","password":"12}|$|
+{"email":"tooLongFailed@bg.com","password":"123456aA124564789456aaa444"}|$|
+{"email":"notComplexFailed@bg.com","password":"12345689A"}|$|
+{"email":"emailTooLongaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@bg.com","password":"QSDFGHa1"}|$|
