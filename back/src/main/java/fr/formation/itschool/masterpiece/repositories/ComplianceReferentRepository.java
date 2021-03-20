@@ -12,7 +12,7 @@ import java.util.List;
 public interface ComplianceReferentRepository extends JpaRepository<ComplianceReferent, Long> {
 
     @Query(
-            "SELECT new fr.formation.itschool.masterpiece.dtos.compliancereferent.ComplianceReferentViewDto(cr.id, c.lastname, c.firstname, r.code, co.iso, ou.code)"
+            "SELECT new fr.formation.itschool.masterpiece.dtos.compliancereferent.ComplianceReferentViewDto(cr.id, c.lastname, c.firstname, c.sesame, r.code, co.iso, ou.code)"
                     + "FROM ComplianceReferent cr "
                     + "JOIN cr.collaborator c "
                     + "JOIN cr.risk r  "

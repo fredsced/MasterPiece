@@ -1,5 +1,7 @@
 package fr.formation.itschool.masterpiece.dtos.compliancereferent;
 
+import java.util.StringJoiner;
+
 /**
  * A DTO representation of a {@code ComplianceReferent}
  */
@@ -9,15 +11,18 @@ public class ComplianceReferentViewDto {
     private final Long id;
     private final String firstname;
     private final String lastname;
+    private final String sesame;
     private final String country;
     private final String buCode;
     private final String riskCode;
 
+
     public ComplianceReferentViewDto(
-            Long id, String firstname, String lastname, String riskCode, String country, String buCode) {
+            Long id, String firstname, String lastname, String sesame, String riskCode, String country, String buCode) {
         this.id = id;
         this.firstname = firstname;
         this.lastname = lastname;
+        this.sesame = sesame;
         this.country = country;
         this.buCode = buCode;
         this.riskCode = riskCode;
@@ -33,6 +38,8 @@ public class ComplianceReferentViewDto {
         return lastname;
     }
 
+    public String getSesame() { return sesame;}
+
     public String getCountry() {
         return country;
     }
@@ -47,13 +54,14 @@ public class ComplianceReferentViewDto {
 
     @Override
     public String toString() {
-        return "ComplianceReferentViewDto{" +
-                "id=" + id +
-                ", firstname='" + firstname + '\'' +
-                ", lastname='" + lastname + '\'' +
-                ", country='" + country + '\'' +
-                ", buCode='" + buCode + '\'' +
-                ", riskCode='" + riskCode + '\'' +
-                '}';
+        return new StringJoiner(", ", ComplianceReferentViewDto.class.getSimpleName() + "[", "]")
+          .add("id=" + id)
+          .add("firstname=" + firstname)
+          .add("lastname=" + lastname)
+          .add("sesame=" + sesame)
+          .add("country=" + country)
+          .add("buCode=" + buCode)
+          .add("riskCode=" + riskCode)
+          .toString();
     }
 }

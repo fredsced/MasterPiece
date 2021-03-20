@@ -17,6 +17,9 @@ import java.util.StringJoiner;
     columnNames = "collaborator_id"))
 public class ComplianceReferent extends AbstractEntity {
 
+  private String email;
+  private String phone;
+
   @OneToOne
   @JoinColumn(name = "collaborator_id", nullable = false)
   private Collaborator collaborator;
@@ -33,6 +36,8 @@ public class ComplianceReferent extends AbstractEntity {
   public String toString() {
     return new StringJoiner(", ", ComplianceReferent.class.getSimpleName() + "[", "]")
       .add("id=" + super.getId())
+      .add("email=" + email)
+      .add("phone=" + phone)
       .add("collaborator=" + collaborator)
       .add("level=" + level)
       .add("risk=" + risk)
