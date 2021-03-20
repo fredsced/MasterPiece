@@ -3,5 +3,7 @@
   "trailingComma": "es5",
   "semi": true,
   "jsxSingleQuote": true,
-  "bracketSpacing": true
+  "bracketSpacing": true,
+  "printWidth": 80,
+  "tabWidth": 2
 }
