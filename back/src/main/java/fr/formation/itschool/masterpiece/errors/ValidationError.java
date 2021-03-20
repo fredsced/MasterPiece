@@ -1,25 +1,24 @@
 package fr.formation.itschool.masterpiece.errors;
 
+
+import java.util.List;
+
 public class ValidationError {
-  private final String code;
-  private final String field;
   private final String message;
+  private final List<String> errors;
 
-  public ValidationError(String code, String field, String message) {
-    this.code = code;
-    this.field = field;
+
+  public ValidationError(String message, List<String> errors) {
+
     this.message = message;
-  }
-
-  public String getCode() {
-    return code;
-  }
-
-  public String getField() {
-    return field;
+    this.errors = errors;
   }
 
   public String getMessage() {
     return message;
+  }
+
+  public List<String> getErrors() {
+    return errors;
   }
 }
