@@ -8,6 +8,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+/**
+ * A {@code RestController} to handle {@code Countries}.
+ *
+ */
 @RestController
 @RequestMapping(value = "/countries")
 public class CountryController {
@@ -18,7 +22,7 @@ public class CountryController {
     }
 
     @GetMapping()
-    public List<CountryViewDto> getAllCountries() {
+    protected List<CountryViewDto> getAllCountries() {
         return countryService.getAll();
     }
 }

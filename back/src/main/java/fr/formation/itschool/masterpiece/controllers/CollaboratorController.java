@@ -1,6 +1,6 @@
 package fr.formation.itschool.masterpiece.controllers;
 
-import fr.formation.itschool.masterpiece.config.SecurityHelper;
+import fr.formation.itschool.masterpiece.security.SecurityHelper;
 import fr.formation.itschool.masterpiece.dtos.collaborator.SaveCollaboratorDto;
 import fr.formation.itschool.masterpiece.services.CollaboratorService;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -10,6 +10,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 
+/**
+ * A {@code RestController} to handle {@code Collaborators}.
+ *
+ */
 
 @RestController
 @RequestMapping(value = "/collaborators")
@@ -21,8 +25,13 @@ public class CollaboratorController {
     this.collaboratorService = collaboratorService;
   }
 
+  /**
+   * Creates or update a collaborator profile given lastname, firstname, sesame, countryId and organisationUnitId
+   *
+   * @param saveCollaboratorDto
+   */
   @PutMapping()
-  public void saveCollaborator(@RequestBody @Valid SaveCollaboratorDto saveCollaboratorDto) {
+  protected void saveCollaborator(@RequestBody @Valid SaveCollaboratorDto saveCollaboratorDto) {
     collaboratorService.saveCollaborator(saveCollaboratorDto, SecurityHelper.getAccountId());
   }
 }

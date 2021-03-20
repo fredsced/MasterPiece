@@ -8,6 +8,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+/**
+ * A {@code RestController} to handle {@code Risks}.
+ *
+ */
+
 @RestController
 @RequestMapping(value = "/risks")
 public class RiskController {
@@ -18,7 +23,7 @@ public class RiskController {
     }
 
     @GetMapping()
-    public List<RiskViewDto> getAllRisks() {
+    protected List<RiskViewDto> getAllRisks() {
         return riskService.getAll();
     }
 }

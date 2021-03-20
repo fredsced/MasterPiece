@@ -9,8 +9,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 
+/**
+ * A {@code RestController} to handle {@code Accounts}.
+ *
+ */
 
-@RestController
+ @RestController
 @RequestMapping(value = "/accounts")
 class AccountController {
 
@@ -20,8 +24,12 @@ class AccountController {
     this.accountService = accountService;
   }
 
+  /**
+   * Creates a new account with given email, password and default role
+   * @param createAccountDto
+   */
   @PostMapping()
-  public void createAccount(@Valid @RequestBody CreateAccountDto createAccountDto) {
+  protected void createAccount(@Valid @RequestBody CreateAccountDto createAccountDto) {
     accountService.create(createAccountDto);
   }
 }

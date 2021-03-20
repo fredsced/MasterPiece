@@ -8,7 +8,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-
+/**
+ * A {@code RestController} to handle {@code OrganisationUnits}.
+ *
+ */
 @RestController
 @RequestMapping(value = "/organisation-units")
 public class OrganisationUnitController {
@@ -20,7 +23,7 @@ public class OrganisationUnitController {
   }
 
   @GetMapping()
-  public List<OrganisationUnitViewDto> getAllOrganisationUnits() {
+  protected List<OrganisationUnitViewDto> getAllOrganisationUnits() {
     return organisationUnitService.getAllOrganisationUnits();
   }
 }

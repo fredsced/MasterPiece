@@ -8,6 +8,11 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
+/**
+ * A {@code RestController} to handle {@code ComplianceReferents}.
+ *
+ */
+
 @RestController
 @RequestMapping(value = "/compliance-referents")
 public class ComplianceReferentController {
@@ -19,7 +24,7 @@ public class ComplianceReferentController {
     }
 
     @GetMapping()
-    public List<ComplianceReferentViewDto> search(
+    protected List<ComplianceReferentViewDto> search(
             @Valid ComplianceReferentCriteria criteria) {
         return complianceReferentService.search(criteria);
     }
