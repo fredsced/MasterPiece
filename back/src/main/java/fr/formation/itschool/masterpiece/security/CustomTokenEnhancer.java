@@ -1,4 +1,4 @@
-package fr.formation.itschool.masterpiece.config;
+package fr.formation.itschool.masterpiece.security;
 
 import fr.formation.itschool.masterpiece.dtos.collaborator.CollaboratorInfoDto;
 import fr.formation.itschool.masterpiece.services.CollaboratorService;

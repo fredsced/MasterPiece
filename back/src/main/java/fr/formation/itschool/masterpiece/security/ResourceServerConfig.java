@@ -1,4 +1,4 @@
-package fr.formation.itschool.masterpiece.config;
+package fr.formation.itschool.masterpiece.security;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -21,7 +21,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
   @Override
   public void configure(HttpSecurity http) throws Exception {
     /*
-    All the endpoints request authentication except the POST method in the /api/accounts end point
+    All the endpoints request authentication except the POST method in the /api/accounts end-point
     To enable anonymous to create an account
      */
     http.httpBasic()

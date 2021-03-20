@@ -1,12 +1,22 @@
-package fr.formation.itschool.masterpiece.config;
+package fr.formation.itschool.masterpiece.security;
 
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
+import org.springframework.security.oauth2.provider.token.AccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.DefaultAccessTokenConverter;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
+/**
+ *
+ * Custom implementation of {@link AccessTokenConverter}.
+ * <p>
+ * Provides custom configuration for
+ * {@link AccessTokenConverter#extractAuthentication(Map) extractAuthentication
+ * }
+ *
+ */
 
-@Component
+ @Component
 public class CustomAccessTokenConverter extends DefaultAccessTokenConverter {
 
   @Override

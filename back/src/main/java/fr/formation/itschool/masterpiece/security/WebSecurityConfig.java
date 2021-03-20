@@ -1,4 +1,4 @@
-package fr.formation.itschool.masterpiece.config;
+package fr.formation.itschool.masterpiece.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

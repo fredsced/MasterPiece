@@ -1,4 +1,4 @@
-package fr.formation.itschool.masterpiece.config;
+package fr.formation.itschool.masterpiece.security;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.Ordered;

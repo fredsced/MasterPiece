@@ -1,4 +1,4 @@
-package fr.formation.itschool.masterpiece.config;
+package fr.formation.itschool.masterpiece.security;
 
 import fr.formation.itschool.masterpiece.domain.Role;
 import fr.formation.itschool.masterpiece.dtos.account.AccountAuthDto;
