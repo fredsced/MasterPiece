@@ -68,6 +68,10 @@ const ValidationSchema = Yup.object().shape({
     .required('required'),
 });
 
+const handleError = (error) => {
+  console.log(error);
+};
+
 export default function SearchComplianceReferent() {
   const classes = useStyles();
 
@@ -141,10 +145,10 @@ export default function SearchComplianceReferent() {
                 setMyCR([]);
                 ComplianceService.getMyCR(values)
                   .then((response) => {
-                    setMyCR(response);
+                    setMyCR(response.data);
                   })
                   .catch((error) => {
-                    console.log(error);
+                    handleError(error.response);
                   })
                   .then(() => {
                     setSubmitting(false);
@@ -167,8 +171,6 @@ export default function SearchComplianceReferent() {
                     justify='space-evenly'
                     alignItems='baseline'
                   >
-                    {/* risk */}
-                    {/* risk */}
                     {/* risk */}
                     <Grid
                       item
@@ -217,12 +219,10 @@ export default function SearchComplianceReferent() {
                       >
                         {risks.map((risk) => (
                           <MenuItem key={risk.id} value={risk.id}>
-                            {
-                              <FormattedMessage
-                                id={risk.code}
-                                defaultMessage={risk.label}
-                              />
-                            }
+                            <FormattedMessage
+                              id={risk.code}
+                              defaultMessage={risk.label}
+                            />
                           </MenuItem>
                         ))}
                       </TextField>
@@ -288,7 +288,6 @@ export default function SearchComplianceReferent() {
                         ))}
                       </TextField>
                     </Grid>
-                    {/* country */}
                     {/* organisation unit */}
                     <Grid
                       item
@@ -351,7 +350,7 @@ export default function SearchComplianceReferent() {
                         ))}
                       </TextField>
                     </Grid>
-                    {/* country */}
+                    {/* submit */}
                     <Grid item xs={12}>
                       <Grid container justify='center'>
                         <Button

@@ -63,9 +63,10 @@ function App() {
               <Route exact path={['/', '/login']}>
                 {isAuthenticated ? (
                   <RedirectedContent
-                    mainMessage='alreadyConnected'
+                    mainTitle='alreadyConnected'
+                    mainMessage='alreadyConnectedMessage'
                     link='/collaborator'
-                    linkMessage='collaboratorPage'
+                    linkMessage='backToCollaboratorPage'
                   />
                 ) : (
                   <Sign type='login' userLogged={(user) => updateUser(user)} />
@@ -74,9 +75,10 @@ function App() {
               <Route exact path='/register'>
                 {isAuthenticated ? (
                   <RedirectedContent
-                    mainMessage='alreadyConnected'
+                    mainTitle='alreadyConnected'
+                    mainMessage='alreadyConnectedMessage'
                     link='/collaborator'
-                    linkMessage='collaboratorPage'
+                    linkMessage='backToCollaboratorPage'
                   />
                 ) : (
                   <Sign type='register' />
@@ -85,23 +87,24 @@ function App() {
               <Route exact path='/collaborator'>
                 {!isAuthenticated ? (
                   <RedirectedContent
-                    mainMessage='notConnected'
+                    mainTitle='notConnected'
+                    mainMessage='notConnectedMessage'
                     link='/login'
-                    linkMessage='connection'
+                    linkMessage='backToAuthentification'
                   />
                 ) : (
                   <Collaborator
                     user={currentUser}
-                    updateUser={(user) => updateUser(user)}
                   />
                 )}
               </Route>
               <Route exact path='/collaborator/profile'>
                 {!isAuthenticated ? (
                   <RedirectedContent
-                    mainMessage='notConnected'
+                    mainTitle='notConnected'
+                    mainMessage='notConnectedMessage'
                     link='/login'
-                    linkMessage='connection'
+                    linkMessage='backToAuthentification'
                   />
                 ) : (
                   <Profile
@@ -110,12 +113,13 @@ function App() {
                   />
                 )}
               </Route>
-              <Route exact path='/collaborator/searchlco'>
+              <Route exact path='/collaborator/search-referent'>
                 {!isAuthenticated ? (
                   <RedirectedContent
-                    mainMessage='notConnected'
+                    mainTitle='notConnected'
+                    mainMessage='notConnectedMessage'
                     link='/login'
-                    linkMessage='connection'
+                    linkMessage='backToAuthentification'
                   />
                 ) : (
                   <SearchComplianceReferent user={currentUser} />
@@ -126,9 +130,10 @@ function App() {
               </Route>
               <Route path='*'>
                 <RedirectedContent
+                  mainTitle='notFound'
                   mainMessage='noPageFound'
                   link='/'
-                  linkMessage='hompage'
+                  linkMessage='backTohomePage'
                 />
               </Route>
             </Switch>

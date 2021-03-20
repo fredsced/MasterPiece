@@ -20,12 +20,18 @@ import { useHistory } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 import { object, string, ref } from 'yup';
 import Alert from './Alert';
+import handleValidationError from '../services/handleValidationError';
 
 const useStyles = makeStyles((theme) => ({
   main: {
     minHeight: 'calc(100vh - 110px)',
     paddingTop: theme.spacing(6),
     marginBottom: '10px',
+  },
+  title: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
   },
   paper: {
     display: 'flex',
@@ -34,9 +40,9 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(4, 3, 6, 3),
   },
   logo: {
-    width: '150px',
+    width: '200px',
     marginBottom: theme.spacing(2),
-    padding: theme.spacing(4),
+    padding: theme.spacing(5),
   },
   form: {
     width: '100%',
@@ -54,7 +60,7 @@ const useStyles = makeStyles((theme) => ({
     color: '#fff',
   },
 }));
-const ValidationSchema = (type) => {
+const validationSchema = (type) => {
   if (type === 'register') {
     return object().shape({
       email: string()
@@ -63,20 +69,27 @@ const ValidationSchema = (type) => {
         .max(255, 'tooLong'),
       password: string()
         .min(8, 'tooShort')
-        .max(30, 'tooLong')
+        .max(25, 'tooLong')
         .matches(
-          /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])\S{8,30}/,
+          /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])\S{8,25}/,
           'passwordNotComplex'
         )
         .required('passwordRequired'),
       password_confirmation: string()
         .oneOf([ref('password'), null], 'passwordNotMatch')
-        .required('required'),
+        .required('passwordConfirmationRequired'),
     });
-  } else {
+  } else if (type === 'login') {
     return object().shape({
       email: string().email('emailNotValid').required('emailRequired'),
-      password: string().required('passwordRequired'),
+      password: string()
+        .min(8, 'tooShort')
+        .max(25, 'tooLong')
+        .matches(
+          /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])\S{8,25}/,
+          'passwordNotComplex'
+        )
+        .required('passwordRequired'),
     });
   }
 };
@@ -84,82 +97,64 @@ const ValidationSchema = (type) => {
 export default function Sign(props) {
   const history = useHistory();
   const classes = useStyles();
-  const [apiErrorResponse, setApiErrorResponse] = useState();
-  const [uniqueEmailErr, setUniqueEmailErr] = useState();
+  const [apiErrorTitle, setApiErrorTitle] = useState();
   const [errorOpen, setErrorOpen] = useState(false);
   const [successOpen, setSuccessOpen] = useState(false);
+  const [fieldsInError, setFieldsInError] = useState({});
 
   const handleErrorClose = () => {
     setErrorOpen(false);
   };
   const handleSuccessClose = () => {
-    if (props.type === 'register') history.push('/login');
-    setSuccessOpen(false);
+    if (props.type === 'register') {
+      setSuccessOpen(false);
+      history.push('/login');
+    } else if (props.type === 'login') {
+      setSuccessOpen(false);
+      window.location = './collaborator';
+    }
   };
   const handleLoginError = (error) => {
+    console.log(error.message);
     let resMessage =
       (error.response && error.response.data && error.response.data.error) ||
       error.message ||
       error.toString();
-    switch (resMessage) {
-      case 'Network':
-        resMessage = <FormattedMessage id='networkError' />;
-        break;
-      case 'invalid_grant':
-        resMessage = <FormattedMessage id='invalidGrant' />;
-        break;
-      default:
-    }
-    setApiErrorResponse(resMessage);
+    resMessage = <FormattedMessage id={resMessage} default={resMessage} />;
+    setApiErrorTitle(resMessage);
     setErrorOpen(true);
   };
 
   const handleRegisterError = (error) => {
-    let errorMessage =
-      (error.response && error.response.data) ||
-      error.message ||
-      error.toString();
-    switch (errorMessage) {
-      case 'Network Error':
-        errorMessage = <FormattedMessage id='networkError' />;
-        break;
-      default:
-    }
-    setApiErrorResponse(errorMessage);
-    if (
-      Array.isArray(errorMessage) &&
-      errorMessage.find((e) => e.field === 'email' && e.code === 'UniqueEmail')
-    ) {
-      setUniqueEmailErr(
-        <FormattedMessage
-          id='emailNotUnique'
-          defaultMessage='Email not unique'
-        />
-      );
-    } else {
-      setErrorOpen(true);
-    }
+    const result = handleValidationError(error);
+    setFieldsInError(result.validationErrors);
+    const errorText = (
+      <FormattedMessage
+        id={result.errorMessage}
+        default='Oups an error occurs...'
+      />
+    );
+    setApiErrorTitle(errorText);
+    setErrorOpen(true);
   };
   const resetApiErrors = () => {
-    setApiErrorResponse();
-    setUniqueEmailErr();
+    setApiErrorTitle();
+    setFieldsInError({});
     setErrorOpen(false);
   };
-
   return (
     <Formik
       initialValues={{ email: '', password: '', password_confirmation: '' }}
-      validationSchema={() => ValidationSchema(props.type)}
-      onSubmit={(values, { setSubmitting }) => {
+      validationSchema={() => validationSchema(props.type)}
+      onSubmit={(values, { setSubmitting, resetForm }) => {
         resetApiErrors();
         const { email, password } = values;
         setSubmitting(true);
         props.type === 'login'
           ? AuthService.login(email, password)
-              .then((response) => {
+              .then(() => {
                 setSubmitting(false);
-                props.userLogged(response);
-                history.push('/collaborator');
+                setSuccessOpen(true);
               })
               .catch((error) => {
                 handleLoginError(error);
@@ -167,6 +162,7 @@ export default function Sign(props) {
               })
           : AuthService.register(email, password)
               .then(() => {
+                resetForm();
                 setSuccessOpen(true);
               })
               .catch((error) => {
@@ -181,19 +177,17 @@ export default function Sign(props) {
         values,
         errors,
         touched,
-        dirty,
         handleChange,
         handleSubmit,
         isSubmitting,
-        isValid,
+        dirty,
       }) => (
         <Container component='main' className={classes.main} maxWidth='xs'>
           <Paper className={classes.paper}>
-            <Grid container spacing={2} justify='center'>
+            <Grid className={classes.title} container spacing={2}>
               <div className={classes.logo}>
                 <img src={logo} alt='logo Banque Générale' />
               </div>
-
               <Typography component='h1' variant='h3'>
                 {props.type === 'register' ? (
                   <FormattedMessage
@@ -231,17 +225,18 @@ export default function Sign(props) {
                     value={values.email}
                     onChange={handleChange}
                     error={
-                      (touched.email && !!errors.email) || !!uniqueEmailErr
+                      (touched.email && Boolean(errors.email)) ||
+                      Boolean(fieldsInError.email)
                     }
                   />
-                  {!!uniqueEmailErr ? (
+                  {Boolean(fieldsInError.email) ? (
                     <Grid item xs={12}>
                       <Typography
                         color='secondary'
                         component='p'
                         display='block'
                       >
-                        {uniqueEmailErr}
+                        {<FormattedMessage id={fieldsInError.email} />}
                       </Typography>
                     </Grid>
                   ) : null}
@@ -253,7 +248,7 @@ export default function Sign(props) {
                     fullWidth
                     name='password'
                     label={
-                      touched.password && !!errors.password ? (
+                      touched.password && Boolean(errors.password) ? (
                         <FormattedMessage
                           id={errors.password}
                           defaultMessage={errors.password}
@@ -269,13 +264,14 @@ export default function Sign(props) {
                     id='password'
                     onChange={handleChange}
                     value={values.password}
-                    error={touched.password && !!errors.password}
+                    error={
+                      (touched.password && Boolean(errors.password)) ||
+                      Boolean(fieldsInError.password)
+                    }
                   />
                   <Dialog open={errorOpen} onClose={handleErrorClose}>
                     <Alert severity='error'>
-                      {Array.isArray(apiErrorResponse)
-                        ? null
-                        : apiErrorResponse}
+                      {apiErrorTitle}
                       <IconButton
                         size='small'
                         aria-label='close'
@@ -320,7 +316,7 @@ export default function Sign(props) {
                         name='password_confirmation'
                         label={
                           touched.password_confirmation &&
-                          !!errors.password_confirmation ? (
+                          Boolean(errors.password_confirmation) ? (
                             <FormattedMessage
                               id={errors.password_confirmation}
                               defaultMessage={errors.password_confirmation}
@@ -338,7 +334,7 @@ export default function Sign(props) {
                         value={values.password_confirmation}
                         error={
                           touched.password_confirmation &&
-                          !!errors.password_confirmation
+                          Boolean(errors.password_confirmation)
                         }
                       />
                     </Grid>
@@ -351,7 +347,7 @@ export default function Sign(props) {
                 color='primary'
                 fullWidth
                 disableElevation
-                disabled={isSubmitting}
+                disabled={isSubmitting || !dirty}
                 className={classes.submit}
               >
                 {props.type === 'register' ? (

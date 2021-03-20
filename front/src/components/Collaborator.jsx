@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import RedirectedContent from '../components/RedirectedContent';
 import { Container, Paper, Grid, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
@@ -56,9 +57,10 @@ export default function Collaborator(props) {
     <>
       {!user ? (
         <RedirectedContent
-          mainMessage='notConnected'
+          mainTitle='notConnected'
+          mainMessage='notConnectedMessage'
           link='/login'
-          linkMessage='connection'
+          linkMessage='backToAuthentification'
         />
       ) : (
         <>
@@ -107,7 +109,7 @@ export default function Collaborator(props) {
                     <AccountCircleIcon className={classes.accountIcon} />
                   </Paper>
                 </Link>
-                <Link to={'/collaborator/searchlco'}>
+                <Link to={'/collaborator/search-referent'}>
                   <Paper className={classes.paper}>
                     <Typography component='h2' variant='h6'>
                       <FormattedMessage
@@ -132,3 +134,6 @@ export default function Collaborator(props) {
     </>
   );
 }
+Collaborator.propTypes = {
+  user: PropTypes.object.isRequired,
+};

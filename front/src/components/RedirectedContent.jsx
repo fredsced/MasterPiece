@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Paper, Grid, Typography, Link, Container } from '@material-ui/core';
 import { FormattedMessage } from 'react-intl';
 import { Link as RouterLink } from 'react-router-dom';
@@ -14,11 +15,19 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    padding: theme.spacing(4, 3),
+    padding: theme.spacing(4, 3, 2),
+  },
+  bottom: {
+    marginTop: theme.spacing(6),
   },
 }));
 
-export default function RedirectedContent({ mainMessage, link, linkMessage }) {
+export default function RedirectedContent({
+  mainTitle,
+  mainMessage,
+  link,
+  linkMessage,
+}) {
   const classes = useStyles();
   return (
     <Container component='main' className={classes.main} maxWidth='sm'>
@@ -26,15 +35,19 @@ export default function RedirectedContent({ mainMessage, link, linkMessage }) {
         <Grid container spacing={2} justify='center'>
           <Grid item>
             <Typography component='h1' variant='h4'>
-              <FormattedMessage
-                id={mainMessage}
-              />
+              <FormattedMessage id={mainTitle} />
+            </Typography>
+            <Typography component='p' variant='body2'>
+              <FormattedMessage id={mainMessage} />
             </Typography>
           </Grid>
           <Grid container spacing={2} justify='flex-end'>
-            <Grid item>
+            <Grid item className={classes.bottom}>
               <Link component={RouterLink} to={link} variant='body2'>
-                <FormattedMessage id={linkMessage} defaultMessage='Connection' />
+                <FormattedMessage
+                  id={linkMessage}
+                  defaultMessage='Connection'
+                />
               </Link>
             </Grid>
           </Grid>
@@ -43,3 +56,10 @@ export default function RedirectedContent({ mainMessage, link, linkMessage }) {
     </Container>
   );
 }
+
+RedirectedContent.propTypes = {
+  mainTitle: PropTypes.string.isRequired,
+  mainMessage: PropTypes.string.isRequired,
+  link: PropTypes.string.isRequired,
+  linkMessage: PropTypes.string.isRequired,
+};

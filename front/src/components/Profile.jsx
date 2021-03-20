@@ -23,6 +23,7 @@ import CountriesService from '../services/CountriesService';
 import OrgUnitService from '../services/OrgUnitService';
 import { useHistory } from 'react-router-dom';
 import Alert from './Alert';
+import handleValidationError from '../services/handleValidationError';
 
 const useStyles = makeStyles((theme) => ({
   main: {
@@ -78,9 +79,9 @@ export default function Profile(props) {
   const history = useHistory();
   const classes = useStyles();
   const [successOpen, setSuccessOpen] = useState(false);
-  const [uqSesameId, setUqSesameId] = useState();
+  const [apiErrorTitle, setApiErrorTitle] = useState();
+  const [fieldsInError, setFieldsInError] = useState({});
   const [errorOpen, setErrorOpen] = useState(false);
-  const [apiErrorResponse, setApiErrorResponse] = useState();
   const [countries, setCountries] = useState([]);
   const [organisationUnits, setOrganisationUnits] = useState([]);
   const hasProfile = AuthService.getCurrentUser().accountHasProfile;
@@ -119,53 +120,36 @@ export default function Profile(props) {
     const updatedUser = AuthService.getCurrentUser();
     props.updateUser(updatedUser);
     setSuccessOpen(false);
-    history.push('/collaborator');
+    //history.push('/collaborator');
   };
   const handleErrorClose = () => {
     setErrorOpen(false);
   };
   const handleCreationError = (error) => {
-    let errorMessage =
-      (error.response && error.response.data) ||
-      error.message ||
-      error.toString();
-    switch (errorMessage) {
-      case 'Network Error':
-        errorMessage = <FormattedMessage id='networkError' />;
-        setApiErrorResponse(errorMessage);
-        break;
-      default:
-    }
-    if (
-      Array.isArray(errorMessage) &&
-      errorMessage.find(
-        (error) => error.field === 'sesameId' && error.code === 'UniqueSesameId'
-      )
-    ) {
-      setUqSesameId(
-        <FormattedMessage
-          id='SesameNotUnique'
-          defaultMessage='Sesame ID not unique'
-        />
-      );
-    } else if (Array.isArray(errorMessage)) {
-      const err = errorMessage
-        .map((error) => error.field + ' ' + error.message)
-        .join(' ');
-      //const myerr = err.join("\n");
-      console.log(err);
-      setApiErrorResponse(err);
-      setErrorOpen(true);
-    }
+    const result = handleValidationError(error);
+    setFieldsInError(result.validationErrors);
+    const errorText = (
+      <FormattedMessage
+        id={result.errorMessage}
+        default='Oups an error occurs...'
+      />
+    );
+    setApiErrorTitle(errorText);
+    setErrorOpen(true);
   };
+
+  const resetUniqueSesameError = () => {
+    const fieldsInErrorReseted = { ...fieldsInError, sesame: '' };
+    setFieldsInError(fieldsInErrorReseted);
+  };
+
   const resetApiErrors = () => {
-    setUqSesameId(null);
+    setFieldsInError({});
+    setApiErrorTitle();
     setErrorOpen(false);
-    setApiErrorResponse(null);
   };
 
   return (
-   
     <>
       {fetchingCountries || fetchingOrgUnits ? (
         <Container component='main' className={classes.main} maxWidth='sm'>
@@ -176,7 +160,7 @@ export default function Profile(props) {
             <CircularProgress color='primary' />
           </Backdrop>
         </Container>
-      ) : (       
+      ) : (
         <Formik
           initialValues={{
             firstname: userFirstname,
@@ -209,9 +193,9 @@ export default function Profile(props) {
             handleSubmit,
             isSubmitting,
             touched,
+            dirty,
           }) => (
-              <Container component='main' className={classes.main} maxWidth='sm'>
-                 <>Retour</>
+            <Container component='main' className={classes.main} maxWidth='sm'>
               <Paper className={classes.paper}>
                 <Grid container spacing={2} justify='center'>
                   <Typography component='h1' variant='h3'>
@@ -252,7 +236,10 @@ export default function Profile(props) {
                           name='firstname'
                           value={values.firstname}
                           onChange={handleChange}
-                          error={touched.firstname && !!errors.firstname}
+                          error={
+                            (touched.firstname && !!errors.firstname) ||
+                            !!fieldsInError.firstname
+                          }
                           helperText={
                             touched.firstname &&
                             !!errors.firstname && (
@@ -281,7 +268,10 @@ export default function Profile(props) {
                           name='lastname'
                           value={values.lastname}
                           onChange={handleChange}
-                          error={touched.lastname && !!errors.lastname}
+                          error={
+                            (touched.lastname && !!errors.lastname) ||
+                            fieldsInError.lastname
+                          }
                           helperText={
                             touched.lastname &&
                             !!errors.lastname && (
@@ -310,16 +300,20 @@ export default function Profile(props) {
                           name='sesame'
                           value={values.sesame}
                           onChange={handleChange}
+                          onKeyPress={resetUniqueSesameError}
                           error={
-                            !!uqSesameId || (touched.sesame && !!errors.sesame)
+                            (touched.sesame && !!errors.sesame) ||
+                            Boolean(fieldsInError.sesame)
                           }
                           helperText={
-                            uqSesameId ||
                             (touched.sesame && errors.sesame && (
                               <FormattedMessage
                                 id={errors.sesame}
                                 defaultMessage={errors.sesame}
                               />
+                            )) ||
+                            (fieldsInError.sesame && (
+                              <FormattedMessage id={fieldsInError.sesame} />
                             ))
                           }
                         />
@@ -428,7 +422,7 @@ export default function Profile(props) {
                     </Dialog>
                     <Dialog open={errorOpen} onClose={handleErrorClose}>
                       <Alert severity='error'>
-                        {apiErrorResponse}
+                        {apiErrorTitle}
                         <IconButton
                           size='small'
                           aria-label='close'
@@ -446,7 +440,7 @@ export default function Profile(props) {
                           variant='contained'
                           color='primary'
                           disableElevation
-                          disabled={isSubmitting}
+                          disabled={isSubmitting || !dirty}
                           className={classes.submit}
                         >
                           <FormattedMessage id='send' defaultMessage='Send' />
@@ -464,7 +458,7 @@ export default function Profile(props) {
               </Paper>
             </Container>
           )}
-            </Formik>
+        </Formik>
       )}
     </>
   );

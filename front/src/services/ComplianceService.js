@@ -13,10 +13,7 @@ const ComplianceService = {
       method: 'GET',
       headers: authHeaders(),
     };
-    const response = await axios(optionsToFindCR);
-    if (response.data) {
-      return response.data;
-    }
+    return  await axios(optionsToFindCR);
   },
 };
 export default ComplianceService;
