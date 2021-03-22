@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import {
   Container,
   Paper,
@@ -390,3 +391,6 @@ export default function SearchComplianceReferent() {
     </>
   );
 }
+SearchComplianceReferent.propTypes = {
+  user: PropTypes.object.isRequired,
+};

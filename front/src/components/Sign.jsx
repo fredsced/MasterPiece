@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Link from '@material-ui/core/Link';
@@ -385,3 +386,7 @@ export default function Sign(props) {
     </Formik>
   );
 }
+Sign.propTypes = {
+  type: PropTypes.oneOf(['login', 'register']).isRequired,
+  userLogged: PropTypes.func,
+};

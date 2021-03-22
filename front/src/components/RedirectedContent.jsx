@@ -56,7 +56,6 @@ export default function RedirectedContent({
     </Container>
   );
 }
-
 RedirectedContent.propTypes = {
   mainTitle: PropTypes.string.isRequired,
   mainMessage: PropTypes.string.isRequired,

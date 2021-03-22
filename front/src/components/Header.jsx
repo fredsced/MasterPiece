@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import { makeStyles } from '@material-ui/core/styles';
@@ -140,3 +141,9 @@ export default function Header(props) {
     </header>
   );
 }
+Header.propTypes = {
+  user: PropTypes.object,
+  logOut: PropTypes.func.isRequired,
+  changeLanguage: PropTypes.func.isRequired,
+  currentLanguage: PropTypes.string.isRequired,
+};
