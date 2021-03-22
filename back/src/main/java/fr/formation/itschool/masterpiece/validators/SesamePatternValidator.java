@@ -9,7 +9,7 @@ public class SesamePatternValidator implements ConstraintValidator<SesamePattern
   @Override
   public boolean isValid(String sesame, ConstraintValidatorContext context) {
     /*
-    Sesame must begin with an A or X, follows by 6 digits (case insensitive)
+    Sesame must begin with an A or X, follows and ending by 6 digits (case insensitive)
      */
     final String regex = "[a,x]\\d{6}";
     final Pattern pattern =

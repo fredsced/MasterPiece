@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { object, string, number } from 'yup';
 import {
   Container,
@@ -66,9 +67,7 @@ const ValidationSchema = () => {
       .max(50, 'tooLong')
       .required('required'),
     sesame: string()
-      .min(7, 'tooShort')
-      .max(7, 'tooLong')
-      .matches(/[a,x]\d{6}/i, 'notASesameId')
+      .matches(/^[a,x]\d{6}$/i, 'notASesameId')
       .required('required'),
     countryId: number().required('required'),
     organisationUnitId: number().required('required'),
@@ -120,7 +119,7 @@ export default function Profile(props) {
     const updatedUser = AuthService.getCurrentUser();
     props.updateUser(updatedUser);
     setSuccessOpen(false);
-    //history.push('/collaborator');
+    history.push('/collaborator');
   };
   const handleErrorClose = () => {
     setErrorOpen(false);
@@ -463,3 +462,7 @@ export default function Profile(props) {
     </>
   );
 }
+Profile.propTypes = {
+  user: PropTypes.object.isRequired,
+  updateUser: PropTypes.func.isRequired,
+};
