@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import {
   Table,
   TableContainer,
@@ -31,6 +32,10 @@ const useStyles = makeStyles((theme) => ({
   },
   typography: {
     padding: theme.spacing(1, 2),
+  },
+  typographyTitle: {
+    padding: theme.spacing(1, 2),
+    fontWeight: 900,
   },
   active: {
     width: '100%',
@@ -73,9 +78,16 @@ export default function ListComplianceReferents({ myCR }) {
           horizontal: 'left',
         }}
       >
-        <Typography component='p' className={classes.typography}>
+        <Typography component='p' className={classes.typographyTitle}>
           {myCR && myCR[rowId] && myCR[rowId].firstname}{' '}
           {myCR && myCR[rowId] && myCR[rowId].lastname}
+        </Typography>
+        <Typography component='p' className={classes.typography}>
+          {myCR && myCR[rowId] && myCR[rowId].email}
+        </Typography>
+        <Typography component='p' className={classes.typography}>
+          {'Tel : '}
+          {myCR && myCR[rowId] && myCR[rowId].phone}
         </Typography>
         <Typography
           component='p'
@@ -142,3 +154,6 @@ export default function ListComplianceReferents({ myCR }) {
     </>
   );
 }
+ListComplianceReferents.propTypes = {
+  myCR: PropTypes.arrayOf(PropTypes.string),
+};

@@ -1,5 +1,6 @@
 package fr.formation.itschool.masterpiece.domain;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -17,7 +18,10 @@ import java.util.StringJoiner;
     columnNames = "collaborator_id"))
 public class ComplianceReferent extends AbstractEntity {
 
+  @Column(nullable = false)
   private String email;
+
+  @Column(nullable = true, length = 20)
   private String phone;
 
   @OneToOne
