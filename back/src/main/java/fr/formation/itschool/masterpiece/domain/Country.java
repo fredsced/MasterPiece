@@ -15,7 +15,7 @@ public class Country extends AbstractEntity {
   @Column(nullable = false, length = 3)
   private String iso;
 
-  @Column(length = 60)
+  @Column(nullable = false, length = 100)
   private String name;
 
   @Override

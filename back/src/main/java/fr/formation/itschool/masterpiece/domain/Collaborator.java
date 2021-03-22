@@ -33,17 +33,17 @@ public class Collaborator extends AbstractEntity {
   @Column(nullable = false)
   private String firstname;
 
-  @Column(name = "sesame_id", nullable = false)
+  @Column(name = "sesame_id", nullable = false, length = 7)
   private String sesame;
 
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "country_id", foreignKey = @ForeignKey(name = "collaborators_country_id_FK"))
+  @JoinColumn(name = "country_id", foreignKey = @ForeignKey(name = "collaborators_country_id_FK"), nullable = false)
   private Country country;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(
     name = "organisation_unit_id",
-    foreignKey = @ForeignKey(name = "collaborators_organisation_unit_id_FK"))
+    foreignKey = @ForeignKey(name = "collaborators_organisation_unit_id_FK"), nullable = false)
   private OrganisationUnit organisationUnit;
 
   @ManyToOne(fetch = FetchType.LAZY)

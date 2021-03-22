@@ -9,7 +9,7 @@ import java.util.StringJoiner;
 @Table(name = "roles")
 public class Role extends AbstractEntity {
 
-  @Column(length = 45, nullable = false, unique = true)
+  @Column(length = 20, nullable = false, unique = true)
   private String code;
 
   @Column(nullable = false)

@@ -13,10 +13,9 @@ import java.util.StringJoiner;
   uniqueConstraints = @UniqueConstraint(name = "risks_code_UQ", columnNames = "code"))
 public class Risk extends AbstractEntity {
 
-  @Column(unique = true, nullable = false, length = 45)
+  @Column(unique = true, nullable = false, length = 5)
   private String code;
-
-  @Size(max = 255)
+  @Column(nullable = false)
   private String label;
 
   @Override

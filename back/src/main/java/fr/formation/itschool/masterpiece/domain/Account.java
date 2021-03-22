@@ -25,7 +25,7 @@ public class Account extends AbstractEntity {
   @Column(nullable = false)
   private String email;
 
-  @Column(nullable = false)
+  @Column(nullable = false, length = 60)
   private String password;
 
   @ManyToMany(fetch = FetchType.EAGER)

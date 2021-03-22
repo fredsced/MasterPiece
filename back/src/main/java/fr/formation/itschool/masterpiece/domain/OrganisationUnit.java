@@ -16,12 +16,10 @@ import java.util.StringJoiner;
 public class OrganisationUnit extends AbstractEntity {
 
 
-  @NotBlank
-  @Size(max = 25)
-  @Column(nullable = false)
+  @Column(nullable = false, length = 25)
   private String code;
 
-  @Size(max = 100)
+  @Column(length = 100, nullable = true)
   private String name;
 
 

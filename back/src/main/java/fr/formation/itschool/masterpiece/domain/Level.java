@@ -12,9 +12,10 @@ import java.util.StringJoiner;
   uniqueConstraints = @UniqueConstraint(name = "compliance_levels_code_UQ", columnNames = "code"))
 public class Level extends AbstractEntity {
 
-  @Column(nullable = false, length = 45)
+  @Column(nullable = false, length = 3)
   private String code;
 
+  @Column(nullable = false)
   private String label;
 
   @Override
