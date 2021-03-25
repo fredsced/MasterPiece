@@ -70,12 +70,12 @@ export default function ListComplianceReferents({ myCR }) {
         anchorEl={anchorEl}
         onClose={handleClose}
         anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'left',
+          vertical: 'top',
+          horizontal: 'center',
         }}
         transformOrigin={{
-          vertical: 'top',
-          horizontal: 'left',
+          vertical: 'bottom',
+          horizontal: 'center',
         }}
       >
         <Typography component='p' className={classes.typographyTitle}>
@@ -88,6 +88,14 @@ export default function ListComplianceReferents({ myCR }) {
         <Typography component='p' className={classes.typography}>
           {'Tel : '}
           {myCR && myCR[rowId] && myCR[rowId].phone}
+        </Typography>
+        <Typography
+          component='p'
+          variant='subtitle1'
+          className={classes.typography}
+        >
+          {'Level : '}
+          {myCR && myCR[rowId] && myCR[rowId].level}
         </Typography>
         <Typography
           component='p'
@@ -155,5 +163,5 @@ export default function ListComplianceReferents({ myCR }) {
   );
 }
 ListComplianceReferents.propTypes = {
-  myCR: PropTypes.arrayOf(PropTypes.string),
+  myCR: PropTypes.arrayOf(Object),
 };

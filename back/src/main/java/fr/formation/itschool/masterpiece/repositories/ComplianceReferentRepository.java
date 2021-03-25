@@ -12,12 +12,13 @@ import java.util.List;
 public interface ComplianceReferentRepository extends JpaRepository<ComplianceReferent, Long> {
 
   @Query(
-    "SELECT new fr.formation.itschool.masterpiece.dtos.compliancereferent.ComplianceReferentViewDto(cr.id, c.firstname, c.lastname, c.sesame, co.iso, ou.code, r.code, cr.email, cr.phone)"
+    "SELECT new fr.formation.itschool.masterpiece.dtos.compliancereferent.ComplianceReferentViewDto(cr.id, c.firstname, c.lastname, c.sesame, co.iso, ou.code, r.code, cr.email, cr.phone, l.code)"
       + "FROM ComplianceReferent cr "
       + "JOIN cr.collaborator c "
       + "JOIN cr.risk r  "
       + "JOIN c.country co "
       + "JOIN c.organisationUnit ou "
+      + "JOIN cr.level l "
       + "WHERE (:countryId is null or co.id = :countryId) "
       + "AND (:organisationUnitId is null or ou.id = :organisationUnitId) "
       + "AND (:riskId is null or r.id = :riskId) "

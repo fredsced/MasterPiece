@@ -17,8 +17,9 @@ public class ComplianceReferentViewDto {
   private final String riskCode;
   private final String email;
   private final String phone;
+  private final String level;
 
-  public ComplianceReferentViewDto(Long id, String firstname, String lastname, String sesame, String country, String buCode, String riskCode, String email, String phone) {
+  public ComplianceReferentViewDto(Long id, String firstname, String lastname, String sesame, String country, String buCode, String riskCode, String email, String phone, String level) {
     this.id = id;
     this.firstname = firstname;
     this.lastname = lastname;
@@ -28,6 +29,7 @@ public class ComplianceReferentViewDto {
     this.riskCode = riskCode;
     this.email = email;
     this.phone = phone;
+    this.level = level;
   }
 
   public Long getId() {
@@ -66,6 +68,10 @@ public class ComplianceReferentViewDto {
     return phone;
   }
 
+  public String getLevel() {
+    return level;
+  }
+
   @Override
   public String toString() {
     return new StringJoiner(", ", ComplianceReferentViewDto.class.getSimpleName() + "[", "]")
@@ -78,6 +84,7 @@ public class ComplianceReferentViewDto {
       .add("riskCode=" + riskCode)
       .add("email=" + email)
       .add("phone=" + phone)
+      .add("level=" + level)
       .toString();
   }
 }

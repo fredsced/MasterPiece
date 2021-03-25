@@ -144,6 +144,7 @@ export default function SearchComplianceReferent() {
               onSubmit={(values, { setSubmitting }) => {
                 setSubmitting(true);
                 setMyCR([]);
+                console.log(values);
                 ComplianceService.getMyCR(values)
                   .then((response) => {
                     setMyCR(response.data);
