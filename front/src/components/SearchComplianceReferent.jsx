@@ -21,6 +21,8 @@ import CountriesService from '../services/CountriesService';
 import OrgUnitService from '../services/OrgUnitService';
 import AuthService from '../services/AuthService';
 import ListComplianceReferents from './ListComplianceReferents';
+import RedirectedContent from './RedirectedContent';
+import BackLink from './BackLink';
 
 const useStyles = makeStyles((theme) => ({
   main: {
@@ -90,21 +92,41 @@ export default function SearchComplianceReferent() {
   const [organisationUnits, setOrganisationUnits] = useState([]);
   const [fetchingCountries, setFetchingCountries] = useState(true);
   const [fetchingOrgUnits, setFetchingOrgUnits] = useState(true);
+  const [errorToFetch, setErrorToFetch] = useState(false);
 
   useEffect(() => {
     const fetchRisks = async () => {
-      const result = await RisksService.getAll();
-      setRisks(result);
+      await RisksService.getAll()
+        .then((result) => {
+          setRisks(result.data);
+        })
+        .catch((error) => {
+          setErrorToFetch(true);
+        });
     };
     const fetchCountries = async () => {
-      const result = await CountriesService.getAll();
-      setCountries(result);
-      setFetchingCountries(false);
+      await CountriesService.getAll()
+        .then((result) => {
+          setCountries(result.data);
+        })
+        .catch((error) => {
+          setErrorToFetch(true);
+        })
+        .then(() => {
+          setFetchingCountries(false);
+        });
     };
     const fetchOrgUnits = async () => {
-      const orgUnits = await OrgUnitService.getAll();
-      setOrganisationUnits(orgUnits);
-      setFetchingOrgUnits(false);
+      await OrgUnitService.getAll()
+        .then((result) => {
+          setOrganisationUnits(result.data);
+        })
+        .catch((error) => {
+          setErrorToFetch(true);
+        })
+        .then(() => {
+          setFetchingOrgUnits(false);
+        });
     };
     fetchRisks();
     fetchCountries();
@@ -113,7 +135,14 @@ export default function SearchComplianceReferent() {
 
   return (
     <>
-      {fetchingCountries || fetchingOrgUnits ? (
+      {errorToFetch ? (
+        <RedirectedContent
+          mainTitle='Connection issue'
+          mainMessage='Sorry we cannot handle your request for the moment'
+          link='/collaborator'
+          linkMessage='backToCollaboratorPage'
+        />
+      ) : fetchingCountries || fetchingOrgUnits ? (
         <Container component='main' className={classes.main} maxWidth='sm'>
           <Backdrop
             className={classes.backdrop}
@@ -144,7 +173,6 @@ export default function SearchComplianceReferent() {
               onSubmit={(values, { setSubmitting }) => {
                 setSubmitting(true);
                 setMyCR([]);
-                console.log(values);
                 ComplianceService.getMyCR(values)
                   .then((response) => {
                     setMyCR(response.data);
@@ -387,6 +415,7 @@ export default function SearchComplianceReferent() {
               )}
             </Grid>
           </Paper>
+          <BackLink path='/collaborator' />
         </Container>
       )}
     </>

@@ -10,12 +10,7 @@ const CountriesService = {
       method: 'GET',
       headers: authHeaders(),
     };
-    const result = await axios(optionsToGetAllCountries);
-    if (result.data) {
-      return result.data;
-    } else {
-      return [];
-    }
+    return await axios(optionsToGetAllCountries);
   },
 };
 

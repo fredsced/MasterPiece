@@ -63,5 +63,8 @@
   "noPageFound": "No page found with this url",
   "backTohomePage": "Back to home page",
   "UniqueEmail": "Email is already taken",
-  "ValidationFailed": "Error in at least one field"
+  "ValidationFailed": "Error in at least one field",
+  "Connection issue": "Connection issue",
+  "Sorry we cannot handle your request for the moment": "Sorry we cannot handle your request for the moment",
+  "Back": "Back to previous"
 }

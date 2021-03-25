@@ -25,6 +25,8 @@ import OrgUnitService from '../services/OrgUnitService';
 import { useHistory } from 'react-router-dom';
 import Alert from './Alert';
 import handleValidationError from '../services/handleValidationError';
+import RedirectedContent from './RedirectedContent';
+import BackLink from './BackLink';
 
 const useStyles = makeStyles((theme) => ({
   main: {
@@ -77,6 +79,7 @@ const ValidationSchema = () => {
 export default function Profile(props) {
   const history = useHistory();
   const classes = useStyles();
+  const [errorToFetch, setErrorToFetch] = useState(false);
   const [successOpen, setSuccessOpen] = useState(false);
   const [apiErrorTitle, setApiErrorTitle] = useState();
   const [fieldsInError, setFieldsInError] = useState({});
@@ -102,14 +105,28 @@ export default function Profile(props) {
 
   useEffect(() => {
     const fetchCountries = async () => {
-      const countries = await CountriesService.getAll();
-      setCountries(countries);
-      setFetchingCountries(false);
+      await CountriesService.getAll()
+        .then((result) => {
+          setCountries(result.data);
+        })
+        .catch((error) => {
+          setErrorToFetch(true);
+        })
+        .then(() => {
+          setFetchingCountries(false);
+        });
     };
     const fetchOrgUnits = async () => {
-      const orgUnits = await OrgUnitService.getAll();
-      setOrganisationUnits(orgUnits);
-      setFetchingOrgUnits(false);
+      await OrgUnitService.getAll()
+        .then((result) => {
+          setOrganisationUnits(result.data);
+        })
+        .catch((error) => {
+          setErrorToFetch(true);
+        })
+        .then(() => {
+          setFetchingOrgUnits(false);
+        });
     };
     fetchCountries();
     fetchOrgUnits();
@@ -150,7 +167,14 @@ export default function Profile(props) {
 
   return (
     <>
-      {fetchingCountries || fetchingOrgUnits ? (
+      {errorToFetch ? (
+        <RedirectedContent
+          mainTitle='Connection issue'
+          mainMessage='Sorry we cannot handle your request for the moment'
+          link='/collaborator'
+          linkMessage='backToCollaboratorPage'
+        />
+      ) : fetchingCountries || fetchingOrgUnits ? (
         <Container component='main' className={classes.main} maxWidth='sm'>
           <Backdrop
             className={classes.backdrop}
@@ -160,304 +184,311 @@ export default function Profile(props) {
           </Backdrop>
         </Container>
       ) : (
-        <Formik
-          initialValues={{
-            firstname: userFirstname,
-            lastname: userLastname,
-            sesame: userSesame,
-            countryId: userCountryId,
-            organisationUnitId: userOrganisationUnitId,
-          }}
-          validationSchema={() => ValidationSchema()}
-          onSubmit={(values, { setSubmitting }) => {
-            setSubmitting(true);
-            resetApiErrors();
-            CollaboratorService.save(values)
-              .then(() => {
-                CollaboratorService.updateCollaboratorProfile(values);
-                setSuccessOpen(true);
-              })
-              .catch((error) => {
-                handleCreationError(error);
-              })
-              .then(() => {
-                setSubmitting(false);
-              });
-          }}
-        >
-          {({
-            values,
-            errors,
-            handleChange,
-            handleSubmit,
-            isSubmitting,
-            touched,
-            dirty,
-          }) => (
-            <Container component='main' className={classes.main} maxWidth='sm'>
-              <Paper className={classes.paper}>
-                <Grid container spacing={2} justify='center'>
-                  <Typography component='h1' variant='h3'>
-                    {!hasProfile ? (
-                      <FormattedMessage
-                        id='createProfile'
-                        defaultMessage='Create your profile'
-                      />
-                    ) : (
-                      <FormattedMessage
-                        id='updateProfile'
-                        defaultMessage='Update your profile'
-                      />
-                    )}
-                  </Typography>
-                </Grid>
-                <form className={classes.form} onSubmit={handleSubmit}>
-                  <Grid
-                    container
-                    spacing={2}
-                    direction='row'
-                    justify='space-evenly'
-                    alignItems='center'
-                  >
-                    <Grid item sm={6} xs={12}>
-                      <Grid container justify='center'>
-                        <TextField
-                          type='text'
-                          variant='standard'
-                          size='small'
-                          id='firstname'
-                          label={
-                            <FormattedMessage
-                              id='firstname'
-                              defaultMessage='Firstname'
-                            />
-                          }
-                          name='firstname'
-                          value={values.firstname}
-                          onChange={handleChange}
-                          error={
-                            (touched.firstname && !!errors.firstname) ||
-                            !!fieldsInError.firstname
-                          }
-                          helperText={
-                            touched.firstname &&
-                            !!errors.firstname && (
-                              <FormattedMessage
-                                id={errors.firstname}
-                                defaultMessage={errors.firstname}
-                              />
-                            )
-                          }
+        <>
+          <Formik
+            initialValues={{
+              firstname: userFirstname,
+              lastname: userLastname,
+              sesame: userSesame,
+              countryId: userCountryId,
+              organisationUnitId: userOrganisationUnitId,
+            }}
+            validationSchema={() => ValidationSchema()}
+            onSubmit={(values, { setSubmitting }) => {
+              setSubmitting(true);
+              resetApiErrors();
+              CollaboratorService.save(values)
+                .then(() => {
+                  CollaboratorService.updateCollaboratorProfile(values);
+                  setSuccessOpen(true);
+                })
+                .catch((error) => {
+                  handleCreationError(error);
+                })
+                .then(() => {
+                  setSubmitting(false);
+                });
+            }}
+          >
+            {({
+              values,
+              errors,
+              handleChange,
+              handleSubmit,
+              isSubmitting,
+              touched,
+              dirty,
+            }) => (
+              <Container
+                component='main'
+                className={classes.main}
+                maxWidth='sm'
+              >
+                <Paper className={classes.paper}>
+                  <Grid container spacing={2} justify='center'>
+                    <Typography component='h1' variant='h3'>
+                      {!hasProfile ? (
+                        <FormattedMessage
+                          id='createProfile'
+                          defaultMessage='Create your profile'
                         />
-                      </Grid>
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                      <Grid container justify='center'>
-                        <TextField
-                          type='text'
-                          variant='standard'
-                          size='small'
-                          id='lastname'
-                          label={
-                            <FormattedMessage
-                              id='lastname'
-                              defaultMessage='Lastname'
-                            />
-                          }
-                          name='lastname'
-                          value={values.lastname}
-                          onChange={handleChange}
-                          error={
-                            (touched.lastname && !!errors.lastname) ||
-                            fieldsInError.lastname
-                          }
-                          helperText={
-                            touched.lastname &&
-                            !!errors.lastname && (
-                              <FormattedMessage
-                                id={errors.lastname}
-                                defaultMessage={errors.lastname}
-                              />
-                            )
-                          }
+                      ) : (
+                        <FormattedMessage
+                          id='updateProfile'
+                          defaultMessage='Update your profile'
                         />
-                      </Grid>
-                    </Grid>
-                    <Grid item sm={6} xs={12}>
-                      <Grid container justify='center'>
-                        <TextField
-                          type='text'
-                          variant='standard'
-                          size='small'
-                          id='sesame'
-                          label={
-                            <FormattedMessage
-                              id='sesameId'
-                              defaultMessage='Sesame ID'
-                            />
-                          }
-                          name='sesame'
-                          value={values.sesame}
-                          onChange={handleChange}
-                          onKeyPress={resetUniqueSesameError}
-                          error={
-                            (touched.sesame && !!errors.sesame) ||
-                            Boolean(fieldsInError.sesame)
-                          }
-                          helperText={
-                            (touched.sesame && errors.sesame && (
-                              <FormattedMessage
-                                id={errors.sesame}
-                                defaultMessage={errors.sesame}
-                              />
-                            )) ||
-                            (fieldsInError.sesame && (
-                              <FormattedMessage id={fieldsInError.sesame} />
-                            ))
-                          }
-                        />
-                      </Grid>
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                      <Grid container justify='center'>
-                        <TextField
-                          variant='standard'
-                          id='organisationUnit'
-                          size='small'
-                          width='115'
-                          select
-                          label={
-                            <FormattedMessage
-                              id='organisationUnit'
-                              defaultMessage='Organisation Unit'
-                            />
-                          }
-                          name='organisationUnitId'
-                          onChange={handleChange}
-                          value={values.organisationUnitId}
-                          error={
-                            touched.organisationUnitId &&
-                            !!errors.organisationUnitId
-                          }
-                          helperText={
-                            touched.organisationUnitId &&
-                            !!errors.organisationUnitId && (
-                              <FormattedMessage
-                                id={errors.organisationUnitId}
-                              />
-                            )
-                          }
-                        >
-                          {organisationUnits.map((organisationUnit) => (
-                            <MenuItem
-                              key={organisationUnit.id}
-                              value={organisationUnit.id}
-                            >
-                              {organisationUnit.code}
-                            </MenuItem>
-                          ))}
-                        </TextField>
-                      </Grid>
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                      <Grid container justify='center'>
-                        <TextField
-                          variant='standard'
-                          id='country'
-                          size='small'
-                          width='115'
-                          select
-                          value={values.countryId}
-                          label={
-                            <FormattedMessage
-                              id='country'
-                              defaultMessage='Country'
-                            />
-                          }
-                          name='countryId'
-                          onChange={handleChange}
-                          error={touched.countryId && !!errors.countryId}
-                          helperText={
-                            touched.countryId &&
-                            !!errors.countryId && (
-                              <FormattedMessage id={errors.countryId} />
-                            )
-                          }
-                        >
-                          {countries.map((country) => (
-                            <MenuItem key={country.id} value={country.id}>
-                              <FormattedMessage
-                                id={country.iso}
-                                defaultMessage={country.name}
-                              />
-                            </MenuItem>
-                          ))}
-                        </TextField>
-                      </Grid>
-                    </Grid>
-                    <Dialog open={successOpen} onClose={handleSuccessClose}>
-                      <Alert severity='success'>
-                        {hasProfile ? (
-                          <FormattedMessage
-                            id='collaboratorUpdated'
-                            defaultMessage='Collaborator profile updated'
-                          />
-                        ) : (
-                          <FormattedMessage
-                            id='collaboratorCreated'
-                            defaultMessage='Collaborator profile created'
-                          />
-                        )}
-
-                        <IconButton
-                          size='small'
-                          aria-label='close'
-                          color='inherit'
-                          onClick={handleSuccessClose}
-                        >
-                          <CloseIcon fontSize='small' />
-                        </IconButton>
-                      </Alert>
-                    </Dialog>
-                    <Dialog open={errorOpen} onClose={handleErrorClose}>
-                      <Alert severity='error'>
-                        {apiErrorTitle}
-                        <IconButton
-                          size='small'
-                          aria-label='close'
-                          color='inherit'
-                          onClick={handleErrorClose}
-                        >
-                          <CloseIcon fontSize='small' />
-                        </IconButton>
-                      </Alert>
-                    </Dialog>
-                    <Grid item xs={12} sm={12}>
-                      <Grid container justify='center'>
-                        <Button
-                          type='submit'
-                          variant='contained'
-                          color='primary'
-                          disableElevation
-                          disabled={isSubmitting || !dirty}
-                          className={classes.submit}
-                        >
-                          <FormattedMessage id='send' defaultMessage='Send' />
-                        </Button>
-                        <Backdrop
-                          className={classes.backdrop}
-                          open={isSubmitting}
-                        >
-                          <CircularProgress color='primary' />
-                        </Backdrop>
-                      </Grid>
-                    </Grid>
+                      )}
+                    </Typography>
                   </Grid>
-                </form>
-              </Paper>
-            </Container>
-          )}
-        </Formik>
+                  <form className={classes.form} onSubmit={handleSubmit}>
+                    <Grid
+                      container
+                      spacing={2}
+                      direction='row'
+                      justify='space-evenly'
+                      alignItems='center'
+                    >
+                      <Grid item sm={6} xs={12}>
+                        <Grid container justify='center'>
+                          <TextField
+                            type='text'
+                            variant='standard'
+                            size='small'
+                            id='firstname'
+                            label={
+                              <FormattedMessage
+                                id='firstname'
+                                defaultMessage='Firstname'
+                              />
+                            }
+                            name='firstname'
+                            value={values.firstname}
+                            onChange={handleChange}
+                            error={
+                              (touched.firstname && !!errors.firstname) ||
+                              !!fieldsInError.firstname
+                            }
+                            helperText={
+                              touched.firstname &&
+                              !!errors.firstname && (
+                                <FormattedMessage
+                                  id={errors.firstname}
+                                  defaultMessage={errors.firstname}
+                                />
+                              )
+                            }
+                          />
+                        </Grid>
+                      </Grid>
+                      <Grid item xs={12} sm={6}>
+                        <Grid container justify='center'>
+                          <TextField
+                            type='text'
+                            variant='standard'
+                            size='small'
+                            id='lastname'
+                            label={
+                              <FormattedMessage
+                                id='lastname'
+                                defaultMessage='Lastname'
+                              />
+                            }
+                            name='lastname'
+                            value={values.lastname}
+                            onChange={handleChange}
+                            error={
+                              (touched.lastname && !!errors.lastname) ||
+                              fieldsInError.lastname
+                            }
+                            helperText={
+                              touched.lastname &&
+                              !!errors.lastname && (
+                                <FormattedMessage
+                                  id={errors.lastname}
+                                  defaultMessage={errors.lastname}
+                                />
+                              )
+                            }
+                          />
+                        </Grid>
+                      </Grid>
+                      <Grid item sm={6} xs={12}>
+                        <Grid container justify='center'>
+                          <TextField
+                            type='text'
+                            variant='standard'
+                            size='small'
+                            id='sesame'
+                            label={
+                              <FormattedMessage
+                                id='sesameId'
+                                defaultMessage='Sesame ID'
+                              />
+                            }
+                            name='sesame'
+                            value={values.sesame}
+                            onChange={handleChange}
+                            onKeyPress={resetUniqueSesameError}
+                            error={
+                              (touched.sesame && !!errors.sesame) ||
+                              Boolean(fieldsInError.sesame)
+                            }
+                            helperText={
+                              (touched.sesame && errors.sesame && (
+                                <FormattedMessage
+                                  id={errors.sesame}
+                                  defaultMessage={errors.sesame}
+                                />
+                              )) ||
+                              (fieldsInError.sesame && (
+                                <FormattedMessage id={fieldsInError.sesame} />
+                              ))
+                            }
+                          />
+                        </Grid>
+                      </Grid>
+                      <Grid item xs={12} sm={6}>
+                        <Grid container justify='center'>
+                          <TextField
+                            variant='standard'
+                            id='organisationUnit'
+                            size='small'
+                            width='115'
+                            select
+                            label={
+                              <FormattedMessage
+                                id='organisationUnit'
+                                defaultMessage='Organisation Unit'
+                              />
+                            }
+                            name='organisationUnitId'
+                            onChange={handleChange}
+                            value={values.organisationUnitId}
+                            error={
+                              touched.organisationUnitId &&
+                              !!errors.organisationUnitId
+                            }
+                            helperText={
+                              touched.organisationUnitId &&
+                              !!errors.organisationUnitId && (
+                                <FormattedMessage
+                                  id={errors.organisationUnitId}
+                                />
+                              )
+                            }
+                          >
+                            {organisationUnits.map((organisationUnit) => (
+                              <MenuItem
+                                key={organisationUnit.id}
+                                value={organisationUnit.id}
+                              >
+                                {organisationUnit.code}
+                              </MenuItem>
+                            ))}
+                          </TextField>
+                        </Grid>
+                      </Grid>
+                      <Grid item xs={12} sm={6}>
+                        <Grid container justify='center'>
+                          <TextField
+                            variant='standard'
+                            id='country'
+                            size='small'
+                            width='115'
+                            select
+                            value={values.countryId}
+                            label={
+                              <FormattedMessage
+                                id='country'
+                                defaultMessage='Country'
+                              />
+                            }
+                            name='countryId'
+                            onChange={handleChange}
+                            error={touched.countryId && !!errors.countryId}
+                            helperText={
+                              touched.countryId &&
+                              !!errors.countryId && (
+                                <FormattedMessage id={errors.countryId} />
+                              )
+                            }
+                          >
+                            {countries.map((country) => (
+                              <MenuItem key={country.id} value={country.id}>
+                                <FormattedMessage
+                                  id={country.iso}
+                                  defaultMessage={country.name}
+                                />
+                              </MenuItem>
+                            ))}
+                          </TextField>
+                        </Grid>
+                      </Grid>
+                      <Dialog open={successOpen} onClose={handleSuccessClose}>
+                        <Alert severity='success'>
+                          {hasProfile ? (
+                            <FormattedMessage
+                              id='collaboratorUpdated'
+                              defaultMessage='Collaborator profile updated'
+                            />
+                          ) : (
+                            <FormattedMessage
+                              id='collaboratorCreated'
+                              defaultMessage='Collaborator profile created'
+                            />
+                          )}
+
+                          <IconButton
+                            size='small'
+                            aria-label='close'
+                            color='inherit'
+                            onClick={handleSuccessClose}
+                          >
+                            <CloseIcon fontSize='small' />
+                          </IconButton>
+                        </Alert>
+                      </Dialog>
+                      <Dialog open={errorOpen} onClose={handleErrorClose}>
+                        <Alert severity='error'>
+                          {apiErrorTitle}
+                          <IconButton
+                            size='small'
+                            aria-label='close'
+                            color='inherit'
+                            onClick={handleErrorClose}
+                          >
+                            <CloseIcon fontSize='small' />
+                          </IconButton>
+                        </Alert>
+                      </Dialog>
+                      <Grid item xs={12} sm={12}>
+                        <Grid container justify='center'>
+                          <Button
+                            type='submit'
+                            variant='contained'
+                            color='primary'
+                            disableElevation
+                            disabled={isSubmitting || !dirty}
+                            className={classes.submit}
+                          >
+                            <FormattedMessage id='send' defaultMessage='Send' />
+                          </Button>
+                          <Backdrop
+                            className={classes.backdrop}
+                            open={isSubmitting}
+                          >
+                            <CircularProgress color='primary' />
+                          </Backdrop>
+                        </Grid>
+                      </Grid>
+                    </Grid>
+                  </form>
+                </Paper>
+                <BackLink path='/collaborator' />
+              </Container>
+            )}
+          </Formik>
+        </>
       )}
     </>
   );

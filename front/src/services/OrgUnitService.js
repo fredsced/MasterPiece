@@ -10,12 +10,7 @@ const OrgUnitService = {
       method: 'GET',
       headers: authHeaders(),
     };
-    const result = await axios(optionsToGetAllOrgUnits);
-    if (result.data) {
-      return result.data;
-    } else {
-      return [];
-    }
+    return await axios(optionsToGetAllOrgUnits);
   },
 };
 

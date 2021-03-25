@@ -10,12 +10,7 @@ const RisksService = {
       method: 'GET',
       headers: authHeaders(),
     };
-    const result = await axios(optionsToGetAllRisks);
-    if (result.data) {
-      return result.data;
-    } else {
-      return [];
-    }
+    return await axios(optionsToGetAllRisks);
   },
 };
 
