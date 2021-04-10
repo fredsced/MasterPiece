@@ -40,7 +40,6 @@ public class CollaboratorServiceImpl implements CollaboratorService {
   @Transactional(readOnly = false)
   @Override
   public void saveCollaborator(SaveCollaboratorDto saveCollaboratorDto, Long accountId) {
-    modelMapper.typeMap(SaveCollaboratorDto.class, Collaborator.class).addMappings(mapper -> mapper.skip(Collaborator::setId));
     Collaborator collaboratorToCreate = modelMapper.map(saveCollaboratorDto, Collaborator.class);
     Account account = accountRepository.getOne(accountId);
     collaboratorToCreate.setAccount(account);
