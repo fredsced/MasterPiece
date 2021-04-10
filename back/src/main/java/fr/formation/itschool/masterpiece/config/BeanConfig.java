@@ -36,26 +36,11 @@ public class BeanConfig {
                 .setMatchingStrategy(MatchingStrategies.STANDARD);
         return modelMapper;
     }
-    /**
-     * The objectMapper for application. Used to make the mapping between json and dtos.
-     *
-     * @return a {@code ObjectMapper} instance
-     */
-    /*@Bean
-    protected ObjectMapper objectMapper() {
-        ObjectMapper mapper = Jackson2ObjectMapperBuilder.json().build();
-        mapper.findAndRegisterModules();
-        mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-        mapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
-        mapper.setVisibility(
-          mapper.getSerializationConfig().getDefaultVisibilityChecker()
-            .withFieldVisibility(JsonAutoDetect.Visibility.ANY)
-            .withGetterVisibility(JsonAutoDetect.Visibility.NONE)
-            .withIsGetterVisibility(JsonAutoDetect.Visibility.NONE)
-            .withSetterVisibility(JsonAutoDetect.Visibility.NONE));
-        return mapper;
-    }
-*/
+  /**
+   * The cache manager for application. Used to cached some referential data.
+   *
+   * @return a {@code ConcurrentMapCacheManager} instance
+   */
     @Bean
     public CacheManager cacheManager(){
         return new ConcurrentMapCacheManager("countries","organisationUnits","risks");
