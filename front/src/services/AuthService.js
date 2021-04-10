@@ -24,9 +24,9 @@ const AuthService = {
     };
     const response = await axios(optionsToLogin);
     if (response.data.access_token) {
-      localStorage.setItem(LOCAL_STORAGE_USER, JSON.stringify(response.data));
+      sessionStorage.setItem(LOCAL_STORAGE_USER, JSON.stringify(response.data));
       const expiresAt = response.data.expires_in * 1000 + new Date().getTime();
-      localStorage.setItem(LOCAL_STORAGE_EXPIRES_AT, expiresAt);
+      sessionStorage.setItem(LOCAL_STORAGE_EXPIRES_AT, expiresAt);
     }
     return response.data;
   },
@@ -40,16 +40,16 @@ const AuthService = {
     return await axios(optionsToRegister);
   },
   logout: () => {
-    localStorage.removeItem(LOCAL_STORAGE_USER);
-    localStorage.removeItem(LOCAL_STORAGE_EXPIRES_AT);
+    sessionStorage.removeItem(LOCAL_STORAGE_USER);
+    sessionStorage.removeItem(LOCAL_STORAGE_EXPIRES_AT);
   },
   getCurrentUser: () => {
     if (AuthService.isAuthenticated()) {
-      return JSON.parse(localStorage.getItem(LOCAL_STORAGE_USER));
+      return JSON.parse(sessionStorage.getItem(LOCAL_STORAGE_USER));
     } else return null;
   },
   isAuthenticated: () => {
-    const expiresAt = localStorage.getItem(LOCAL_STORAGE_EXPIRES_AT);
+    const expiresAt = sessionStorage.getItem(LOCAL_STORAGE_EXPIRES_AT);
     return expiresAt > new Date().getTime();
   },
 };

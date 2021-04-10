@@ -20,7 +20,7 @@ const CollaboratorService = {
     }
   },
   updateCollaboratorProfile: (values) => {
-    const userToUpdate = JSON.parse(localStorage.getItem(LOCAL_STORAGE_USER));
+    const userToUpdate = JSON.parse(sessionStorage.getItem(LOCAL_STORAGE_USER));
     userToUpdate.accountHasProfile = true;
     userToUpdate.collaboratorInfo = {
       lastname: values.lastname,
@@ -29,7 +29,7 @@ const CollaboratorService = {
       countryId: values.countryId,
       organisationUnitId: values.organisationUnitId,
     };
-    localStorage.setItem(LOCAL_STORAGE_USER, JSON.stringify(userToUpdate));
+    sessionStorage.setItem(LOCAL_STORAGE_USER, JSON.stringify(userToUpdate));
   },
 };
 export default CollaboratorService;

@@ -1,6 +1,6 @@
 export default function authHeader() {
   const user = JSON.parse(
-    localStorage.getItem(process.env.REACT_APP_LOCAL_STORAGE_USER)
+    sessionStorage.getItem(process.env.REACT_APP_LOCAL_STORAGE_USER)
   );
 
   if (user && user.access_token) {
