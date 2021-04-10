@@ -1,8 +1,9 @@
 package fr.formation.itschool.masterpiece.controllers;
 
 import fr.formation.itschool.masterpiece.dtos.compliancereferent.ComplianceReferentViewDto;
-import fr.formation.itschool.masterpiece.dtos.compliancereferent.ComplianceReferentCriteria;
+import fr.formation.itschool.masterpiece.dtos.compliancereferent.ComplianceReferentCriteriaDto;
 import fr.formation.itschool.masterpiece.services.ComplianceReferentService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -23,9 +24,15 @@ public class ComplianceReferentController {
         this.complianceReferentService = complianceReferentService;
     }
 
+    /**
+     *
+     * @param criteria
+     * @return
+     */
+    @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping()
     protected List<ComplianceReferentViewDto> search(
-            @Valid ComplianceReferentCriteria criteria) {
+            @Valid ComplianceReferentCriteriaDto criteria) {
         return complianceReferentService.search(criteria);
     }
 }

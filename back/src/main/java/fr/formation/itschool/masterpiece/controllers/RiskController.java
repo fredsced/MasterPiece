@@ -2,6 +2,7 @@ package fr.formation.itschool.masterpiece.controllers;
 
 import fr.formation.itschool.masterpiece.dtos.RiskViewDto;
 import fr.formation.itschool.masterpiece.services.RiskService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,6 +23,7 @@ public class RiskController {
         this.riskService = riskService;
     }
 
+    @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping()
     protected List<RiskViewDto> getAllRisks() {
         return riskService.getAll();
