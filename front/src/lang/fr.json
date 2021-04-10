@@ -69,5 +69,6 @@
   "ValidationFailed": "Erreur sur au moins un des champs",
   "Connection issue": "Erreur de connexion",
   "Sorry we cannot handle your request for the moment": "Désolé nous ne pouvons pas excécuter votre requête pour le moment",
-  "Back": "Retour page précédente"
+  "Back": "Retour page précédente",
+  "Size": "La taille du champ n'est pas correcte"
 }

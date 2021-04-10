@@ -67,5 +67,6 @@
   "ValidationFailed": "Error in at least one field",
   "Connection issue": "Connection issue",
   "Sorry we cannot handle your request for the moment": "Sorry we cannot handle your request for the moment",
-  "Back": "Back to previous"
+  "Back": "Back to previous",
+  "Size": "Incorrect field size"
 }
