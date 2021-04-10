@@ -7,7 +7,7 @@ import Footer from './components/Footer';
 import Header from './components/Header';
 import { Switch, Route } from 'react-router-dom';
 import { ThemeProvider } from '@material-ui/core';
-import bgtheme from './themes/bgTheme';
+import bgtheme from './theme/bgTheme';
 import { BrowserRouter } from 'react-router-dom';
 import { IntlProvider } from 'react-intl';
 import AuthService from './services/AuthService';

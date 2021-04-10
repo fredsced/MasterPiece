@@ -32,7 +32,7 @@ const bgTheme = createMuiTheme({
       '@media (min-width:600px)': {
         fontSize: '1.3rem',
       },
-      fontWeight: 300,
+      fontWeight: 400,
     },
     subtitle1: {
       fontSize: '0.7rem',
@@ -42,7 +42,7 @@ const bgTheme = createMuiTheme({
     },
     subtitle2: {
       fontSize: '0.6rem',
-      fontWeight: 300,
+      fontWeight: 400,
       padding: 0,
       lineHeight: 1.5,
     },
