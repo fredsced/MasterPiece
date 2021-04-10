@@ -46,8 +46,7 @@ public class Collaborator extends AbstractEntity {
     foreignKey = @ForeignKey(name = "collaborators_organisation_unit_id_FK"), nullable = false)
   private OrganisationUnit organisationUnit;
 
-  @ManyToOne(fetch = FetchType.LAZY)
-  @OneToOne
+  @OneToOne(fetch = FetchType.LAZY)
   @JoinColumn(
     name = "account_id",
     nullable = true,
