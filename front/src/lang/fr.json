@@ -5,6 +5,7 @@
   "connection": "Se connecter",
   "logout": "Déconnexion",
   "email": "Email",
+  "Email": "Format d'email incorrect",
   "password": "Mot de passe",
   "passwordConfirmation": "Confirmation du mot de passe",
   "alreadyAnAccount?": "Déjà un compte? connectez vous",

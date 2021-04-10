@@ -5,6 +5,7 @@
   "connection": "Sign In",
   "logout": "Log out",
   "email": "Email",
+  "Email": "Wrong email format ",
   "password": "Password",
   "passwordConfirmation": "Password confirmation",
   "alreadyAnAccount?": "Already have an account? sign in",
