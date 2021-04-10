@@ -104,8 +104,8 @@ export default function Profile(props) {
   }
 
   useEffect(() => {
-    const fetchCountries = async () => {
-      await CountriesService.getAll()
+    const fetchCountries = () => {
+      CountriesService.getAll()
         .then((result) => {
           setCountries(result.data);
         })
@@ -116,8 +116,8 @@ export default function Profile(props) {
           setFetchingCountries(false);
         });
     };
-    const fetchOrgUnits = async () => {
-      await OrgUnitService.getAll()
+    const fetchOrgUnits = () => {
+      OrgUnitService.getAll()
         .then((result) => {
           setOrganisationUnits(result.data);
         })

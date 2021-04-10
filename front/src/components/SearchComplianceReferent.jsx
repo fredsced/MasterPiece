@@ -71,9 +71,7 @@ const ValidationSchema = Yup.object().shape({
     .required('required'),
 });
 
-const handleError = (error) => {
-  console.log(error);
-};
+const handleError = (error) => {};
 
 export default function SearchComplianceReferent() {
   const classes = useStyles();
@@ -95,8 +93,8 @@ export default function SearchComplianceReferent() {
   const [errorToFetch, setErrorToFetch] = useState(false);
 
   useEffect(() => {
-    const fetchRisks = async () => {
-      await RisksService.getAll()
+    const fetchRisks = () => {
+      RisksService.getAll()
         .then((result) => {
           setRisks(result.data);
         })
@@ -104,8 +102,8 @@ export default function SearchComplianceReferent() {
           setErrorToFetch(true);
         });
     };
-    const fetchCountries = async () => {
-      await CountriesService.getAll()
+    const fetchCountries = () => {
+      CountriesService.getAll()
         .then((result) => {
           setCountries(result.data);
         })
@@ -116,8 +114,8 @@ export default function SearchComplianceReferent() {
           setFetchingCountries(false);
         });
     };
-    const fetchOrgUnits = async () => {
-      await OrgUnitService.getAll()
+    const fetchOrgUnits = () => {
+      OrgUnitService.getAll()
         .then((result) => {
           setOrganisationUnits(result.data);
         })

@@ -116,7 +116,6 @@ export default function Sign(props) {
     }
   };
   const handleLoginError = (error) => {
-    console.log(error.message);
     let resMessage =
       (error.response && error.response.data && error.response.data.error) ||
       error.message ||
@@ -363,14 +362,24 @@ export default function Sign(props) {
               <Grid container justify='flex-end'>
                 <Grid item>
                   {props.type === 'register' ? (
-                    <Link component={RouterLink} to='/login' variant='body2'>
+                    <Link
+                      component={RouterLink}
+                      underline='none'
+                      to='/login'
+                      variant='body2'
+                    >
                       <FormattedMessage
                         id='alreadyAnAccount?'
                         defaultMessage='Already have an account? sign in'
                       />
                     </Link>
                   ) : (
-                    <Link component={RouterLink} to='/register' variant='body2'>
+                    <Link
+                      component={RouterLink}
+                      underline='none'
+                      to='/register'
+                      variant='body2'
+                    >
                       <FormattedMessage
                         id='noAccount?'
                         defaultMessage='No account? register'
