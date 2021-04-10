@@ -12,6 +12,9 @@ import static java.lang.annotation.ElementType.ANNOTATION_TYPE;
 import static java.lang.annotation.ElementType.FIELD;
 import static java.lang.annotation.ElementType.METHOD;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
+/*
+   Extended email validator to prevent email without any dot in the domain part
+ */
 
 @Email(message="Please provide a valid email address")
 @Pattern(regexp=".+@.+\\..+", message="Please provide a valid email address")
