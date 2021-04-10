@@ -1,6 +1,6 @@
 package fr.formation.itschool.masterpiece.services;
 
-import fr.formation.itschool.masterpiece.dtos.compliancereferent.ComplianceReferentCriteria;
+import fr.formation.itschool.masterpiece.dtos.compliancereferent.ComplianceReferentCriteriaDto;
 import fr.formation.itschool.masterpiece.dtos.compliancereferent.ComplianceReferentViewDto;
 import fr.formation.itschool.masterpiece.repositories.ComplianceReferentRepository;
 import org.springframework.stereotype.Service;
@@ -19,7 +19,7 @@ public class ComplianceReferentServiceImpl implements ComplianceReferentService 
 
   @Transactional(readOnly = true)
   @Override
-  public List<ComplianceReferentViewDto> search(ComplianceReferentCriteria criteria) {
+  public List<ComplianceReferentViewDto> search(ComplianceReferentCriteriaDto criteria) {
     return complianceReferentRepository.findWithCriteria(
       criteria.getCountryId(),
       criteria.getOrganisationUnitId(),
