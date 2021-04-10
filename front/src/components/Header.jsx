@@ -7,6 +7,7 @@ import logo from '../assets/logo.svg';
 import logoPhone from '../assets/logo_phone.svg';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { FormattedMessage } from 'react-intl';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   header: {
@@ -93,9 +94,14 @@ export default function Header(props) {
         {user && user.accountEmail ? (
           <>
             <Box pr={1}>
-              <a href='/collaborator/profile' alt='Profile' title='Profile'>
+              <Link
+                to={{
+                  pathname: '/collaborator/profile',
+                }}
+                variant='body2'
+              >
                 <AccountCircleIcon className={classes.accountIcon} />
-              </a>
+              </Link>
             </Box>
             <Box pr={6}>
               <Box>
