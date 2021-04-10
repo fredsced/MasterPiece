@@ -35,7 +35,7 @@ public class AccountControllerTest extends IntegrationTest {
     api.perform(post(path)
       .contentType(MediaType.APPLICATION_JSON)
       .content(account))
-      .andExpect(status().is4xxClientError());
+      .andExpect(status().isBadRequest());
   }
   @ParameterizedTest
   @Order(3)
@@ -44,7 +44,7 @@ public class AccountControllerTest extends IntegrationTest {
     api.perform(post(path)
       .contentType(MediaType.APPLICATION_JSON)
       .content(account))
-      .andExpect(status().is4xxClientError());
+      .andExpect(status().isBadRequest());
   }
 
 
