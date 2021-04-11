@@ -2,6 +2,7 @@ package fr.formation.itschool.masterpiece.controllers;
 
 import fr.formation.itschool.masterpiece.errors.ValidationError;
 import fr.formation.itschool.masterpiece.exceptions.ResourceNotFoundException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,14 +23,20 @@ import java.util.stream.Collectors;
 public class ControllerAdvice extends ResponseEntityExceptionHandler {
 
   @ExceptionHandler(ResourceNotFoundException.class)
-  protected ResponseEntity<Object> handleResourceNotFountException(ResourceNotFoundException ex, WebRequest request){
-    return super.handleExceptionInternal(ex, ex.getMessage(),  null, HttpStatus.NOT_FOUND, request);
+  protected ResponseEntity<Object> handleResourceNotFountException(ResourceNotFoundException ex, WebRequest request) {
+    return super.handleExceptionInternal(ex, ex.getMessage(), null, HttpStatus.NOT_FOUND, request);
   }
 
   @ExceptionHandler(EntityNotFoundException.class)
-  protected ResponseEntity<Object> handleEntityNotFoundException(EntityNotFoundException ex, WebRequest request){
+  protected ResponseEntity<Object> handleEntityNotFoundException(EntityNotFoundException ex, WebRequest request) {
     ValidationError validationError = new ValidationError("EntityNotFoundException", Collections.singletonList(ex.getMessage()));
     return super.handleExceptionInternal(ex, validationError, null, HttpStatus.NOT_FOUND, request);
+  }
+
+  @ExceptionHandler(DataIntegrityViolationException.class)
+  protected ResponseEntity<Object> handleDataIntegrityViolationException(DataIntegrityViolationException ex, WebRequest request) {
+    ValidationError validationError = new ValidationError("SQLIntegrityException", Collections.singletonList(ex.getMessage()));
+    return super.handleExceptionInternal(ex, validationError, null, HttpStatus.CONFLICT, request);
   }
 
   @Override
