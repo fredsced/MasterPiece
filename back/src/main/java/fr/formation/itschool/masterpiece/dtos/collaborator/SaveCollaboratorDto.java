@@ -9,17 +9,17 @@ import java.util.StringJoiner;
 
 public class SaveCollaboratorDto {
   @NotNull
-  @Size(min = 2, max = 255)
+  @Size(min = 2, max = 255, message="Field length between 2 and 255 char")
   private String lastname;
 
   @NotNull
-  @Size(min = 2, max = 255)
+  @Size(min = 2, max = 255, message="Field length between 2 and 255 char")
   private String firstname;
 
   @NotNull
   @SesamePattern
   @UniqueSesame
-  @Size(min = 7, max = 7)
+  @Size(min = 7, max = 7, message = "Field length must be 7 char")
   private String sesame;
 
   @NotNull
