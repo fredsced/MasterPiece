@@ -67,7 +67,7 @@ const validationSchema = (type) => {
       email: string()
         .email('emailNotValid')
         .required('emailRequired')
-        .max(255, 'tooLong'),
+        .max(254, 'tooLong'),
       password: string()
         .min(8, 'tooShort')
         .max(25, 'tooLong')
