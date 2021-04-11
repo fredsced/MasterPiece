@@ -14,10 +14,7 @@ const CollaboratorService = {
       data: JSON.stringify(values),
       headers: authHeaders(),
     };
-    const response = await axios(optionsToCreateProfile);
-    if (response.data) {
-      return response.data;
-    }
+    return await axios(optionsToCreateProfile);
   },
   updateCollaboratorProfile: (values) => {
     const userToUpdate = JSON.parse(sessionStorage.getItem(LOCAL_STORAGE_USER));
