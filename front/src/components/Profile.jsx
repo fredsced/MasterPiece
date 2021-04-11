@@ -144,6 +144,7 @@ export default function Profile(props) {
   const handleCreationError = (error) => {
     const result = handleValidationError(error);
     setFieldsInError(result.validationErrors);
+
     const errorText = (
       <FormattedMessage
         id={result.errorMessage}
@@ -266,14 +267,23 @@ export default function Profile(props) {
                             onChange={handleChange}
                             error={
                               (touched.firstname && !!errors.firstname) ||
-                              !!fieldsInError.firstname
+                              Boolean(fieldsInError.firstname)
                             }
                             helperText={
                               touched.firstname &&
-                              !!errors.firstname && (
+                              (Boolean(errors.firstname) ||
+                                Boolean(fieldsInError.firstname)) && (
                                 <FormattedMessage
-                                  id={errors.firstname}
-                                  defaultMessage={errors.firstname}
+                                  id={
+                                    errors.firstname
+                                      ? errors.firstname
+                                      : fieldsInError.firstname
+                                  }
+                                  defaultMessage={
+                                    errors.firstname
+                                      ? errors.firstname
+                                      : fieldsInError.firstname
+                                  }
                                 />
                               )
                             }
