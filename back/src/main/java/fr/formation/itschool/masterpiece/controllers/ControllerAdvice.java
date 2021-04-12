@@ -48,7 +48,7 @@ public class ControllerAdvice extends ResponseEntityExceptionHandler {
     BindingResult result = ex.getBindingResult();
     List<FieldError> fieldErrors = result.getFieldErrors();
     List<String> errors = fieldErrors.stream()
-      .map(fieldError -> fieldError.getField() + "-" + fieldError.getCode()).collect(Collectors.toList());
+      .map(fieldError -> fieldError.getField() + "-" + fieldError.getDefaultMessage()).collect(Collectors.toList());
     ValidationError validationError = new ValidationError("ValidationFailed", errors);
 
     return super.handleExceptionInternal(ex, validationError, headers, status, webRequest);

@@ -4,6 +4,7 @@ import fr.formation.itschool.masterpiece.validators.ExtendedEmailValidator;
 import fr.formation.itschool.masterpiece.validators.PasswordComplexityRequirement;
 import fr.formation.itschool.masterpiece.validators.UniqueEmail;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
@@ -14,11 +15,10 @@ public class CreateAccountDto {
   @NotEmpty
   @ExtendedEmailValidator
   @UniqueEmail
-  @Size(max = 255)
+  @Size(max = 254)
   private String email;
 
   @NotBlank
-  @Size(min = 8, max = 25)
   @PasswordComplexityRequirement
   private String password;
 

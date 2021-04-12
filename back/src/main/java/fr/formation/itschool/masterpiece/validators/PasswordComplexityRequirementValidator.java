@@ -11,7 +11,7 @@ public class PasswordComplexityRequirementValidator implements ConstraintValidat
   @Override
   public boolean isValid(String password, ConstraintValidatorContext context) {
     /*
-    Password must have at least one uppercase, one lowercase, one digit and 8 characters
+    Password must have at least one uppercase, one lowercase, one digit and 8 characters min, 25 max
      */
     final String regex = "(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])\\S{8,25}";
     final Pattern pattern =
