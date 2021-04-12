@@ -49,8 +49,6 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
   private String keyAlias;
   @Value("${jwt-auth-server.accessTokenValiditySeconds}")
   private int accessTokenValiditySeconds;
-  @Value("${jwt-auth-server.refreshTokenValiditySeconds}")
-  private int refreshTokenValiditySeconds;
   @Value("${jwt-auth-server.clientId}")
   private String clientId;
 
