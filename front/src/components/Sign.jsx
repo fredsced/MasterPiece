@@ -84,8 +84,8 @@ const validationSchema = (type) => {
     return object().shape({
       email: string().email('emailNotValid').required('emailRequired'),
       password: string()
-        .min(8, 'tooShort')
-        .max(25, 'tooLong')
+        .min(8, 'passwordMinMaxError')
+        .max(25, 'passwordMinMaxError')
         .matches(
           /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])\S{8,25}/,
           'passwordNotComplex'
@@ -234,6 +234,7 @@ export default function Sign(props) {
                       <Typography
                         color='secondary'
                         component='p'
+                        variant='subtitle1'
                         display='block'
                       >
                         {<FormattedMessage id={fieldsInError.email} />}
@@ -269,6 +270,18 @@ export default function Sign(props) {
                       Boolean(fieldsInError.password)
                     }
                   />
+                  {Boolean(fieldsInError.password) ? (
+                    <Grid item xs={12}>
+                      <Typography
+                        color='secondary'
+                        component='p'
+                        variant='subtitle1'
+                        display='block'
+                      >
+                        {<FormattedMessage id={fieldsInError.password} />}
+                      </Typography>
+                    </Grid>
+                  ) : null}
                   <Dialog open={errorOpen} onClose={handleErrorClose}>
                     <Alert severity='error'>
                       {apiErrorTitle}

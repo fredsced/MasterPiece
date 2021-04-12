@@ -15,9 +15,9 @@
   "emailNotUnique": "Email not unique",
   "passwordRequired": "Password required",
   "passwordConfirmationRequired": "Password confirmation required",
-  "passwordMinMax": "Password between 8 and 50 characteres",
+  "passwordMinMaxError": "Password length must be between 8 and 25 characteres",
   "passwordNotMatch": "Password doesn't match",
-  "passwordNotComplex": "Password must contain uppercase, lowercase and digit",
+  "PasswordComplexityRequirement":"Password must contain uppercase, lowercase and digit and a length between 8 and 25 characteres",
   "Network Error": "Network error",
   "invalid_grant": "Invalid grant",
   "unauthorized": "Invalid grant",
@@ -41,7 +41,7 @@
   "USA": "United States",
   "GBR": "United Kingdom",
   "ITA":"Italy",
-  "UniqueSesame": "Sesame ID not unique",
+  "sesameIdNotUnique": "Sesame ID not unique",
   "notASesameId": "Sesame ID incorrect, must start with a or x follow by 6 digits",
   "chooseRiskScope": "Choose the risk perimeter",
   "Risk":"Risk",
@@ -68,5 +68,6 @@
   "Connection issue": "Connection issue",
   "Sorry we cannot handle your request for the moment": "Sorry we cannot handle your request for the moment",
   "Back": "Back to previous",
-  "Size": "Incorrect field size"
+  "Size": "Incorrect field size",
+  "Field length between 2 and 255 char": "Field length between 2 and 255 char"
 }

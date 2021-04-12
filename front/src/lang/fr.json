@@ -15,9 +15,9 @@
   "emailNotUnique": "Email déjà utilisé",
   "passwordRequired": "Mot de passe obligatoire",
   "passwordConfirmationRequired": "Confirmation mot de passe obligatoire",
-  "passwordMinMax": "Mode de passe entre 8 et 50 caractères",
+  "passwordMinMaxError": "Mot de passe entre 8 et 25 caractères",
   "passwordNotMatch": "Le mot de passe n'est pas identique",
-  "passwordNotComplex": "Le mot de passe doit contenir une majuscule, une minuscule et un chiffre",
+  "PasswordComplexityRequirement": "Le mot de passe doit contenir une majuscule, une minuscule et un chiffre et être d'une longueur entre 8 et 25 caractères",
   "Network Error": "Erreur réseau",
   "invalid_grant": "Identifiants non valides",
   "unauthorized": "Identifiants non valides",
@@ -42,7 +42,7 @@
   "USA": "Etats-Unis",
   "GBR": "Royaume-Uni",
   "ITA":"Italie",
-  "UniqueSesame": "Compte sésame déjà utilisé",
+  "sesameIdNotUnique": "Compte sésame déjà utilisé",
   "notASesameId": "ID Sesame incorrect, doit commencer par a ou x suivi de 6 chiffres",
   "chooseRiskScope": "Choisissez le périmètre du risque",
   "Risk":"Risque",
@@ -70,5 +70,6 @@
   "Connection issue": "Erreur de connexion",
   "Sorry we cannot handle your request for the moment": "Désolé nous ne pouvons pas excécuter votre requête pour le moment",
   "Back": "Retour page précédente",
-  "Size": "La taille du champ n'est pas correcte"
+  "Size": "La taille du champ n'est pas correcte",
+  "Field length between 2 and 255 char": "La longueur du champ doit être entre 2 et 255"
 }

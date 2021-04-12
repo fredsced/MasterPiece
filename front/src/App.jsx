@@ -93,9 +93,7 @@ function App() {
                     linkMessage='backToAuthentification'
                   />
                 ) : (
-                  <Collaborator
-                    user={currentUser}
-                  />
+                  <Collaborator user={currentUser} />
                 )}
               </Route>
               <Route exact path='/collaborator/profile'>
@@ -107,10 +105,7 @@ function App() {
                     linkMessage='backToAuthentification'
                   />
                 ) : (
-                  <Profile
-                    user={currentUser}
-                    updateUser={(user) => updateUser(user)}
-                  />
+                  <Profile user={currentUser} />
                 )}
               </Route>
               <Route exact path='/collaborator/search-referent'>

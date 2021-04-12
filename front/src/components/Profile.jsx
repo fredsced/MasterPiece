@@ -62,11 +62,11 @@ const ValidationSchema = () => {
   return object().shape({
     firstname: string()
       .min(2, 'tooShort')
-      .max(50, 'tooLong')
+      .max(255, 'tooLong')
       .required('required'),
     lastname: string()
       .min(2, 'tooShort')
-      .max(50, 'tooLong')
+      .max(255, 'tooLong')
       .required('required'),
     sesame: string()
       .matches(/^[a,x]\d{6}$/i, 'notASesameId')
@@ -133,8 +133,6 @@ export default function Profile(props) {
   }, []);
 
   const handleSuccessClose = () => {
-    const updatedUser = AuthService.getCurrentUser();
-    props.updateUser(updatedUser);
     setSuccessOpen(false);
     history.push('/collaborator');
   };
@@ -505,5 +503,4 @@ export default function Profile(props) {
 }
 Profile.propTypes = {
   user: PropTypes.object.isRequired,
-  updateUser: PropTypes.func.isRequired,
 };
