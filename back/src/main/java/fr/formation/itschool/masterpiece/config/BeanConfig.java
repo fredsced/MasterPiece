@@ -1,7 +1,9 @@
 package fr.formation.itschool.masterpiece.config;
 
 import fr.formation.itschool.masterpiece.domain.Collaborator;
+import fr.formation.itschool.masterpiece.domain.ComplianceReferent;
 import fr.formation.itschool.masterpiece.dtos.collaborator.SaveCollaboratorDto;
+import fr.formation.itschool.masterpiece.dtos.compliancereferent.SaveComplianceReferentDto;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.cache.CacheManager;
@@ -37,6 +39,7 @@ public class BeanConfig {
       .setFieldAccessLevel(org.modelmapper.config.Configuration.AccessLevel.PRIVATE)
       .setMatchingStrategy(MatchingStrategies.STANDARD);
     modelMapper.typeMap(SaveCollaboratorDto.class, Collaborator.class).addMappings(mapper -> mapper.skip(Collaborator::setId));
+    modelMapper.typeMap(SaveComplianceReferentDto.class, ComplianceReferent.class).addMappings(mapper -> mapper.skip(ComplianceReferent::setId));
     return modelMapper;
   }
 

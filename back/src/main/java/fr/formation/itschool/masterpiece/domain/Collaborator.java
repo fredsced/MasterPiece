@@ -1,5 +1,6 @@
 package fr.formation.itschool.masterpiece.domain;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;

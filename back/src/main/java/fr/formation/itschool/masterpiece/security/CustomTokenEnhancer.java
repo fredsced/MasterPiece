@@ -18,6 +18,7 @@ public class CustomTokenEnhancer implements TokenEnhancer {
   static final String ACCOUNT_ROLES = "accountRoles";
   static final String ACCOUNT_HAS_PROFILE = "accountHasProfile";
   static final String COLLABORATOR_INFO = "collaboratorInfo";
+  static final String IS_ADMIN = "isAdmin";
 
   // @Autowired because need to conserve the empty constructor
   @Autowired
@@ -34,6 +35,9 @@ public class CustomTokenEnhancer implements TokenEnhancer {
     additionalInfo.put(ACCOUNT_ID_KEY, account.getId());
     additionalInfo.put(ACCOUNT_EMAIL, account.getUsername());
     additionalInfo.put(ACCOUNT_ROLES, account.getAuthorities());
+    additionalInfo.put(
+      IS_ADMIN, account.getAuthorities().stream()
+        .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equalsIgnoreCase("ROLE_ADMIN")));
     boolean hasProfile = collaboratorService.hasProfile(account.getId());
     additionalInfo.put(ACCOUNT_HAS_PROFILE, hasProfile);
     if (hasProfile) {

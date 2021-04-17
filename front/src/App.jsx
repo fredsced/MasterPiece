@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import Sign from './components/Sign';
-import Admin from './components/Admin';
-import Collaborator from './components/Collaborator';
+import Admin from './components/admin/Admin';
+import ManageCaches from './components/admin/ManageCaches';
+import CreateComplianceReferent from './components/admin/CreateComplianceReferent';
+import Collaborator from './components/collaborator/Collaborator';
 import RedirectedContent from './components/RedirectedContent';
 import Footer from './components/Footer';
 import Header from './components/Header';
@@ -13,8 +15,8 @@ import { IntlProvider } from 'react-intl';
 import AuthService from './services/AuthService';
 import message_en from './lang/en.json';
 import message_fr from './lang/fr.json';
-import Profile from './components/Profile';
-import SearchComplianceReferent from './components/SearchComplianceReferent';
+import Profile from './components/collaborator/Profile';
+import SearchComplianceReferent from './components/collaborator/SearchComplianceReferent';
 
 function App() {
   const [currentUser, setCurrentUser] = useState(AuthService.getCurrentUser);
@@ -121,7 +123,40 @@ function App() {
                 )}
               </Route>
               <Route exact path='/admin'>
-                <Admin user={currentUser} />
+                {!isAuthenticated ? (
+                  <RedirectedContent
+                    mainTitle='notConnected'
+                    mainMessage='notConnectedMessage'
+                    link='/login'
+                    linkMessage='backToAuthentification'
+                  />
+                ) : (
+                  <Admin user={currentUser} />
+                )}
+              </Route>
+              <Route exact path='/admin/manage-caches'>
+                {!isAuthenticated ? (
+                  <RedirectedContent
+                    mainTitle='notConnected'
+                    mainMessage='notConnectedMessage'
+                    link='/login'
+                    linkMessage='backToAuthentification'
+                  />
+                ) : (
+                  <ManageCaches user={currentUser} />
+                )}
+              </Route>
+              <Route exact path='/admin/create-compliance-referent'>
+                {!isAuthenticated ? (
+                  <RedirectedContent
+                    mainTitle='notConnected'
+                    mainMessage='notConnectedMessage'
+                    link='/login'
+                    linkMessage='backToAuthentification'
+                  />
+                ) : (
+                  <CreateComplianceReferent user={currentUser} />
+                )}
               </Route>
               <Route path='*'>
                 <RedirectedContent

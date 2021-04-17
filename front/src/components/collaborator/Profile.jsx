@@ -18,15 +18,15 @@ import { FormattedMessage } from 'react-intl';
 import { Formik } from 'formik';
 import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import CollaboratorService from '../services/CollaboratorService';
-import AuthService from '../services/AuthService';
-import CountriesService from '../services/CountriesService';
-import OrgUnitService from '../services/OrgUnitService';
+import CollaboratorService from '../../services/CollaboratorService';
+import AuthService from '../../services/AuthService';
+import CountriesService from '../../services/CountriesService';
+import OrgUnitService from '../../services/OrgUnitService';
 import { useHistory } from 'react-router-dom';
-import Alert from './Alert';
-import handleValidationError from '../services/handleValidationError';
-import RedirectedContent from './RedirectedContent';
-import BackLink from './BackLink';
+import Alert from '../Alert';
+import handleValidationError from '../../services/handleValidationError';
+import RedirectedContent from '../RedirectedContent';
+import BackLink from '../BackLink';
 
 const useStyles = makeStyles((theme) => ({
   main: {

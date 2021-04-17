@@ -15,5 +15,22 @@ const ComplianceService = {
     };
     return await axios(optionsToFindCR);
   },
+  saveCR: async (values) => {
+    const saveCollaboratorDto = {
+      lastname: values.lastname,
+      firstname: values.firstname,
+      sesame: values.sesame,
+      country: values.country,
+      organisationUnit: values.organisationUnit,
+    };
+    values.saveCollaboratorDto = saveCollaboratorDto;
+    const optionsToSaveCR = {
+      url: `${API_BASE_URL}${COMPLIANCE_END_POINT}`,
+      method: 'POST',
+      data: JSON.stringify(values),
+      headers: authHeaders(),
+    };
+    return await axios(optionsToSaveCR);
+  },
 };
 export default ComplianceService;

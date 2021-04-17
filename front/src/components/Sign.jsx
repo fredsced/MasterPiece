@@ -73,7 +73,7 @@ const validationSchema = (type) => {
         .max(25, 'tooLong')
         .matches(
           /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])\S{8,25}/,
-          'passwordNotComplex'
+          'PasswordComplexityRequirement'
         )
         .required('passwordRequired'),
       password_confirmation: string()

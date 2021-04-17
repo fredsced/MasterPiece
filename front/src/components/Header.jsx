@@ -6,6 +6,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import logo from '../assets/logo.svg';
 import logoPhone from '../assets/logo_phone.svg';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import SupervisedUserCircleIcon from '@material-ui/icons/SupervisedUserCircle';
 import { FormattedMessage } from 'react-intl';
 import { Link } from 'react-router-dom';
 
@@ -46,14 +47,14 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 
-  accountIcon: {
+  icon: {
     color: theme.palette.primary.main,
     fontSize: '1.75rem',
     '&:hover': {
       color: theme.palette.primary.light,
     },
   },
-  logout: {
+  buttonLink: {
     background: theme.palette.primary.main,
     textTransform: 'none',
     padding: theme.spacing(0, 1),
@@ -77,7 +78,7 @@ export default function Header(props) {
   return (
     <header className={classes.header}>
       <Box display='flex' pt={2}>
-        <Box flexGrow={0}>
+        <Box flexGrow={1}>
           <div className={classes.logo}>
             <img src={logo} alt='logo Banque Générale' />
           </div>
@@ -85,10 +86,25 @@ export default function Header(props) {
             <img src={logoPhone} alt='logo Banque Générale' />
           </div>
         </Box>
-        <Box flexGrow={1} pl={6} pt={1}>
-          {' '}
+        <Box mr={1} display='flex'>
           {user && user.isAdmin ? (
-            <Typography variant='p'>Admin</Typography>
+            <>
+              <Box>
+                <Link
+                  to={{
+                    pathname: '/admin',
+                  }}
+                >
+                  <SupervisedUserCircleIcon className={classes.icon} />
+                  <Typography variant='srOnly'>Access admin page</Typography>
+                </Link>
+              </Box>
+              <Box pt={1}>
+                <Box>
+                  <Typography variant='subtitle1'>Admin</Typography>
+                </Box>
+              </Box>
+            </>
           ) : null}
         </Box>
         {user && user.accountEmail ? (
@@ -100,7 +116,10 @@ export default function Header(props) {
                 }}
                 variant='body2'
               >
-                <AccountCircleIcon className={classes.accountIcon} />
+                <AccountCircleIcon className={classes.icon} />
+                <Typography variant='srOnly'>
+                  Access collaborator profile
+                </Typography>
               </Link>
             </Box>
             <Box pr={6}>
@@ -110,7 +129,7 @@ export default function Header(props) {
               <Box>
                 <Typography variant='subtitle1'>
                   <a
-                    className={classes.logout}
+                    className={classes.buttonLink}
                     href='/login'
                     onClick={() => props.logOut()}
                   >
