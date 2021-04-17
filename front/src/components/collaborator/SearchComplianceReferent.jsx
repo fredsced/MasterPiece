@@ -15,14 +15,14 @@ import { makeStyles } from '@material-ui/core/styles';
 import { FormattedMessage } from 'react-intl';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
-import RisksService from '../services/RisksService';
-import ComplianceService from '../services/ComplianceService';
-import CountriesService from '../services/CountriesService';
-import OrgUnitService from '../services/OrgUnitService';
-import AuthService from '../services/AuthService';
-import ListComplianceReferents from './ListComplianceReferents';
-import RedirectedContent from './RedirectedContent';
-import BackLink from './BackLink';
+import RisksService from '../../services/RisksService';
+import ComplianceService from '../../services/ComplianceService';
+import CountriesService from '../../services/CountriesService';
+import OrgUnitService from '../../services/OrgUnitService';
+import AuthService from '../../services/AuthService';
+import ListComplianceReferents from '../ListComplianceReferents';
+import RedirectedContent from '../RedirectedContent';
+import BackLink from '../BackLink';
 
 const useStyles = makeStyles((theme) => ({
   main: {

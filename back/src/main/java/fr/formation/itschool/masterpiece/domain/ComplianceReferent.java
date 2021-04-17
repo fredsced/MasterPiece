@@ -1,5 +1,6 @@
 package fr.formation.itschool.masterpiece.domain;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -24,7 +25,7 @@ public class ComplianceReferent extends AbstractEntity {
   @Column(nullable = true, length = 20)
   private String phone;
 
-  @OneToOne
+  @OneToOne(cascade = {CascadeType.PERSIST})
   @JoinColumn(name = "collaborator_id", nullable = false)
   private Collaborator collaborator;
 
@@ -35,6 +36,11 @@ public class ComplianceReferent extends AbstractEntity {
   @ManyToOne
   @JoinColumn(name = "risk_id", nullable = false)
   private Risk risk;
+
+  public void setCollaborator(Collaborator collaborator) {
+    this.collaborator = collaborator;
+  }
+
 
   @Override
   public String toString() {

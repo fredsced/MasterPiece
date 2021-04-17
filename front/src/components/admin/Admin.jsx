@@ -1,13 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import RedirectedContent from '../components/RedirectedContent';
+import RedirectedContent from '../RedirectedContent';
 import { Container, Paper, Grid, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { FormattedMessage } from 'react-intl';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import VerifiedUserIcon from '@material-ui/icons/VerifiedUser';
+import SettingsIcon from '@material-ui/icons/Settings';
+
 import { Link } from 'react-router-dom';
-import myCompliancePal from '../assets/myCompliancePal.svg';
+import myCompliancePal from '../../assets/myCompliancePal.svg';
+import BackLink from '../BackLink';
 
 const useStyles = makeStyles((theme) => ({
   main: {
@@ -49,20 +51,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Collaborator(props) {
+export default function Admin(props) {
   const classes = useStyles();
   const user = props.user;
 
   return (
     <>
-      {!user ? (
-        <RedirectedContent
-          mainTitle='notConnected'
-          mainMessage='notConnectedMessage'
-          link='/login'
-          linkMessage='backToAuthentification'
-        />
-      ) : (
+      {user.isAdmin ? (
         <>
           <Container component='main' className={classes.main} maxWidth='md'>
             <Grid container spacing={3} justify='center'>
@@ -74,8 +69,8 @@ export default function Collaborator(props) {
               <Grid container justify='flex-start' className={classes.title}>
                 <Typography component='h1' variant='h3'>
                   <FormattedMessage
-                    id='collaboratorPage'
-                    defaultMessage='Collaborator page'
+                    id='administratorPage'
+                    defaultMessage='Administrator page'
                   />
                 </Typography>
               </Grid>
@@ -90,50 +85,55 @@ export default function Collaborator(props) {
               >
                 <Link
                   to={{
-                    pathname: '/collaborator/profile',
+                    pathname: '/admin/create-compliance-referent',
                   }}
                 >
                   <Paper className={classes.paper} elevation={1}>
                     <Typography component='h2' variant='h6'>
-                      <FormattedMessage
-                        id='manageProfile'
-                        defaultMessage='Manage profile'
-                      />
+                      <FormattedMessage id='createCR' defaultMessage='Create' />
                       <Typography variant='body2'>
                         <FormattedMessage
-                          id='createUpdateProfile'
-                          defaultMessage='Create or update your collaborator profile'
+                          id='createCRsub'
+                          defaultMessage='Create a compliance referent'
                         />
                       </Typography>
                     </Typography>
                     <AccountCircleIcon className={classes.accountIcon} />
                   </Paper>
                 </Link>
-                <Link to={'/collaborator/search-referent'}>
+                <Link to={'/admin/manage-caches'}>
                   <Paper className={classes.paper}>
                     <Typography component='h2' variant='h6'>
                       <FormattedMessage
-                        id='findReferent'
-                        defaultMessage='Find referent'
+                        id='referential'
+                        defaultMessage='Referential'
                       />
                     </Typography>
                     <Typography variant='body2'>
                       <FormattedMessage
-                        id='findComplianceReferent'
-                        defaultMessage='Find Compliance Referent filtered by risk scope'
+                        id='updateReferential'
+                        defaultMessage='Clear the cache related to countries, organisation units and risks'
                       />
                     </Typography>
-                    <VerifiedUserIcon className={classes.accountIcon} />
+                    <SettingsIcon className={classes.accountIcon} />
                   </Paper>
                 </Link>
               </Grid>
             </Grid>
+            <BackLink path='/collaborator' />
           </Container>
         </>
+      ) : (
+        <RedirectedContent
+          mainTitle='noAuthorization'
+          mainMessage='noAuthorizationMessage'
+          link='/collaborator'
+          linkMessage='backToCollaboratorPage'
+        />
       )}
     </>
   );
 }
-Collaborator.propTypes = {
+Admin.propTypes = {
   user: PropTypes.object.isRequired,
 };
