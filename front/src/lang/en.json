@@ -86,5 +86,10 @@
   "level": "Level",
   "phone": "Phone",
   "NotPhoneFormat":"Not a valid phone format",
-  "complianceReferentCreated": "Compliance referent created"
+  "complianceReferentCreated": "Compliance referent created",
+  "clearCache": "Clear the referentials caches",
+  "clearAllCaches": "Clear all caches",
+  "clearRisksCaches": "Clear risks cache",
+  "clearCountriesCache": "Clear countries cache",
+  "clearOrgUnitCaches": "Clear org.units cache"
 }
