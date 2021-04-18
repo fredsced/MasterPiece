@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
   content: {
     borderTop: `1px solid ${theme.palette.primary.light}`,
     borderBottom: `1px solid ${theme.palette.primary.light}`,
-    margin: theme.spacing(6, 0),
+    margin: theme.spacing(6, 0, 0),
     padding: theme.spacing(3, 3, 5),
     backgroundColor: theme.palette.primary.light2,
   },

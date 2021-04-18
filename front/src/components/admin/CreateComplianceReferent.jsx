@@ -662,7 +662,7 @@ export default function CreateComplianceReferent(props) {
                     </Grid>
                   </form>
                 </Paper>
-                <BackLink path='/collaborator' />
+                <BackLink path='/admin' />
               </Container>
             )}
           </Formik>
