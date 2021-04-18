@@ -85,5 +85,6 @@
   "createComplianceReferent": "Create Compliance Referent",
   "level": "Level",
   "phone": "Phone",
-  "NotPhoneFormat":"Not a valid phone format"
+  "NotPhoneFormat":"Not a valid phone format",
+  "complianceReferentCreated": "Compliance referent created"
 }

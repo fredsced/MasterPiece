@@ -16,14 +16,14 @@ const ComplianceService = {
     return await axios(optionsToFindCR);
   },
   saveCR: async (values) => {
-    const saveCollaboratorDto = {
+    const collaboratorDto = {
       lastname: values.lastname,
       firstname: values.firstname,
       sesame: values.sesame,
       country: values.country,
       organisationUnit: values.organisationUnit,
     };
-    values.saveCollaboratorDto = saveCollaboratorDto;
+    values.collaboratorDto = collaboratorDto;
     const optionsToSaveCR = {
       url: `${API_BASE_URL}${COMPLIANCE_END_POINT}`,
       method: 'POST',

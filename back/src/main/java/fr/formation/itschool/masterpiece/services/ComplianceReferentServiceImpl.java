@@ -41,7 +41,7 @@ public class ComplianceReferentServiceImpl implements ComplianceReferentService 
   @Transactional(readOnly = false)
   @Override
   public void save(SaveComplianceReferentDto saveComplianceReferentDto) {
-   Collaborator collaboratorToSave = modelMapper.map(saveComplianceReferentDto.getSaveCollaboratorDto(), Collaborator.class);
+   Collaborator collaboratorToSave = modelMapper.map(saveComplianceReferentDto.getCollaboratorDto(), Collaborator.class);
    Collaborator collaboratorSaved = collaboratorRepository.save(collaboratorToSave);
    ComplianceReferent complianceReferentToSave = modelMapper.map(saveComplianceReferentDto, ComplianceReferent.class);
    complianceReferentToSave.setCollaborator(collaboratorSaved);
