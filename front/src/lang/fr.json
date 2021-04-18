@@ -88,6 +88,11 @@
   "level": "Niveau",
   "phone": "Téléphone",
   "NotPhoneFormat":"Format de téléphone non valide",
-  "complianceReferentCreated": "Référent conformité crée"
+  "complianceReferentCreated": "Référent conformité crée",
+  "clearCache": "Vider le cache des référentiels",
+  "clearAllCaches": "Vider tous les caches",
+  "clearRisksCaches": "Vider le cache des risques",
+  "clearCountriesCache": "Vider le cache des pays",
+  "clearOrgUnitCaches": "Vider le cache des u.orgs"
 
 }
