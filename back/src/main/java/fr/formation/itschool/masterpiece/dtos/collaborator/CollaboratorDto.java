@@ -10,16 +10,21 @@ import javax.validation.constraints.Size;
 import java.util.StringJoiner;
 
 public class CollaboratorDto {
+
   @NotNull
   Country country;
+
   @NotNull
   OrganisationUnit organisationUnit;
+
   @NotNull
   @Size(min = 2, max = 255, message = "Field length between 2 and 255 char")
   private String lastname;
+
   @NotNull
   @Size(min = 2, max = 255, message = "Field length between 2 and 255 char")
   private String firstname;
+
   @NotNull
   @SesamePattern
   @UniqueSesame
@@ -30,40 +35,40 @@ public class CollaboratorDto {
     return lastname;
   }
 
-  public String getFirstname() {
-    return firstname;
-  }
-
-  public String getSesame() {
-    return sesame;
-  }
-
-  public Country getCountry() {
-    return country;
-  }
-
-  public OrganisationUnit getOrganisationUnit() {
-    return organisationUnit;
-  }
-
-  public void setCountry(Country country) {
-    this.country = country;
-  }
-
-  public void setOrganisationUnit(OrganisationUnit organisationUnit) {
-    this.organisationUnit = organisationUnit;
-  }
-
   public void setLastname(String lastname) {
     this.lastname = lastname;
+  }
+
+  public String getFirstname() {
+    return firstname;
   }
 
   public void setFirstname(String firstname) {
     this.firstname = firstname;
   }
 
+  public String getSesame() {
+    return sesame;
+  }
+
   public void setSesame(String sesame) {
     this.sesame = sesame;
+  }
+
+  public Country getCountry() {
+    return country;
+  }
+
+  public void setCountry(Country country) {
+    this.country = country;
+  }
+
+  public OrganisationUnit getOrganisationUnit() {
+    return organisationUnit;
+  }
+
+  public void setOrganisationUnit(OrganisationUnit organisationUnit) {
+    this.organisationUnit = organisationUnit;
   }
 
   @Override

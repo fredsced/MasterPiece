@@ -6,6 +6,7 @@ import fr.formation.itschool.masterpiece.dtos.collaborator.CollaboratorDto;
 import fr.formation.itschool.masterpiece.validators.ExtendedEmailValidator;
 import fr.formation.itschool.masterpiece.validators.UniqueEmail;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -13,7 +14,8 @@ import javax.validation.constraints.Size;
 public class SaveComplianceReferentDto {
 
   @NotNull
-  private CollaboratorDto CollaboratorDto;
+  @Valid
+  private CollaboratorDto collaboratorDto;
 
   @NotNull
   private Risk risk;
@@ -29,12 +31,12 @@ public class SaveComplianceReferentDto {
 
   private String phone;
 
-  public CollaboratorDto getSaveCollaboratorDto() {
-    return CollaboratorDto;
+  public CollaboratorDto getCollaboratorDto() {
+    return collaboratorDto;
   }
 
-  public void setSaveCollaboratorDto(CollaboratorDto CollaboratorDto) {
-    this.CollaboratorDto = CollaboratorDto;
+  public void setCollaboratorDto(CollaboratorDto collaboratorDto) {
+    this.collaboratorDto = collaboratorDto;
   }
 
   public Risk getRiskId() {

@@ -243,11 +243,9 @@ export default function CreateComplianceReferent(props) {
               resetApiErrors();
               ComplianceService.saveCR(values)
                 .then(() => {
-                  console.log('in the then');
                   setSuccessOpen(true);
                 })
                 .catch((error) => {
-                  console.log('in the catch');
                   handleCreationError(error);
                 })
                 .then(() => {
@@ -378,7 +376,7 @@ export default function CreateComplianceReferent(props) {
                             onKeyPress={resetUniqueSesameError}
                             error={
                               (touched.sesame && !!errors.sesame) ||
-                              Boolean(fieldsInError.sesame)
+                              Boolean(fieldsInError['collaboratorDto.sesame'])
                             }
                             helperText={
                               (touched.sesame && errors.sesame && (
@@ -387,8 +385,10 @@ export default function CreateComplianceReferent(props) {
                                   defaultMessage={errors.sesame}
                                 />
                               )) ||
-                              (fieldsInError.sesame && (
-                                <FormattedMessage id={fieldsInError.sesame} />
+                              (fieldsInError['collaboratorDto.sesame'] && (
+                                <FormattedMessage
+                                  id={fieldsInError['collaboratorDto.sesame']}
+                                />
                               ))
                             }
                           />
@@ -412,16 +412,18 @@ export default function CreateComplianceReferent(props) {
                             onChange={handleChange}
                             error={
                               (touched.email && !!errors.email) ||
-                              fieldsInError.email
+                              Boolean(fieldsInError.email)
                             }
                             helperText={
-                              touched.email &&
-                              !!errors.email && (
+                              (touched.email && !!errors.email && (
                                 <FormattedMessage
                                   id={errors.email}
                                   defaultMessage={errors.email}
                                 />
-                              )
+                              )) ||
+                              (fieldsInError.email && (
+                                <FormattedMessage id={fieldsInError.email} />
+                              ))
                             }
                           />
                         </Grid>
@@ -614,7 +616,6 @@ export default function CreateComplianceReferent(props) {
                             id='complianceReferentCreated'
                             defaultMessage='Compliance referent created'
                           />
-                          )
                           <IconButton
                             size='small'
                             aria-label='close'
