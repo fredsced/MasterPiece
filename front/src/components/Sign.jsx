@@ -21,7 +21,7 @@ import { useHistory } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 import { object, string, ref } from 'yup';
 import Alert from './Alert';
-import handleValidationError from '../services/handleValidationError';
+import handleRestApiError from '../services/handleRestApiError';
 
 const useStyles = makeStyles((theme) => ({
   main: {
@@ -88,7 +88,7 @@ const validationSchema = (type) => {
         .max(25, 'passwordMinMaxError')
         .matches(
           /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])\S{8,25}/,
-          'passwordNotComplex'
+          'PasswordComplexityRequirement'
         )
         .required('passwordRequired'),
     });
@@ -126,7 +126,7 @@ export default function Sign(props) {
   };
 
   const handleRegisterError = (error) => {
-    const result = handleValidationError(error);
+    const result = handleRestApiError(error);
     setFieldsInError(result.validationErrors);
     const errorText = (
       <FormattedMessage
