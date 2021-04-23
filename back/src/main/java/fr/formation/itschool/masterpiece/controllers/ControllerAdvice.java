@@ -1,6 +1,6 @@
 package fr.formation.itschool.masterpiece.controllers;
 
-import fr.formation.itschool.masterpiece.errors.ValidationError;
+import fr.formation.itschool.masterpiece.errors.RestApiError;
 import fr.formation.itschool.masterpiece.exceptions.ResourceNotFoundException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
@@ -24,19 +24,21 @@ public class ControllerAdvice extends ResponseEntityExceptionHandler {
 
   @ExceptionHandler(ResourceNotFoundException.class)
   protected ResponseEntity<Object> handleResourceNotFountException(ResourceNotFoundException ex, WebRequest request) {
-    return super.handleExceptionInternal(ex, ex.getMessage(), null, HttpStatus.NOT_FOUND, request);
+    RestApiError restApiError = new RestApiError("EntityNotFoundException");
+    return super.handleExceptionInternal(ex, restApiError, null, HttpStatus.NOT_FOUND, request);
   }
 
   @ExceptionHandler(EntityNotFoundException.class)
   protected ResponseEntity<Object> handleEntityNotFoundException(EntityNotFoundException ex, WebRequest request) {
-    ValidationError validationError = new ValidationError("EntityNotFoundException", Collections.singletonList(ex.getMessage()));
-    return super.handleExceptionInternal(ex, validationError, null, HttpStatus.NOT_FOUND, request);
+    RestApiError restApiError = new RestApiError("EntityNotFoundException");
+    return super.handleExceptionInternal(ex, restApiError, null, HttpStatus.NOT_FOUND, request);
   }
 
   @ExceptionHandler(DataIntegrityViolationException.class)
   protected ResponseEntity<Object> handleDataIntegrityViolationException(DataIntegrityViolationException ex, WebRequest request) {
-    ValidationError validationError = new ValidationError("SQLIntegrityException", Collections.singletonList(ex.getMessage()));
-    return super.handleExceptionInternal(ex, validationError, null, HttpStatus.CONFLICT, request);
+
+    RestApiError restApiError = new RestApiError("SQLIntegrityException");
+    return super.handleExceptionInternal(ex, restApiError, null, HttpStatus.CONFLICT, request);
   }
 
   @Override
@@ -49,9 +51,9 @@ public class ControllerAdvice extends ResponseEntityExceptionHandler {
     List<FieldError> fieldErrors = result.getFieldErrors();
     List<String> errors = fieldErrors.stream()
       .map(fieldError -> fieldError.getField() + "-" + fieldError.getDefaultMessage()).collect(Collectors.toList());
-    ValidationError validationError = new ValidationError("ValidationFailed", errors);
+    RestApiError restApiError = new RestApiError("ValidationFailed", errors);
 
-    return super.handleExceptionInternal(ex, validationError, headers, status, webRequest);
+    return super.handleExceptionInternal(ex, restApiError, headers, status, webRequest);
   }
 
 
