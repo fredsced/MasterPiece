@@ -9,7 +9,7 @@ import java.util.List;
 public interface ComplianceReferentService {
 
   List<ComplianceReferentViewDto> search(
-          ComplianceReferentCriteriaDto criteria);
+          Long countryId, Long RiskId, Long OrganisationUnitId);
 
   void save(SaveComplianceReferentDto saveComplianceReferentDto);
 }

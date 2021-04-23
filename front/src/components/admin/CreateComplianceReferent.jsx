@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { object, string, number } from 'yup';
+import { object, string } from 'yup';
 import {
   Container,
   Paper,
@@ -25,7 +25,7 @@ import RiskService from '../../services/RisksService';
 import LevelsService from '../../services/LevelsService';
 import { useHistory } from 'react-router-dom';
 import Alert from '../Alert';
-import handleValidationError from '../../services/handleValidationError';
+import handleRestApiError from '../../services/handleRestApiError';
 import RedirectedContent from '../RedirectedContent';
 import BackLink from '../BackLink';
 
@@ -78,7 +78,7 @@ const ValidationSchema = () => {
     level: object().required('required'),
     phone: string()
       .matches(
-        /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]{8,30}/,
+        /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]{6,30}/,
         'NotPhoneFormat'
       )
       .min(8, 'tooShort'),
@@ -171,7 +171,7 @@ export default function CreateComplianceReferent(props) {
     setErrorOpen(false);
   };
   const handleCreationError = (error) => {
-    const result = handleValidationError(error);
+    const result = handleRestApiError(error);
     setFieldsInError(result.validationErrors);
 
     const errorText = (
@@ -662,7 +662,11 @@ export default function CreateComplianceReferent(props) {
                     </Grid>
                   </form>
                 </Paper>
-                <BackLink path='/admin' />
+                <BackLink
+                  path='/admin'
+                  title='back'
+                  defaultMessage='Back to previous page'
+                />
               </Container>
             )}
           </Formik>

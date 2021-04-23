@@ -19,6 +19,7 @@
   "passwordNotMatch": "Password doesn't match",
   "PasswordComplexityRequirement":"Password must contain uppercase, lowercase and digit",
   "Network Error": "Network error",
+  "Network error": "Network error",
   "invalid_grant": "Invalid grant",
   "unauthorized": "Invalid grant",
   "accountCreated": "Account created",
@@ -68,9 +69,11 @@
   "backTohomePage": "Back to home page",
   "UniqueEmail": "Email is already taken",
   "ValidationFailed": "Error in at least one field",
+  "SQLIntegrityException":"Insertion in database failed",
+  "EntityNotFoundException" : "Resource not found",
   "Connection issue": "Connection issue",
   "Sorry we cannot handle your request for the moment": "Sorry we cannot handle your request for the moment",
-  "Back": "Back to previous",
+  "back": "Back to previous",
   "Size": "Incorrect field size",
   "Field length between 2 and 255 char": "Field length between 2 and 255 char",
   "administratorPage":"Administrator page",
@@ -91,5 +94,6 @@
   "clearAllCaches": "Clear all caches",
   "clearRisksCaches": "Clear risks cache",
   "clearCountriesCache": "Clear countries cache",
-  "clearOrgUnitCaches": "Clear org.units cache"
+  "clearOrgUnitCaches": "Clear org.units cache",
+  "NoComplianceFound":"Sorry, No compliance referent found with these criterias"
 }
