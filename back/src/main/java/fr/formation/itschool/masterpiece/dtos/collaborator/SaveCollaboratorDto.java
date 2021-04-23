@@ -19,7 +19,6 @@ public class SaveCollaboratorDto {
   @NotNull
   @SesamePattern
   @UniqueSesame
-  @Size(min = 7, max = 7, message = "Field length must be 7 char")
   private String sesame;
 
   @NotNull
