@@ -19,9 +19,9 @@ public interface ComplianceReferentRepository extends JpaRepository<ComplianceRe
       + "JOIN c.country co "
       + "JOIN c.organisationUnit ou "
       + "JOIN cr.level l "
-      + "WHERE (:countryId is null or co.id = :countryId) "
-      + "AND (:organisationUnitId is null or ou.id = :organisationUnitId) "
-      + "AND (:riskId is null or r.id = :riskId) "
+      + "WHERE (co.id = :countryId) "
+      + "AND (ou.id = :organisationUnitId) "
+      + "AND (r.id = :riskId) "
   )
   List<ComplianceReferentViewDto> findWithCriteria(@Param("countryId") Long countryId,
                                                    @Param("organisationUnitId") Long organisationUnitId,

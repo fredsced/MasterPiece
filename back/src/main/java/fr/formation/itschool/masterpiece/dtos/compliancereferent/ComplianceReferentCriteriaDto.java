@@ -18,6 +18,14 @@ public class ComplianceReferentCriteriaDto {
   @Positive
   Long riskId;
 
+
+  public ComplianceReferentCriteriaDto(@NotNull @Positive Long countryId, @NotNull @Positive Long organisationUnitId, @NotNull @Positive Long riskId) {
+    this.countryId = countryId;
+    this.organisationUnitId = organisationUnitId;
+    this.riskId = riskId;
+  }
+
+
   public Long getCountryId() {
     return countryId;
   }

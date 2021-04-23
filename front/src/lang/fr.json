@@ -19,6 +19,7 @@
   "passwordNotMatch": "Le mot de passe n'est pas identique",
   "PasswordComplexityRequirement": "Le mot de passe doit contenir une majuscule, une minuscule et un chiffre",
   "Network Error": "Erreur réseau",
+  "Network error": "Erreur réseau",
   "invalid_grant": "Identifiants non valides",
   "unauthorized": "Identifiants non valides",
   "accountCreated": "Compte créé",
@@ -70,9 +71,11 @@
   "backTohomePage": "Retour à l'accueil",
   "UniqueEmail": "Cet email est déjà pris...",
   "ValidationFailed": "Erreur sur au moins un des champs",
+  "SQLIntegrityException":"Insertion des données impossible",
+  "EntityNotFoundException" : "Ressource non trouvée",
   "Connection issue": "Erreur de connexion",
   "Sorry we cannot handle your request for the moment": "Désolé nous ne pouvons pas excécuter votre requête pour le moment",
-  "Back": "Retour page précédente",
+  "back": "Retour page précédente",
   "Size": "La taille du champ n'est pas correcte",
   "Field length between 2 and 255 char": "La longueur du champ doit être entre 2 et 255",
   "administratorPage":"Page administrateur",
@@ -93,6 +96,6 @@
   "clearAllCaches": "Vider tous les caches",
   "clearRisksCaches": "Vider le cache des risques",
   "clearCountriesCache": "Vider le cache des pays",
-  "clearOrgUnitCaches": "Vider le cache des u.orgs"
-
+  "clearOrgUnitCaches": "Vider le cache des u.orgs",
+  "NoComplianceFound":"Désolé, aucun référent conformité trouvé avec ces critères"
 }
