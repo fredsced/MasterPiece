@@ -29,6 +29,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import Alert from './../Alert';
 import { Dialog } from '@material-ui/core';
 
+
 const useStyles = makeStyles((theme) => ({
   main: {
     minHeight: 'calc(100vh - 110px)',
@@ -98,6 +99,7 @@ export default function SearchComplianceReferent() {
   const [errorOpen, setErrorOpen] = useState(false);
   const [restApiError, setRestApiError] = useState({});
 
+
   useEffect(() => {
     const fetchRisks = () => {
       RisksService.getAll()
@@ -136,6 +138,7 @@ export default function SearchComplianceReferent() {
     fetchCountries();
     fetchOrgUnits();
   }, []);
+
   const handleErrorClose = () => {
     setErrorOpen(false);
   };
@@ -147,6 +150,7 @@ export default function SearchComplianceReferent() {
 
     setErrorOpen(true);
   };
+
 
   return (
     <>
@@ -188,7 +192,9 @@ export default function SearchComplianceReferent() {
               onSubmit={(values, { setSubmitting }) => {
                 setSubmitting(true);
                 setMyCR([]);
+
                 SetSent(false);
+
                 ComplianceService.getMyCR(values)
                   .then((response) => {
                     setMyCR(response.data);
@@ -198,7 +204,9 @@ export default function SearchComplianceReferent() {
                   })
                   .then(() => {
                     setSubmitting(false);
+
                     SetSent(true);
+
                   });
               }}
             >
@@ -421,6 +429,7 @@ export default function SearchComplianceReferent() {
                 </form>
               )}
             </Formik>
+
             <Dialog open={errorOpen} onClose={handleErrorClose}>
               <Alert severity='error'>
                 {restApiError.length > 0 ? (
@@ -441,12 +450,14 @@ export default function SearchComplianceReferent() {
                 </IconButton>
               </Alert>
             </Dialog>
+
             <Grid
               className={classes.responseCR}
               container
               spacing={3}
               justify='center'
             >
+
               {myCR && myCR.length > 0 ? (
                 <ListComplianceReferents myCR={myCR} />
               ) : sent ? (
@@ -462,6 +473,7 @@ export default function SearchComplianceReferent() {
             title='back'
             defaultMessage='Back to previous page'
           />
+
         </Container>
       )}
     </>

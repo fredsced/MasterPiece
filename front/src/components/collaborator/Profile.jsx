@@ -24,6 +24,7 @@ import CountriesService from '../../services/CountriesService';
 import OrgUnitService from '../../services/OrgUnitService';
 import { useHistory } from 'react-router-dom';
 import Alert from '../Alert';
+
 import handleRestApiError from '../../services/handleRestApiError';
 import RedirectedContent from '../RedirectedContent';
 import BackLink from '../BackLink';
@@ -140,7 +141,9 @@ export default function Profile(props) {
     setErrorOpen(false);
   };
   const handleCreationError = (error) => {
+
     const result = handleRestApiError(error);
+
     setFieldsInError(result.validationErrors);
 
     const errorText = (
@@ -492,11 +495,13 @@ export default function Profile(props) {
                     </Grid>
                   </form>
                 </Paper>
+
                 <BackLink
                   path='/collaborator'
                   title='back'
                   defaultMessage='Back to previous page'
                 />
+
               </Container>
             )}
           </Formik>

@@ -5,8 +5,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 /**
  * a {@code RestController} to handle {@code Caches}.
  *
@@ -20,6 +20,7 @@ public class CacheManagerController {
 
   private final CacheManagerService cacheManagerService;
 
+
   /**
    * Protected constructor to autowire needed bean
    *
@@ -29,6 +30,7 @@ public class CacheManagerController {
     this.cacheManagerService = cacheManagerService;
   }
 
+
   /**
    * Clear all caches
    */
@@ -37,12 +39,12 @@ public class CacheManagerController {
     cacheManagerService.clearAllCaches();
   }
 
+
   /**
    * Clear cache by {@code cacheName}
    *
    * @param cacheName
    */
-
   @GetMapping("/{cacheName}")
   protected void clearCache(@PathVariable String cacheName) {
     cacheManagerService.clearCache(cacheName);

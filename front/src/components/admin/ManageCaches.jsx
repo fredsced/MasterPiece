@@ -191,11 +191,13 @@ export default function ManageCaches(props) {
                 </Grid>
               </Grid>
             </Paper>
+
             <BackLink
               path='/admin'
               title='back'
               defaultMessage='Back to previous page'
             />
+
           </Container>
           <Dialog open={successOpen} onClose={handleSuccessClose}>
             <Alert severity='success'>
