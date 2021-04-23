@@ -9,6 +9,9 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.StringJoiner;
 
+/**
+ * DTO representing {@code Account} data to project to the client.
+ */
 public class CollaboratorDto {
 
   @NotNull

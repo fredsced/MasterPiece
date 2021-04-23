@@ -6,6 +6,10 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import java.util.StringJoiner;
 
+/**
+ * A representation of an account {@code Country}
+ * code ISO-3 as discriminant field
+ */
 @Entity
 @Table(
   name = "countries",

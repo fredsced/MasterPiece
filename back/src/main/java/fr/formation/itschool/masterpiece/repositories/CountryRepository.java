@@ -5,6 +5,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
+/**
+ * {@code JpaRepository} to handle {@code Country} query.
+ */
 public interface CountryRepository extends JpaRepository<Country, Long> {
   Optional<Country> findByIsoIgnoreCase(String iso);
 }

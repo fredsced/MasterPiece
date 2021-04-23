@@ -10,7 +10,9 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
+/**
+ * DTO representing {@code ComplianceReferent} data to be persisted in database.
+ */
 public class SaveComplianceReferentDto {
 
   @NotNull

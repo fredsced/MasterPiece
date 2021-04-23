@@ -8,8 +8,20 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
+/**
+ * {@code JpaRepository} to handle {@code ComplianceReferent} persistence.
+ */
 
 public interface ComplianceReferentRepository extends JpaRepository<ComplianceReferent, Long> {
+
+  /**
+   * Return a {@code List} of {@code ComplianceReferent} for given
+   * {@code countryId}, {@code organisationUnitId} and {@code riskId}
+   * @param countryId
+   * @param organisationUnitId
+   * @param riskId
+   * @return
+   */
 
   @Query(
     "SELECT new fr.formation.itschool.masterpiece.dtos.compliancereferent.ComplianceReferentViewDto(cr.id, c.firstname, c.lastname, c.sesame, co.iso, ou.code, r.code, cr.email, cr.phone, l.code)"

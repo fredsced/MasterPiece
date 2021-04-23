@@ -6,6 +6,9 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import java.util.StringJoiner;
 
+/**
+ * A representation of an account {@code Level} a level of compliance responsibility
+ */
 @Entity
 @Table(
   name = "compliance_levels",

@@ -11,6 +11,11 @@ import org.springframework.security.oauth2.provider.token.TokenEnhancer;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Custom implementation of {@code TokenEnhancer}
+ * to put collaborator informations in the jwt
+ */
+
 public class CustomTokenEnhancer implements TokenEnhancer {
 
   static final String ACCOUNT_ID_KEY = "accountId";
@@ -20,7 +25,7 @@ public class CustomTokenEnhancer implements TokenEnhancer {
   static final String COLLABORATOR_INFO = "collaboratorInfo";
   static final String IS_ADMIN = "isAdmin";
 
-  // @Autowired because need to conserve the empty constructor
+  // @Autowired the CollaboratorService
   @Autowired
   private CollaboratorService collaboratorService;
 

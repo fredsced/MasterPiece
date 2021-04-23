@@ -1,6 +1,5 @@
 package fr.formation.itschool.masterpiece.controllers;
 
-import fr.formation.itschool.masterpiece.dtos.compliancereferent.ComplianceReferentCriteriaDto;
 import fr.formation.itschool.masterpiece.dtos.compliancereferent.ComplianceReferentViewDto;
 import fr.formation.itschool.masterpiece.dtos.compliancereferent.SaveComplianceReferentDto;
 import fr.formation.itschool.masterpiece.services.ComplianceReferentService;
@@ -35,6 +34,8 @@ public class ComplianceReferentController {
   }
 
   /**
+   * Find a {@code List} of {@code ComplianceReferent} by country, risk and organisation unit
+   *
    * @param countryId
    * @param riskId
    * @param organisationUnitId
@@ -51,6 +52,7 @@ public class ComplianceReferentController {
    * Persists a {@code SaveComplianceReferentDto}
    *
    * @param saveComplianceReferentDto {@code SaveComplianceReferentDto} to persist
+   * Only permit to Admin Accounts
    */
 
   @PreAuthorize(("hasRole('ROLE_ADMIN')"))

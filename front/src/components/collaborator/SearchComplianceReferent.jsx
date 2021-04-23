@@ -144,8 +144,6 @@ export default function SearchComplianceReferent() {
     const result = handleRestApiError(error);
     setRestApiError(result);
     setErrorOpen(true);
-
-    setErrorOpen(true);
   };
 
   return (

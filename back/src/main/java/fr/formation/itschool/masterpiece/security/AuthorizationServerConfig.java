@@ -26,7 +26,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Arrays;
 
-@Configuration
+/**
+ * Configuration of the {@code AuthorizationServer}.
+ * <p>
+ * Configures Oauth2 with JWT token store, token enhancer and provides standard
+ * auth endpoint.
+ */
+
+ @Configuration
 @EnableAuthorizationServer
 @RestController // for "/me" endpoint
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
