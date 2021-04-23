@@ -48,7 +48,6 @@ const useStyles = makeStyles((theme) => ({
 export default function ListComplianceReferents({ myCR }) {
   const [rowId, setRowId] = useState(null);
   const [anchorEl, setAnchorEl] = useState(null);
-
   const classes = useStyles();
 
   const handleClick = (event, id) => {
