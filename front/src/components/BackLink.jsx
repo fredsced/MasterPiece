@@ -19,14 +19,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function BackLink({ path }) {
+export default function BackLink({ path, title, defaultMessage }) {
   const classes = useStyles();
   return (
     <Grid container justify='flex-end'>
       <Grid item>
         <Link component={RouterLink} to={path} variant='body2'>
           <Typography variant='subtitle1' className={classes.backLink}>
-            <FormattedMessage id='Back' defaultMessage='Back' />
+            <FormattedMessage id={title} defaultMessage={defaultMessage} />
           </Typography>
         </Link>
       </Grid>

@@ -120,7 +120,13 @@ export default function Admin(props) {
                 </Link>
               </Grid>
             </Grid>
-            <BackLink path='/collaborator' />
+
+            <BackLink
+              path='/collaborator'
+              title='backToCollaboratorPage'
+              defaultMessage='Back to collaborator page'
+            />
+
           </Container>
         </>
       ) : (

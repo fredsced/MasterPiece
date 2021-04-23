@@ -23,6 +23,12 @@ import AuthService from '../../services/AuthService';
 import ListComplianceReferents from '../ListComplianceReferents';
 import RedirectedContent from '../RedirectedContent';
 import BackLink from '../BackLink';
+import handleRestApiError from '../../services/handleRestApiError';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
+import Alert from './../Alert';
+import { Dialog } from '@material-ui/core';
+
 
 const useStyles = makeStyles((theme) => ({
   main: {
@@ -71,8 +77,6 @@ const ValidationSchema = Yup.object().shape({
     .required('required'),
 });
 
-const handleError = (error) => {};
-
 export default function SearchComplianceReferent() {
   const classes = useStyles();
 
@@ -91,6 +95,10 @@ export default function SearchComplianceReferent() {
   const [fetchingCountries, setFetchingCountries] = useState(true);
   const [fetchingOrgUnits, setFetchingOrgUnits] = useState(true);
   const [errorToFetch, setErrorToFetch] = useState(false);
+  const [sent, SetSent] = useState(false);
+  const [errorOpen, setErrorOpen] = useState(false);
+  const [restApiError, setRestApiError] = useState({});
+
 
   useEffect(() => {
     const fetchRisks = () => {
@@ -130,6 +138,19 @@ export default function SearchComplianceReferent() {
     fetchCountries();
     fetchOrgUnits();
   }, []);
+
+  const handleErrorClose = () => {
+    setErrorOpen(false);
+  };
+
+  const handleError = (error) => {
+    const result = handleRestApiError(error);
+    setRestApiError(result);
+    setErrorOpen(true);
+
+    setErrorOpen(true);
+  };
+
 
   return (
     <>
@@ -171,6 +192,9 @@ export default function SearchComplianceReferent() {
               onSubmit={(values, { setSubmitting }) => {
                 setSubmitting(true);
                 setMyCR([]);
+
+                SetSent(false);
+
                 ComplianceService.getMyCR(values)
                   .then((response) => {
                     setMyCR(response.data);
@@ -180,6 +204,9 @@ export default function SearchComplianceReferent() {
                   })
                   .then(() => {
                     setSubmitting(false);
+
+                    SetSent(true);
+
                   });
               }}
             >
@@ -402,18 +429,51 @@ export default function SearchComplianceReferent() {
                 </form>
               )}
             </Formik>
+
+            <Dialog open={errorOpen} onClose={handleErrorClose}>
+              <Alert severity='error'>
+                {restApiError.length > 0 ? (
+                  restApiError.errorMessage
+                ) : (
+                  <FormattedMessage
+                    id='Connection issue'
+                    default='Connection issue'
+                  ></FormattedMessage>
+                )}
+                <IconButton
+                  size='small'
+                  aria-label='close'
+                  color='inherit'
+                  onClick={handleErrorClose}
+                >
+                  <CloseIcon fontSize='small' />
+                </IconButton>
+              </Alert>
+            </Dialog>
+
             <Grid
               className={classes.responseCR}
               container
               spacing={3}
               justify='center'
             >
-              {myCR && myCR.length > 0 && (
+
+              {myCR && myCR.length > 0 ? (
                 <ListComplianceReferents myCR={myCR} />
-              )}
+              ) : sent ? (
+                <FormattedMessage
+                  id='NoComplianceFound'
+                  default='Sorry, No compliance referent found with these criterias'
+                ></FormattedMessage>
+              ) : null}
             </Grid>
           </Paper>
-          <BackLink path='/collaborator' />
+          <BackLink
+            path='/collaborator'
+            title='back'
+            defaultMessage='Back to previous page'
+          />
+
         </Container>
       )}
     </>
