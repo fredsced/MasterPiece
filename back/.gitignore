@@ -12,6 +12,7 @@ src/main/resources/mycompliancepal.*
 src/test/resources/mockserver.properties
 src/main/resources/application.*
 src/main/resources/application-dev.*
+*.sql
 
 
 
