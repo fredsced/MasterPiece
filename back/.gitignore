@@ -3,8 +3,10 @@ target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**
 !**/src/test/**
+src/main/resources/keystore-generation.txt
 
 /src/main/resources/jwt.jks
+/src/main/resources/mycompliancepal.*
 .DS_Store
 ### STS ###
 .apt_generated
