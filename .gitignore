@@ -24,7 +24,7 @@ RNCP*
 /src/main/resources/keystore*
 mycompliancepal*
 /src/test/resources/mockserver*
-
+*.docx
 /Tests
 /back/.idea
 /back/target
