@@ -27,6 +27,7 @@
   "notConnected": "Vous n'êtes pas authentifié",
   "notConnectedMessage": "Authentification obligatoire pour réaliser cette opération",
   "backToAuthentification":"Retour vers la page de connexion",
+  "backToAdminPage":"Retour vers la page administrateur",
   "firstname": "Prénom",
   "lastname": "Nom",
   "sesameId": "ID Sésame",
