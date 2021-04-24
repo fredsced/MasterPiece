@@ -39,3 +39,6 @@ build/
 
 ### Other ###
 *.docx
+!/src/test/resources/mockserver.properties
+!/src/main/resources/application.properties
+!/src/main/resources/application-dev.properties
