@@ -82,7 +82,7 @@ export default function SearchComplianceReferent() {
   const currentUser = AuthService.getCurrentUser();
   let userCountryId = '';
   let userOrganisationUnitId = '';
-  if (currentUser.accountHasProfile) {
+  if (currentUser && currentUser.accountHasProfile) {
     userCountryId = currentUser.collaboratorInfo.countryId;
     userOrganisationUnitId = currentUser.collaboratorInfo.organisationUnitId;
   }

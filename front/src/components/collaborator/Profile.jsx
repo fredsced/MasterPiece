@@ -86,7 +86,9 @@ export default function Profile(props) {
   const [errorOpen, setErrorOpen] = useState(false);
   const [countries, setCountries] = useState([]);
   const [organisationUnits, setOrganisationUnits] = useState([]);
-  const hasProfile = AuthService.getCurrentUser().accountHasProfile;
+  const hasProfile = AuthService.getCurrentUser()
+    ? AuthService.getCurrentUser().accountHasProfile
+    : null;
   const [fetchingCountries, setFetchingCountries] = useState(true);
   const [fetchingOrgUnits, setFetchingOrgUnits] = useState(true);
   const currentUser = AuthService.getCurrentUser();
@@ -95,7 +97,7 @@ export default function Profile(props) {
   let userSesame = '';
   let userCountryId = '';
   let userOrganisationUnitId = '';
-  if (currentUser.accountHasProfile) {
+  if (currentUser && currentUser.accountHasProfile) {
     userFirstname = currentUser.collaboratorInfo.firstname;
     userLastname = currentUser.collaboratorInfo.lastname;
     userCountryId = currentUser.collaboratorInfo.countryId;
