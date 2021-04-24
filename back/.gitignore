@@ -17,6 +17,9 @@ src/main/resources/keystore-generation.txt
 .springBeans
 .sts4-cache
 
+### LOGS ###
+*.log
+
 ### IntelliJ IDEA ###
 .idea
 *.iws
