@@ -9,6 +9,7 @@ import fr.formation.itschool.masterpiece.validators.UniqueEmail;
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 /**
  * DTO representing {@code ComplianceReferent} data to be persisted in database.
@@ -31,6 +32,7 @@ public class SaveComplianceReferentDto {
   @Size(max = 254)
   private String email;
 
+  @Pattern(regexp = "^[+]*[(]{0,1}[0-9]{0,1}[)]{0,1}[-\\s\\./0-9]{10,30}", message = "invalidPhoneFormat")
   private String phone;
 
   public CollaboratorDto getCollaboratorDto() {

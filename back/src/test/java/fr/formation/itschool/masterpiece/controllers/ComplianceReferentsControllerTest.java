@@ -77,7 +77,7 @@ public class ComplianceReferentsControllerTest extends IntegrationTest {
   }
   @Order(6)
   @ParameterizedTest
-  @CsvFileSource(resources = "/create_compliance_referents.csv", delimiterString = "|$|", numLinesToSkip = 1)
+  @CsvFileSource(resources = "/invalid_compliance_referents.csv", delimiterString = "|$|", numLinesToSkip = 1)
   void shouldNotCreatInvalidComplianceReferentAdminRole(String complianceReferent) throws Exception {
     api.perform(post(path)
       .header("Authorization", adminToken)
