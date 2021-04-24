@@ -21,6 +21,10 @@ Descloux*
 DESCLOUX*
 RÉSUMÉ*
 RNCP*
+/src/main/resources/keystore*
+mycompliancepal*
+/src/test/resources/mockserver*
+
 /Tests
 /back/.idea
 /back/target
