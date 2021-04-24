@@ -1,15 +1,19 @@
 HELP.md
+
+
 target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**
 !**/src/test/**
 src/main/resources/keystore-generation.txt
 
-/src/main/resources/jwt.jks
-/src/main/resources/mycompliancepal.*
-/src/test/resources/mockserver.properties
-/src/main/resources/application.properties
-/src/main/resources/application-dev.properties
+src/main/resources/jwt.jks
+src/main/resources/mycompliancepal.*
+src/test/resources/mockserver.properties
+src/main/resources/application.properties
+src/main/resources/application-dev.properties
+
+
 
 .DS_Store
 ### STS ###
