@@ -5,13 +5,14 @@ import fr.formation.itschool.masterpiece.dtos.compliancereferent.ComplianceRefer
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 /**
  * {@code JpaRepository} to handle {@code ComplianceReferent} persistence.
  */
-
+@Repository
 public interface ComplianceReferentRepository extends JpaRepository<ComplianceReferent, Long> {
 
   /**

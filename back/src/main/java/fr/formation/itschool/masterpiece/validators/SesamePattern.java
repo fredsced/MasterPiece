@@ -13,7 +13,7 @@ import java.lang.annotation.Target;
 @Target({ElementType.FIELD})
 @Constraint(validatedBy =SesamePatternValidator.class)
   public @interface SesamePattern {
-  String message() default "sesameWrongPattern";
+  String message() default "notASesameId";
 
   Class<?>[] groups() default {};
 

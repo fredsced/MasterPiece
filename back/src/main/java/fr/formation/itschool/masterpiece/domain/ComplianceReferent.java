@@ -3,6 +3,7 @@ package fr.formation.itschool.masterpiece.domain;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
@@ -16,16 +17,15 @@ import java.util.StringJoiner;
 @Entity
 @Table(
   name = "compliance_referents",
-  uniqueConstraints =
-  @UniqueConstraint(
-    name = "compliance_referents_collaborator_id",
-    columnNames = "collaborator_id"))
+  uniqueConstraints = {
+    @UniqueConstraint(name = "compliance_referents_collaborator_id_UQ", columnNames = "collaborator_id"),
+    @UniqueConstraint(name = "compliance_referents_email_UQ", columnNames = "email")})
 public class ComplianceReferent extends AbstractEntity {
 
   @Column(nullable = false)
   private String email;
 
-  @Column(nullable = true, length = 20)
+  @Column(nullable = true, length = 30)
   private String phone;
 
   @OneToOne(cascade = {CascadeType.PERSIST})
@@ -33,11 +33,12 @@ public class ComplianceReferent extends AbstractEntity {
   private Collaborator collaborator;
 
   @ManyToOne
-  @JoinColumn(name = "compliance_level_id", nullable = false)
+  @JoinColumn(name = "compliance_level_id",
+    foreignKey = @ForeignKey(name = "compliance_referents_level_id_FK"), nullable = false)
   private Level level;
 
   @ManyToOne
-  @JoinColumn(name = "risk_id", nullable = false)
+  @JoinColumn(name = "risk_id", foreignKey = @ForeignKey(name = "compliance_referents_risk_id_FK"), nullable = false)
   private Risk risk;
 
   public void setCollaborator(Collaborator collaborator) {

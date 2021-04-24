@@ -3,16 +3,20 @@ package fr.formation.itschool.masterpiece.domain;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import java.util.Objects;
 import java.util.StringJoiner;
 /**
  * A representation of an account {@code Role} used for authorization
  */
 @Entity
-@Table(name = "roles")
+@Table(name = "roles",  uniqueConstraints =
+@UniqueConstraint(
+  name = "roles_code_UQ",
+  columnNames = {"code"}))
 public class Role extends AbstractEntity {
 
-  @Column(length = 20, nullable = false, unique = true)
+  @Column(length = 20, nullable = false)
   private String code;
 
   @Column(nullable = false)

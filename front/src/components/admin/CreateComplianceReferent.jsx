@@ -76,12 +76,10 @@ const ValidationSchema = () => {
     organisationUnit: object().required('required'),
     risk: object().required('required'),
     level: object().required('required'),
-    phone: string()
-      .matches(
-        /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]{6,30}/,
-        'NotPhoneFormat'
-      )
-      .min(8, 'tooShort'),
+    phone: string().matches(
+      /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]{10,30}/,
+      'NotPhoneFormat'
+    ),
     email: string()
       .email('emailNotValid')
       .required('emailRequired')

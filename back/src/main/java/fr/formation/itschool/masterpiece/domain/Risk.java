@@ -6,6 +6,7 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Size;
 import java.util.StringJoiner;
+
 /**
  * A representation of an account {@code Risk} a risk of non-compliance
  */
@@ -15,7 +16,7 @@ import java.util.StringJoiner;
   uniqueConstraints = @UniqueConstraint(name = "risks_code_UQ", columnNames = "code"))
 public class Risk extends AbstractEntity {
 
-  @Column(unique = true, nullable = false, length = 5)
+  @Column(nullable = false, length = 5)
   private String code;
   @Column(nullable = false)
   private String label;

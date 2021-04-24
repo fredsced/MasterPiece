@@ -41,10 +41,12 @@ public class Account extends AbstractEntity {
     joinColumns =
     @JoinColumn(
       name = "account_id",
+      nullable = false,
       foreignKey = @ForeignKey(name = "accounts_roles_account_id_FK")),
     inverseJoinColumns =
     @JoinColumn(
       name = "role_id",
+      nullable = false,
       foreignKey = @ForeignKey(name = "account_roles_role_id_FK")))
   private Set<Role> roles;
 
