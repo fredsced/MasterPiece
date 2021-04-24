@@ -7,6 +7,10 @@ src/main/resources/keystore-generation.txt
 
 /src/main/resources/jwt.jks
 /src/main/resources/mycompliancepal.*
+/src/test/resources/mockserver.properties
+/src/main/resources/application.properties
+/src/main/resources/application-dev.properties
+
 .DS_Store
 ### STS ###
 .apt_generated
@@ -39,6 +43,4 @@ build/
 
 ### Other ###
 *.docx
-!/src/test/resources/mockserver.properties
-!/src/main/resources/application.properties
-!/src/main/resources/application-dev.properties
+
