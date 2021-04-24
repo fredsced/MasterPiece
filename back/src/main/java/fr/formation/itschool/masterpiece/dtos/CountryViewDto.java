@@ -3,7 +3,7 @@ package fr.formation.itschool.masterpiece.dtos;
 import java.util.StringJoiner;
 
 /**
- * A DTO representation of a {@code Country}
+ * A DTO representation of a {@code Country} to project
  */
 public class CountryViewDto {
 

@@ -7,6 +7,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
+/**
+ * {@code JpaRepository} to handle {@code Account} persistence.
+ */
+
 public interface AccountRepository extends JpaRepository<Account, Long> {
   Optional<AccountAuthDto> findByEmailIgnoreCase(String email);
 

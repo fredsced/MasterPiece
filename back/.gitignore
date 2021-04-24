@@ -3,8 +3,10 @@ target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**
 !**/src/test/**
+src/main/resources/keystore-generation.txt
 
 /src/main/resources/jwt.jks
+/src/main/resources/mycompliancepal.*
 .DS_Store
 ### STS ###
 .apt_generated
@@ -14,6 +16,9 @@ target/
 .settings
 .springBeans
 .sts4-cache
+
+### LOGS ###
+*.log
 
 ### IntelliJ IDEA ###
 .idea
@@ -31,3 +36,6 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Other ###
+*.docx

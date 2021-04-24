@@ -10,6 +10,9 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import java.util.StringJoiner;
 
+/**
+ * A representation of an account {@code ComplianceReferent}
+ */
 @Entity
 @Table(
   name = "compliance_referents",

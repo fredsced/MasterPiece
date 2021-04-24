@@ -13,6 +13,9 @@ import javax.persistence.UniqueConstraint;
 import java.util.Set;
 import java.util.StringJoiner;
 
+/**
+ * A representation of an account {@code Account}
+ */
 @Entity
 @Table(
   name = "accounts",

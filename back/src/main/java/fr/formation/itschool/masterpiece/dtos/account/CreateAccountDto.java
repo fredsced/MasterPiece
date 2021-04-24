@@ -10,7 +10,10 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.util.StringJoiner;
 
-public class CreateAccountDto {
+/**
+ * DTO representing {@code Account} data to be persisted in database.
+ */
+ public class CreateAccountDto {
 
   @NotEmpty
   @ExtendedEmailValidator

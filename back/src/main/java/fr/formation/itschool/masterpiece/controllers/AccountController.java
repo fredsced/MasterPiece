@@ -19,6 +19,11 @@ class AccountController {
 
   private final AccountService accountService;
 
+  /**
+   * Protected constructor to inject needed dependency
+   * @param accountService
+   */
+
   protected AccountController(AccountService accountService) {
     this.accountService = accountService;
   }

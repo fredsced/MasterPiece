@@ -9,16 +9,29 @@ import org.springframework.security.core.userdetails.User;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+/**
+ * A custom {@code AccountDetails} for Spring authentication contract and custom
+ * properties we want in the token (such as the id).
+ */
 public class AccountDetails extends User {
 
   private static final long serialVersionUID = 5803283930339051994L;
 
   private Long id;
 
-  public AccountDetails(AccountAuthDto user) {
-    super(user.getEmail(), user.getPassword(),
-      buildAuthorities(user.getRoles()));
-    id = user.getId();
+  /**
+   * The minimal constructor to
+   * @param accountAuthDto
+   */
+  public AccountDetails(AccountAuthDto accountAuthDto) {
+    super(accountAuthDto.getEmail(), accountAuthDto.getPassword(),
+      buildAuthorities(accountAuthDto.getRoles()));
+    id = accountAuthDto.getId();
+  }
+
+  public AccountDetails(AccountAuthDto accountAuthDto, boolean enabled, boolean accountNonExpired,
+                        boolean credentialsNonExpired, boolean accountNonLocked) {
+    super(accountAuthDto.getEmail(), accountAuthDto.getPassword(), true, true, true, true, buildAuthorities(accountAuthDto.getRoles()));
   }
 
   private static Set<GrantedAuthority> buildAuthorities(Set<Role> roles) {

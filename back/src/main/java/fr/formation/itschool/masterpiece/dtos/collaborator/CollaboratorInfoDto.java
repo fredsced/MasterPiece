@@ -1,7 +1,7 @@
 package fr.formation.itschool.masterpiece.dtos.collaborator;
 
 /**
- * A projection of {@code Collaborator} name and firstName
+ * A projection of {@code Collaborator} name and firstName, sesame, countryId and organisationUnitId
  */
 public interface CollaboratorInfoDto {
   Long getId();

@@ -8,6 +8,9 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.StringJoiner;
 
+/**
+ * A representation of an account {@code OrganisationUnit} like a service or business unit
+ */
 @Entity
 @Table(
   name = "organisation_units",

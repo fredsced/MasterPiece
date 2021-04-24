@@ -3,7 +3,7 @@ package fr.formation.itschool.masterpiece.dtos.compliancereferent;
 import java.util.StringJoiner;
 
 /**
- * A DTO representation of a {@code ComplianceReferent}
+ * A DTO representation of a {@code ComplianceReferent} to project to client
  */
 
 public class ComplianceReferentViewDto {

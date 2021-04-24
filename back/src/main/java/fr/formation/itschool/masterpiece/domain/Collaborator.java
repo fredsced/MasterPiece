@@ -13,6 +13,9 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import java.util.StringJoiner;
 
+/**
+ * A representation of an account {@code Collaborator}
+ */
 @Entity
 @Table(
   name = "collaborators",

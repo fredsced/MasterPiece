@@ -3,10 +3,11 @@ package fr.formation.itschool.masterpiece.errors;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringJoiner;
 
 /**
- * Class used when
- */
+ * Object encapsulating error informations used by {@code ControllerAdvice}
+ **/
 
 public class RestApiError {
   private final String message;
@@ -17,9 +18,10 @@ public class RestApiError {
     this.message = message;
     this.errors = errors;
   }
-  public RestApiError(String message){
+
+  public RestApiError(String message) {
     this.message = message;
-    this.errors=new ArrayList<String>();
+    this.errors = new ArrayList<String>();
   }
 
   public String getMessage() {
@@ -28,5 +30,13 @@ public class RestApiError {
 
   public List<String> getErrors() {
     return errors;
+  }
+
+  @Override
+  public String toString() {
+    return new StringJoiner(", ", RestApiError.class.getSimpleName() + "[", "]")
+      .add("message=" + message)
+      .add("errors=" + errors)
+      .toString();
   }
 }

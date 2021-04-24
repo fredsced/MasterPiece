@@ -1,6 +1,9 @@
 package fr.formation.itschool.masterpiece.dtos;
 
 import java.util.StringJoiner;
+/**
+ * A DTO representation of a {@code Level} to project
+ */
 
 public class LevelViewDto {
   private Long id;

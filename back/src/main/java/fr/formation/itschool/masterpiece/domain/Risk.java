@@ -6,7 +6,9 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Size;
 import java.util.StringJoiner;
-
+/**
+ * A representation of an account {@code Risk} a risk of non-compliance
+ */
 @Entity
 @Table(
   name = "risks",

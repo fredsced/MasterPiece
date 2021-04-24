@@ -105,6 +105,7 @@ export default function CreateComplianceReferent(props) {
   const [fetchingOrgUnits, setFetchingOrgUnits] = useState(true);
   const [fetchingRisks, setFetchingRisks] = useState(true);
   const [fetchingLevels, setFetchingLevels] = useState(true);
+  const [errorStatus, setErrorStatus] = useState();
 
   const user = props.user;
 
@@ -128,6 +129,27 @@ export default function CreateComplianceReferent(props) {
         })
         .catch((error) => {
           setErrorToFetch(true);
+          if (error.response) {
+            /*
+             * The request was made and the server responded with a
+             * status code that falls out of the range of 2xx
+             */
+            console.log('Datas: ' + error.response.data);
+            console.log('Status: ' + error.response.status);
+            console.log('Header: ' + error.response.headers);
+            setErrorStatus(error.response.status);
+          } else if (error.request) {
+            /*
+             * The request was made but no response was received, `error.request`
+             * is an instance of XMLHttpRequest in the browser and an instance
+             * of http.ClientRequest in Node.js
+             */
+            console.log(error.request);
+          } else {
+            // Something happened in setting up the request and triggered an Error
+            console.log('Error', error.message);
+          }
+          console.log(error);
         })
         .then(() => {
           setFetchingOrgUnits(false);
@@ -205,12 +227,21 @@ export default function CreateComplianceReferent(props) {
           linkMessage='backToCollaboratorPage'
         />
       ) : errorToFetch ? (
-        <RedirectedContent
-          mainTitle='Connection issue'
-          mainMessage='Sorry we cannot handle your request for the moment'
-          link='/admin'
-          linkMessage='backToAdminPage'
-        />
+        errorStatus === 401 ? (
+          <RedirectedContent
+            mainTitle='notConnected'
+            mainMessage='notConnectedMessage'
+            link='/login'
+            linkMessage='backToAuthentification'
+          />
+        ) : (
+          <RedirectedContent
+            mainTitle='Connection issue'
+            mainMessage='Sorry we cannot handle your request for the moment'
+            link='/admin'
+            linkMessage='backToAdminPage'
+          />
+        )
       ) : fetchingCountries ||
         fetchingOrgUnits ||
         fetchingRisks ||

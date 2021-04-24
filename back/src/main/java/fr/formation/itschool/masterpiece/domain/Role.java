@@ -3,8 +3,11 @@ package fr.formation.itschool.masterpiece.domain;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import java.util.Objects;
 import java.util.StringJoiner;
-
+/**
+ * A representation of an account {@code Role} used for authorization
+ */
 @Entity
 @Table(name = "roles")
 public class Role extends AbstractEntity {
@@ -26,5 +29,18 @@ public class Role extends AbstractEntity {
       .add("code=" + code)
       .add("defaultRole=" + defaultRole)
       .toString();
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (!(o instanceof Role)) return false;
+    Role role = (Role) o;
+    return code.equals(role.code);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(code);
   }
 }

@@ -19,7 +19,15 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@RestControllerAdvice
+/**
+ * Controller advice to handle all {@code RestController} exceptions.
+ * <p>
+ * Manages handlers for exceptions to mutualize and standardize exception
+ * handling for all {@code RestControllers}
+ *
+ */
+
+ @RestControllerAdvice
 public class ControllerAdvice extends ResponseEntityExceptionHandler {
 
   @ExceptionHandler(ResourceNotFoundException.class)

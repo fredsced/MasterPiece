@@ -22,6 +22,11 @@ public class CollaboratorController {
 
   private final CollaboratorService collaboratorService;
 
+  /**
+   * Protected constructor to inject needed dependency
+   * @param collaboratorService
+   */
+
   protected CollaboratorController(CollaboratorService collaboratorService) {
     this.collaboratorService = collaboratorService;
   }

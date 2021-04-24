@@ -7,6 +7,9 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.StringJoiner;
 
+/**
+ * DTO representing {@code Collaborator} data to be persisted in database.
+ */
 public class SaveCollaboratorDto {
   @NotNull
   @Size(min = 2, max = 255, message="Field length between 2 and 255 char")
