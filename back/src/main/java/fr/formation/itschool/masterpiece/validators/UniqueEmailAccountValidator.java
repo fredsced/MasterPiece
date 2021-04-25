@@ -5,11 +5,11 @@ import fr.formation.itschool.masterpiece.services.AccountService;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-public class UniqueEmailValidator implements ConstraintValidator<UniqueEmail, String> {
+public class UniqueEmailAccountValidator implements ConstraintValidator<UniqueEmailAccount, String> {
 
   private final AccountService accountService;
 
-  protected UniqueEmailValidator(AccountService accountService) {
+  protected UniqueEmailAccountValidator(AccountService accountService) {
     this.accountService = accountService;
   }
 

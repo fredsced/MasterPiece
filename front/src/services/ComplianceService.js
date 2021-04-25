@@ -16,6 +16,7 @@ const ComplianceService = {
     return await axios(optionsToFindCR);
   },
   saveCR: async (values) => {
+    let valuesToSend = { ...values };
     const collaboratorDto = {
       lastname: values.lastname,
       firstname: values.firstname,
@@ -23,11 +24,14 @@ const ComplianceService = {
       country: values.country,
       organisationUnit: values.organisationUnit,
     };
-    values.collaboratorDto = collaboratorDto;
+    if (values.phone === '') {
+      valuesToSend.phone = null;
+    }
+    valuesToSend.collaboratorDto = collaboratorDto;
     const optionsToSaveCR = {
       url: `${API_BASE_URL}${COMPLIANCE_END_POINT}`,
       method: 'POST',
-      data: JSON.stringify(values),
+      data: JSON.stringify(valuesToSend),
       headers: authHeaders(),
     };
     return await axios(optionsToSaveCR);

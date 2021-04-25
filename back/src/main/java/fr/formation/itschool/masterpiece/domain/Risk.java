@@ -8,7 +8,7 @@ import javax.validation.constraints.Size;
 import java.util.StringJoiner;
 
 /**
- * A representation of an account {@code Risk} a risk of non-compliance
+ * A representation of an compliance risk {@code Risk} a risk of non-compliance
  */
 @Entity
 @Table(

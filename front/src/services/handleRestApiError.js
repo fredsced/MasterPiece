@@ -13,9 +13,9 @@ const handleRestApiError = (error) => {
       restApiErrors[field] = code;
     });
 
-    result.validationErrors = restApiErrors;
+    result.fieldsInError = restApiErrors;
   } else {
-    result.validationErrors = {};
+    result.fieldsInError = {};
   }
   let errorMessage =
     (error &&

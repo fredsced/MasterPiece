@@ -50,7 +50,7 @@ public class BeanConfig {
    */
   @Bean
   public CacheManager cacheManager() {
-    return new ConcurrentMapCacheManager("countries", "organisationUnits", "risks");
+    return new ConcurrentMapCacheManager("countries", "organisationUnits", "risks", "levels");
 
   }
 

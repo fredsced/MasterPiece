@@ -78,7 +78,7 @@ const ValidationSchema = () => {
     level: object().required('required'),
     phone: string().matches(
       /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]{10,30}/,
-      'NotPhoneFormat'
+      'invalidPhoneFormat'
     ),
     email: string()
       .email('emailNotValid')
@@ -132,22 +132,16 @@ export default function CreateComplianceReferent(props) {
              * The request was made and the server responded with a
              * status code that falls out of the range of 2xx
              */
-            console.log('Datas: ' + error.response.data);
-            console.log('Status: ' + error.response.status);
-            console.log('Header: ' + error.response.headers);
             setErrorStatus(error.response.status);
           } else if (error.request) {
             /*
              * The request was made but no response was received, `error.request`
              * is an instance of XMLHttpRequest in the browser and an instance
-             * of http.ClientRequest in Node.js
              */
-            console.log(error.request);
           } else {
             // Something happened in setting up the request and triggered an Error
             console.log('Error', error.message);
           }
-          console.log(error);
         })
         .then(() => {
           setFetchingOrgUnits(false);
@@ -192,7 +186,7 @@ export default function CreateComplianceReferent(props) {
   };
   const handleCreationError = (error) => {
     const result = handleRestApiError(error);
-    setFieldsInError(result.validationErrors);
+    setFieldsInError(result.fieldsInError);
 
     const errorText = (
       <FormattedMessage
@@ -474,15 +468,24 @@ export default function CreateComplianceReferent(props) {
                             value={values.phone}
                             onChange={handleChange}
                             error={
-                              (touched.phone && !!errors.phone) ||
-                              fieldsInError.phone
+                              (touched.phone && Boolean(errors.phone)) ||
+                              Boolean(fieldsInError.phone)
                             }
                             helperText={
                               touched.phone &&
-                              !!errors.phone && (
+                              (Boolean(errors.phone) ||
+                                Boolean(fieldsInError.phone)) && (
                                 <FormattedMessage
-                                  id={errors.phone}
-                                  defaultMessage={errors.phone}
+                                  id={
+                                    Boolean(errors.phone)
+                                      ? errors.phone
+                                      : fieldsInError.phone
+                                  }
+                                  defaultMessage={
+                                    errors.phone
+                                      ? errors.phone
+                                      : fieldsInError.phone
+                                  }
                                 />
                               )
                             }

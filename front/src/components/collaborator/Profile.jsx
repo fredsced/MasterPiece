@@ -143,10 +143,9 @@ export default function Profile(props) {
     setErrorOpen(false);
   };
   const handleCreationError = (error) => {
-
     const result = handleRestApiError(error);
 
-    setFieldsInError(result.validationErrors);
+    setFieldsInError(result.fieldsInError);
 
     const errorText = (
       <FormattedMessage
@@ -503,7 +502,6 @@ export default function Profile(props) {
                   title='back'
                   defaultMessage='Back to previous page'
                 />
-
               </Container>
             )}
           </Formik>

@@ -29,7 +29,6 @@ public class CountryController {
     @GetMapping()
     protected List<CountryViewDto> getAllCountries() {
 
-        log.info("Spring version : {}",SpringVersion.getVersion());
         return countryService.getAll();
     }
 }

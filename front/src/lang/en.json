@@ -89,12 +89,13 @@
   "createComplianceReferent": "Create Compliance Referent",
   "level": "Level",
   "phone": "Phone",
-  "NotPhoneFormat":"Not a valid phone format",
+  "invalidPhoneFormat":"Not a valid phone format",
   "complianceReferentCreated": "Compliance referent created",
   "clearCache": "Clear the referentials caches",
   "clearAllCaches": "Clear all caches",
   "clearRisksCaches": "Clear risks cache",
   "clearCountriesCache": "Clear countries cache",
   "clearOrgUnitCaches": "Clear org.units cache",
+  "clearLevels": "Clear levels cache",
   "NoComplianceFound":"Sorry, No compliance referent found with these criterias"
 }

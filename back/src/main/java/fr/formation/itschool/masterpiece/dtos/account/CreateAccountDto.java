@@ -2,9 +2,8 @@ package fr.formation.itschool.masterpiece.dtos.account;
 
 import fr.formation.itschool.masterpiece.validators.ExtendedEmailValidator;
 import fr.formation.itschool.masterpiece.validators.PasswordComplexityRequirement;
-import fr.formation.itschool.masterpiece.validators.UniqueEmail;
+import fr.formation.itschool.masterpiece.validators.UniqueEmailAccount;
 
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
@@ -17,7 +16,7 @@ import java.util.StringJoiner;
 
   @NotEmpty
   @ExtendedEmailValidator
-  @UniqueEmail
+  @UniqueEmailAccount
   @Size(max = 254)
   private String email;
 

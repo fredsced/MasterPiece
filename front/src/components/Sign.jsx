@@ -127,7 +127,7 @@ export default function Sign(props) {
 
   const handleRegisterError = (error) => {
     const result = handleRestApiError(error);
-    setFieldsInError(result.validationErrors);
+    setFieldsInError(result.fieldsInError);
     const errorText = (
       <FormattedMessage
         id={result.errorMessage}

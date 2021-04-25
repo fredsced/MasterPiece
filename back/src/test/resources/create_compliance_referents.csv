@@ -1,4 +1,4 @@
 post compliance referent
-{"collaboratorDto": {"lastname": "testRef1", "firstname": "firstnameRef1", "sesame": "x232323", "country": {"id":1}, "organisationUnit":{"id":1}}, "risk":{"id":1}, "level":{"id":1},"email":"testRf&@bg.com"} |$|
+{"collaboratorDto": {"lastname": "testRef1", "firstname": "firstnameRef1", "sesame": "x232323", "country": {"id":1}, "organisationUnit":{"id":1}}, "risk":{"id":1}, "level":{"id":1},"email":"testRf&@bg.com", "phone":null} |$|
 {"collaboratorDto": {"lastname": "testRef2", "firstname": "firstnameRef2", "sesame": "x232324", "country": {"id":2}, "organisationUnit":{"id":2}}, "risk":{"id":2}, "level":{"id":2},"email":"testRf2&@bg.com","phone":"+33 6 33 91 40 70"} |$|
 {"collaboratorDto": {"lastname": "testRef2", "firstname": "firstnameRef2", "sesame": "x232312", "country": {"id":2}, "organisationUnit":{"id":2}}, "risk":{"id":2}, "level":{"id":2},"email":"testRf3@bg.com","phone":"0633914070"} |$|

@@ -11,8 +11,8 @@ import java.lang.annotation.Target;
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.FIELD})
-@Constraint(validatedBy = UniqueEmailValidator.class)
-public @interface UniqueEmail {
+@Constraint(validatedBy = UniqueEmailAccountValidator.class)
+public @interface UniqueEmailAccount {
   String message() default "emailNotUnique";
 
   Class<?>[] groups() default {};

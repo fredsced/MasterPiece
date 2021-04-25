@@ -12,7 +12,7 @@ import javax.persistence.UniqueConstraint;
 import java.util.StringJoiner;
 
 /**
- * A representation of an account {@code ComplianceReferent}
+ * A representation of a ComplianceReferent {@code ComplianceReferent}
  */
 @Entity
 @Table(

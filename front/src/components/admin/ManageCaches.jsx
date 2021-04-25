@@ -36,10 +36,7 @@ const useStyles = makeStyles((theme) => ({
   content: {
     width: '100%',
     marginTop: theme.spacing(5),
-    '& .MuiTextField-root': {
-      margin: theme.spacing(1),
-      width: '25ch',
-    },
+    marginBottom: theme.spacing(3),
   },
 }));
 
@@ -123,71 +120,102 @@ export default function ManageCaches(props) {
                 <Grid
                   item
                   container
-                  xs={6}
-                  sm={3}
-                  alignItems='baseline'
-                  justify='center'
+                  spacing={2}
+                  direction='row'
+                  justify='space-evenly'
                 >
-                  <Button
-                    variant='contained'
-                    color='primary'
-                    onClick={() => {
-                      handleClick('risks');
-                    }}
+                  <Grid
+                    item
+                    container
+                    xs={6}
+                    sm={3}
+                    alignItems='baseline'
+                    justify='center'
                   >
-                    <Typography component='h2' variant='subtitle1'>
-                      <FormattedMessage
-                        id='clearRisksCaches'
-                        defaultMessage='Clear risks cache'
-                      />
-                    </Typography>
-                  </Button>
-                </Grid>
-                <Grid
-                  item
-                  container
-                  xs={6}
-                  sm={3}
-                  alignItems='baseline'
-                  justify='center'
-                >
-                  <Button
-                    variant='contained'
-                    color='primary'
-                    onClick={() => {
-                      handleClick('countries');
-                    }}
+                    <Button
+                      variant='contained'
+                      color='primary'
+                      onClick={() => {
+                        handleClick('risks');
+                      }}
+                    >
+                      <Typography component='h2' variant='subtitle1'>
+                        <FormattedMessage
+                          id='clearRisksCaches'
+                          defaultMessage='Clear risks cache'
+                        />
+                      </Typography>
+                    </Button>
+                  </Grid>
+                  <Grid
+                    item
+                    container
+                    xs={6}
+                    sm={3}
+                    alignItems='baseline'
+                    justify='center'
                   >
-                    <Typography component='h2' variant='subtitle1'>
-                      <FormattedMessage
-                        id='clearCountriesCache'
-                        defaultMessage='Clear countries cache'
-                      />
-                    </Typography>
-                  </Button>
-                </Grid>
-                <Grid
-                  item
-                  container
-                  xs={6}
-                  sm={3}
-                  alignItems='baseline'
-                  justify='center'
-                >
-                  <Button
-                    variant='contained'
-                    color='primary'
-                    onClick={() => {
-                      handleClick('organisationUnits');
-                    }}
+                    <Button
+                      variant='contained'
+                      color='primary'
+                      onClick={() => {
+                        handleClick('countries');
+                      }}
+                    >
+                      <Typography component='h2' variant='subtitle1'>
+                        <FormattedMessage
+                          id='clearCountriesCache'
+                          defaultMessage='Clear countries cache'
+                        />
+                      </Typography>
+                    </Button>
+                  </Grid>
+                  <Grid
+                    item
+                    container
+                    xs={6}
+                    sm={3}
+                    alignItems='baseline'
+                    justify='center'
                   >
-                    <Typography component='h2' variant='subtitle1'>
-                      <FormattedMessage
-                        id='clearOrgUnitCaches'
-                        defaultMessage='Clear org.units cache'
-                      />
-                    </Typography>
-                  </Button>
+                    <Button
+                      variant='contained'
+                      color='primary'
+                      onClick={() => {
+                        handleClick('organisationUnits');
+                      }}
+                    >
+                      <Typography component='h2' variant='subtitle1'>
+                        <FormattedMessage
+                          id='clearOrgUnitCaches'
+                          defaultMessage='Clear org.units cache'
+                        />
+                      </Typography>
+                    </Button>
+                  </Grid>
+                  <Grid
+                    item
+                    container
+                    xs={6}
+                    sm={3}
+                    alignItems='baseline'
+                    justify='center'
+                  >
+                    <Button
+                      variant='contained'
+                      color='primary'
+                      onClick={() => {
+                        handleClick('levels');
+                      }}
+                    >
+                      <Typography component='h2' variant='subtitle1'>
+                        <FormattedMessage
+                          id='clearLevels'
+                          defaultMessage='Clear levels cache'
+                        />
+                      </Typography>
+                    </Button>
+                  </Grid>
                 </Grid>
               </Grid>
             </Paper>
@@ -197,7 +225,6 @@ export default function ManageCaches(props) {
               title='back'
               defaultMessage='Back to previous page'
             />
-
           </Container>
           <Dialog open={successOpen} onClose={handleSuccessClose}>
             <Alert severity='success'>

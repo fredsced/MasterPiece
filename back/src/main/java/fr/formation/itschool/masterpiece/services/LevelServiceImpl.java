@@ -3,6 +3,7 @@ package fr.formation.itschool.masterpiece.services;
 import fr.formation.itschool.masterpiece.dtos.LevelViewDto;
 import fr.formation.itschool.masterpiece.repositories.LevelRepository;
 import org.modelmapper.ModelMapper;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,6 +20,7 @@ public class LevelServiceImpl implements LevelService {
     this.modelMapper = modelMapper;
   }
 
+  @Cacheable("levels")
   @Override
   public List<LevelViewDto> getAllLevels() {
     return levelRepository.findAll().stream()

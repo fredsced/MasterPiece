@@ -4,7 +4,8 @@ import fr.formation.itschool.masterpiece.domain.Level;
 import fr.formation.itschool.masterpiece.domain.Risk;
 import fr.formation.itschool.masterpiece.dtos.collaborator.CollaboratorDto;
 import fr.formation.itschool.masterpiece.validators.ExtendedEmailValidator;
-import fr.formation.itschool.masterpiece.validators.UniqueEmail;
+import fr.formation.itschool.masterpiece.validators.UniqueEmailAccount;
+import fr.formation.itschool.masterpiece.validators.UniqueEmailRef;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
@@ -28,7 +29,7 @@ public class SaveComplianceReferentDto {
 
   @NotEmpty
   @ExtendedEmailValidator
-  @UniqueEmail
+  @UniqueEmailRef
   @Size(max = 254)
   private String email;
 

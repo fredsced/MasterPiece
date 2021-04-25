@@ -7,7 +7,7 @@ import javax.persistence.UniqueConstraint;
 import java.util.Objects;
 import java.util.StringJoiner;
 /**
- * A representation of an account {@code Role} used for authorization
+ * A representation of an role {@code Role} used for authorization
  */
 @Entity
 @Table(name = "roles",  uniqueConstraints =

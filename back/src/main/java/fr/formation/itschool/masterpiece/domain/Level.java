@@ -7,7 +7,7 @@ import javax.persistence.UniqueConstraint;
 import java.util.StringJoiner;
 
 /**
- * A representation of an account {@code Level} a level of compliance responsibility
+ * A representation of a level {@code Level} a level of compliance responsibility
  */
 @Entity
 @Table(
