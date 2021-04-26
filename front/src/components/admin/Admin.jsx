@@ -4,7 +4,7 @@ import RedirectedContent from '../RedirectedContent';
 import { Container, Paper, Grid, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { FormattedMessage } from 'react-intl';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import VerifiedUserIcon from '@material-ui/icons/VerifiedUser';
 import SettingsIcon from '@material-ui/icons/Settings';
 
 import { Link } from 'react-router-dom';
@@ -98,7 +98,7 @@ export default function Admin(props) {
                         />
                       </Typography>
                     </Typography>
-                    <AccountCircleIcon className={classes.accountIcon} />
+                    <VerifiedUserIcon className={classes.accountIcon} />
                   </Paper>
                 </Link>
                 <Link to={'/admin/manage-caches'}>
