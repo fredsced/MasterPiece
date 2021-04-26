@@ -11,4 +11,5 @@ public interface ComplianceReferentService {
           Long countryId, Long RiskId, Long OrganisationUnitId);
 
   void save(SaveComplianceReferentDto saveComplianceReferentDto);
+  boolean existsByEmail(String email);
 }

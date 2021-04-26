@@ -39,4 +39,6 @@ public interface ComplianceReferentRepository extends JpaRepository<ComplianceRe
   List<ComplianceReferentViewDto> findWithCriteria(@Param("countryId") Long countryId,
                                                    @Param("organisationUnitId") Long organisationUnitId,
                                                    @Param("riskId") Long riskId);
+
+  Boolean existsByEmailIgnoreCase(String email);
 }

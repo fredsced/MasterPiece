@@ -1,7 +1,7 @@
 package fr.formation.itschool.masterpiece.controllers;
 
-import fr.formation.itschool.masterpiece.security.SecurityHelper;
 import fr.formation.itschool.masterpiece.dtos.collaborator.SaveCollaboratorDto;
+import fr.formation.itschool.masterpiece.security.SecurityHelper;
 import fr.formation.itschool.masterpiece.services.CollaboratorService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -13,7 +13,6 @@ import javax.validation.Valid;
 
 /**
  * A {@code RestController} to handle {@code Collaborators}.
- *
  */
 
 @RestController
@@ -24,6 +23,7 @@ public class CollaboratorController {
 
   /**
    * Protected constructor to inject needed dependency
+   *
    * @param collaboratorService
    */
 

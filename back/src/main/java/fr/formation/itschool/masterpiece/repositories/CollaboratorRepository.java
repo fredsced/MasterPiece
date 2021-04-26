@@ -16,6 +16,5 @@ public interface CollaboratorRepository extends JpaRepository<Collaborator, Long
 
   boolean existsBySesameIgnoreCase(String sesameId);
 
-
   <T> Optional<T> findByAccountId(Long accountId, Class<T> destinationType);
 }

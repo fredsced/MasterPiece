@@ -45,4 +45,10 @@ public class ComplianceReferentServiceImpl implements ComplianceReferentService 
     complianceReferentToSave.setCollaborator(collaboratorSaved);
     complianceReferentRepository.save(complianceReferentToSave);
   }
+
+  @Transactional(readOnly = true)
+  @Override
+  public boolean existsByEmail(String email) {
+    return complianceReferentRepository.existsByEmailIgnoreCase(email);
+  }
 }
