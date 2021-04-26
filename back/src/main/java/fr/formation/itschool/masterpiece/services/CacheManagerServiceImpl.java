@@ -17,7 +17,7 @@ public class CacheManagerServiceImpl implements CacheManagerService {
   @Override
   public void clearAllCaches() {
     for (String name : cacheManager.getCacheNames()) {
-      Objects.requireNonNull(cacheManager.getCache(name),"Cache name must exist").clear();
+      Objects.requireNonNull(cacheManager.getCache(name), "Cache name must exist").clear();
     }
   }
 

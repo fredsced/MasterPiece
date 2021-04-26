@@ -5,6 +5,7 @@ import fr.formation.itschool.masterpiece.repositories.LevelRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -21,6 +22,7 @@ public class LevelServiceImpl implements LevelService {
   }
 
   @Cacheable("levels")
+  @Transactional(readOnly = true)
   @Override
   public List<LevelViewDto> getAllLevels() {
     return levelRepository.findAll().stream()
