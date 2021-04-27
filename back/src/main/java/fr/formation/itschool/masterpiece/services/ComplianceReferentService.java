@@ -8,7 +8,7 @@ import java.util.List;
 public interface ComplianceReferentService {
 
   List<ComplianceReferentViewDto> search(
-          Long countryId, Long RiskId, Long OrganisationUnitId);
+          Long countryId, Long OrganisationUnitId, Long RiskId );
 
   void save(SaveComplianceReferentDto saveComplianceReferentDto);
   boolean existsByEmail(String email);

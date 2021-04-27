@@ -77,7 +77,7 @@ const ValidationSchema = () => {
     risk: object().required('required'),
     level: object().required('required'),
     phone: string().matches(
-      /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s./0-9]{10,30}/,
+      /^[+]?[(]?[\d]{1,4}[)]?[-\s.\d]{9,30}/,
       'invalidPhoneFormat'
     ),
     email: string()

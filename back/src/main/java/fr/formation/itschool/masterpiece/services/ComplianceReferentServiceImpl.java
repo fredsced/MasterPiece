@@ -29,11 +29,11 @@ public class ComplianceReferentServiceImpl implements ComplianceReferentService 
 
   @Transactional(readOnly = true)
   @Override
-  public List<ComplianceReferentViewDto> search(Long countryId, Long riskId, Long organisationUnitId) {
+  public List<ComplianceReferentViewDto> search(Long countryId, Long organisationUnitId, Long riskId) {
     return complianceReferentRepository.findWithCriteria(
-      countryId, riskId, organisationUnitId
+      countryId, organisationUnitId, riskId
 
-    );
+      );
   }
 
   @Transactional(readOnly = false)

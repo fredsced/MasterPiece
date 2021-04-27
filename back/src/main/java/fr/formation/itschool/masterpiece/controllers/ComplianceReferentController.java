@@ -44,15 +44,15 @@ public class ComplianceReferentController {
   @PreAuthorize("hasRole('ROLE_USER')")
   @GetMapping()
   protected List<ComplianceReferentViewDto> search(
-    @RequestParam Long countryId, @RequestParam Long riskId, @RequestParam Long organisationUnitId) {
-    return complianceReferentService.search(countryId,riskId,organisationUnitId);
+    @RequestParam(name = "countryId") Long countryId, @RequestParam(name = "organisationUnitId") Long organisationUnitId, @RequestParam(name = "riskId") Long riskId) {
+    return complianceReferentService.search(countryId, organisationUnitId, riskId);
   }
 
   /**
    * Persists a {@code SaveComplianceReferentDto}
    *
    * @param saveComplianceReferentDto {@code SaveComplianceReferentDto} to persist
-   * Only permit to Admin Accounts
+   *                                  Only permit to Admin Accounts
    */
 
   @PreAuthorize(("hasRole('ROLE_ADMIN')"))
