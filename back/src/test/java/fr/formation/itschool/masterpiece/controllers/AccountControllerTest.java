@@ -24,6 +24,7 @@ public class AccountControllerTest extends IntegrationTest {
   void shouldCreateAccount(String account) throws Exception {
     api.perform(post(path)
       .contentType(MediaType.APPLICATION_JSON)
+
       .content(account))
       .andExpect(status().isOk());
   }
