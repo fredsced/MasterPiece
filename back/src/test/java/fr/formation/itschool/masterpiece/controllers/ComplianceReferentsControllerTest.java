@@ -28,7 +28,7 @@ public class ComplianceReferentsControllerTest extends IntegrationTest {
 
   @Order(1)
   @ParameterizedTest
-  @CsvFileSource(resources = "/create_compliance_referents.csv", delimiterString = "|$|", numLinesToSkip = 1)
+  @CsvFileSource(resources = "/compliance_referents/create_compliance_referents.csv", delimiterString = "|$|", numLinesToSkip = 1)
   void shouldNotCreateCollaboratorUnauthenticated(String complianceReferent) throws Exception {
     api.perform(post(path)
       .contentType(MediaType.APPLICATION_JSON)
@@ -37,7 +37,7 @@ public class ComplianceReferentsControllerTest extends IntegrationTest {
   }
   @Order(2)
   @ParameterizedTest
-  @CsvFileSource(resources = "/create_compliance_referents.csv", delimiterString = "|$|", numLinesToSkip = 1)
+  @CsvFileSource(resources = "/compliance_referents/create_compliance_referents.csv", delimiterString = "|$|", numLinesToSkip = 1)
   void shouldNotCreateComplianceReferentInvalidToken(String complianceReferent) throws Exception {
     api.perform(post(path)
       .header("Authorization", invalidToken)
@@ -47,7 +47,7 @@ public class ComplianceReferentsControllerTest extends IntegrationTest {
   }
   @Order(3)
   @ParameterizedTest
-  @CsvFileSource(resources = "/create_compliance_referents.csv", delimiterString = "|$|", numLinesToSkip = 1)
+  @CsvFileSource(resources = "/compliance_referents/create_compliance_referents.csv", delimiterString = "|$|", numLinesToSkip = 1)
   void shouldNotCreateComplianceReferentUserRole(String complianceReferent) throws Exception {
     api.perform(post(path)
       .header("Authorization", userToken)
@@ -57,7 +57,7 @@ public class ComplianceReferentsControllerTest extends IntegrationTest {
   }
   @Order(4)
   @ParameterizedTest
-  @CsvFileSource(resources = "/create_compliance_referents.csv", delimiterString = "|$|", numLinesToSkip = 1)
+  @CsvFileSource(resources = "/compliance_referents/create_compliance_referents.csv", delimiterString = "|$|", numLinesToSkip = 1)
   void shouldCreateComplianceReferentAdminRole(String complianceReferent) throws Exception {
     api.perform(post(path)
       .header("Authorization", adminToken)
@@ -67,7 +67,7 @@ public class ComplianceReferentsControllerTest extends IntegrationTest {
   }
   @Order(5)
   @ParameterizedTest
-  @CsvFileSource(resources = "/create_compliance_referents.csv", delimiterString = "|$|", numLinesToSkip = 1)
+  @CsvFileSource(resources = "/compliance_referents/create_compliance_referents.csv", delimiterString = "|$|", numLinesToSkip = 1)
   void shouldNotCreateDuplicatedComplianceReferentAdminRole(String complianceReferent) throws Exception {
     api.perform(post(path)
       .header("Authorization", adminToken)
@@ -77,8 +77,8 @@ public class ComplianceReferentsControllerTest extends IntegrationTest {
   }
   @Order(6)
   @ParameterizedTest
-  @CsvFileSource(resources = "/invalid_compliance_referents.csv", delimiterString = "|$|", numLinesToSkip = 1)
-  void shouldNotCreatInvalidComplianceReferentAdminRole(String complianceReferent) throws Exception {
+  @CsvFileSource(resources = "/compliance_referents/invalid_compliance_referents.csv", delimiterString = "|$|", numLinesToSkip = 1)
+  void shouldNotCreateInvalidComplianceReferentAdminRole(String complianceReferent) throws Exception {
     api.perform(post(path)
       .header("Authorization", adminToken)
       .contentType(MediaType.APPLICATION_JSON)

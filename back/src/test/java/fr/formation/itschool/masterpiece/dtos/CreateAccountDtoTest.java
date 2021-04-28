@@ -12,10 +12,4 @@ public class CreateAccountDtoTest {
     assertNotNull(actual, "Create account failed");
   }
 
-  //@Test
-  //void should_create_account_with_valid_params(){
-  //  CreateAccountDto actual = new CreateAccountDto("Fred","toto");
-  //  assertNotNull(actual, "Create account failed");
-  //}
-
 }

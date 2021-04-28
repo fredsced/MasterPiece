@@ -1,0 +1,4 @@
+put collaborator
+{"lastname":"Test1","firstname": "alice","sesame": "a45677447","countryId": 2,"organisationUnitId": 1}|$|
+{"lastname":"Test2","firstname": "bob","sesame": "a4778","countryId": 1,"organisationUnitId": 2}|$|
+{"lastname":"Test3","firstname": "carl","sesame": "z477845","countryId": 2,"organisationUnitId": 2}|$|

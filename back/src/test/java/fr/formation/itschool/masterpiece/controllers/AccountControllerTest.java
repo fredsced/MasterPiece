@@ -20,7 +20,7 @@ public class AccountControllerTest extends IntegrationTest {
 
   @ParameterizedTest
   @Order(1)
-  @CsvFileSource(resources = "/accountsSuccess.csv", delimiterString = "|$|", numLinesToSkip = 1)
+  @CsvFileSource(resources = "/accounts/accountsSuccess.csv", delimiterString = "|$|", numLinesToSkip = 1)
   void shouldCreateAccount(String account) throws Exception {
     api.perform(post(path)
       .contentType(MediaType.APPLICATION_JSON)
@@ -31,7 +31,7 @@ public class AccountControllerTest extends IntegrationTest {
 
   @ParameterizedTest
   @Order(2)
-  @CsvFileSource(resources = "/accountsSuccess.csv", delimiterString = "|$|", numLinesToSkip = 1)
+  @CsvFileSource(resources = "/accounts/accountsSuccess.csv", delimiterString = "|$|", numLinesToSkip = 1)
   void shouldNotCreateDuplicateAccount(String account) throws Exception {
     api.perform(post(path)
       .contentType(MediaType.APPLICATION_JSON)
@@ -40,7 +40,7 @@ public class AccountControllerTest extends IntegrationTest {
   }
   @ParameterizedTest
   @Order(3)
-  @CsvFileSource(resources = "/accountsFail.csv", delimiterString = "|$|", numLinesToSkip = 1)
+  @CsvFileSource(resources = "/accounts/accountsFail.csv", delimiterString = "|$|", numLinesToSkip = 1)
   void shouldNotCreateInvalidAccount(String account) throws Exception {
     api.perform(post(path)
       .contentType(MediaType.APPLICATION_JSON)
