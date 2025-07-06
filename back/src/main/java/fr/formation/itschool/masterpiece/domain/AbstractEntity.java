@@ -15,7 +15,7 @@ import javax.persistence.MappedSuperclass;
 public abstract class AbstractEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name="id", columnDefinition = "BIGINT UNSIGNED", nullable = false)
+  @Column(name="id", columnDefinition = "BIGINT", nullable = false)
   private long id;
 
   public long getId() {

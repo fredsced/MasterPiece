@@ -2,7 +2,7 @@
 <!-- http://logback.qos.ch/manual/ -->
 <configuration>
 
-    <property name="LOG_PATH" value="./logs"/>
+    <property name="LOG_PATH" value="/Users/admin/GoogleDriveCoder/MasterPiece/logtest"/>
     <property name="PATTERN" value="%d %p %C{1.} [%t] %m%n"/>
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <layout class="ch.qos.logback.classic.PatternLayout">
@@ -42,10 +42,8 @@
         <appender-ref ref="FILE"/>
     </logger>
 
-    <logger name="org.hibernate.type.descriptor.sql" additivity="false" level="TRACE">
-        <appender-ref ref="CONSOLE"/>
-        <appender-ref ref="FILE"/>
-    </logger>
+
+    
 
     <springProfile name="dev">
 
